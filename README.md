@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Project Brigada <!-- omit from toc -->
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### As a store-manager... <!-- omit from toc -->
+
+You can let your part-time employees know that you need some help on your store. Either if it's because of some sudden rush in shopping mall, so you need someone just for 2-3 hours, or it's unexpected sick-leave... You can notificate all part-time employees, even from other stores, that there's a chance to earn some extra money.
+
+#### As a part-time employee... <!-- omit from toc -->
+
+You get notification when store needs some extra help on the field. You get notifications also from other stores, so it might be good oportunity to get some extra shifts if you are interested. Also you can notificate store-managers that you have some extra time and you are free to come to work if someone needs your help.
+
+## Frontend
+
+**React, Typescript, Material UI**
 
 ## Available Scripts
 
@@ -39,8 +49,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Commits
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Commit #3: Router with PageWrapper added
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Commit #2: Axios added and simple API call
+
+### Commit #1: Create React app

@@ -10,6 +10,10 @@ const routes = [
     path: "/",
     page: <MainPage />,
   },
+  {
+    path: "/stores/:id",
+    page: <MainPage />,
+  },
 ];
 
 const PageRoutes: FC<Props> = () => (

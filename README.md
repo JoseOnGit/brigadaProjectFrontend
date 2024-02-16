@@ -51,8 +51,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Commits
 
+https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #4: Added Material UI - AppBar and Menu drawer components
+
+https://mui.com/material-ui/getting-started/
+
 ### Commit #3: Router with PageWrapper added
 
+https://reactrouter.com/en/main/start/overview
+
 ### Commit #2: Axios added and simple API call
+
+https://github.com/axios/axios
 
 ### Commit #1: Create React app

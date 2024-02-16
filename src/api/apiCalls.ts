@@ -8,3 +8,11 @@ export const getAllStoresApiCall = async (setData: any) =>
       setData(data.data);
     })
     .catch((error: any) => {});
+
+export const getStoreApiCall = async (storeId: number, setData: any) =>
+  axios
+    .get(`${API_URL}/stores/${storeId}`)
+    .then((data: any) => {
+      setData(data.data);
+    })
+    .catch((error: any) => {});

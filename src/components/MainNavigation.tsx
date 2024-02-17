@@ -8,6 +8,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import React, { FC, useState } from "react";
+import { getHomeRoutePath } from "../routes/routePaths";
 
 type Props = {};
 
@@ -45,7 +46,7 @@ const MainNavigation: FC<Props> = () => {
         <List>
           {["Home", "Profile", "Calendar", "About"].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <ListItemButton>
+              <ListItemButton href={getHomeRoutePath()}>
                 <ListItemIcon>{index % 2 === 0 ? "In" : "@"}</ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>

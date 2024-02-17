@@ -1,6 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { getStoreApiCall } from "../api/apiCalls";
 import { useParams } from "react-router-dom";
+import { Link } from "@mui/material";
+import { getLoginRoutePath } from "../routes/routePaths";
 
 type Props = {};
 
@@ -79,6 +81,7 @@ const MainPage: FC<Props> = () => {
         architecto beatae vitae dicta sunt explicabo. Vivamus porttitor turpis
         ac leo. Nunc dapibus tortor vel mi dapibus sollicitudin.
       </div>
+      <Link href={getLoginRoutePath()}>Login</Link>
     </>
   );
 };

@@ -1,7 +1,9 @@
 import React, { FC } from "react";
 import { Outlet } from "react-router-dom";
-import { AppBar, Toolbar, Typography } from "@mui/material";
 import { MainNavigation } from "../components/MainNavigation";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 type Props = {};
 

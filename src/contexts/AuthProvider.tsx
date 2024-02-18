@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, createContext, useState } from "react";
+import React, { FC, ReactNode, createContext } from "react";
 
 type Props = {
   children: ReactNode;
@@ -18,7 +18,7 @@ export const AuthContext = createContext<AuthContextType>(
 
 const AuthProvider: FC<Props> = ({ children }) => {
   // const [user, setUser] = useState(() => getDecodedUserAndSetupToken());
-  const [isNew, setIsNew] = useState(false);
+  // const [isNew, setIsNew] = useState(false);
 
   return <div>AuthProvider</div>;
 };

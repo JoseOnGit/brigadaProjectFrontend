@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { getStoreApiCall } from "../api/apiCalls";
 import { useParams } from "react-router-dom";
-import { Link } from "@mui/material";
 import { getLoginRoutePath } from "../routes/routePaths";
+import Link from "@mui/material/Link";
 
 type Props = {};
 
@@ -18,7 +18,7 @@ const MainPage: FC<Props> = () => {
     // if (stores) {
     getStoreApiCall(parseInt(id || ""), setStores);
     // }
-  }, []);
+  }, [id]);
 
   return (
     <>

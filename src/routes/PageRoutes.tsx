@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MainPage } from "../pages/MainPage";
 import { PageWrapper } from "../pages/PageWrapper";
 import { LoginPage } from "../pages/LoginPage";
-import { Registration } from "../pages/Registration";
+import { RegistrationPage } from "../pages/RegistrationPage";
 
 type Props = {};
 
@@ -18,7 +18,7 @@ const routes = [
   },
   {
     path: "/registration",
-    page: <Registration />,
+    page: <RegistrationPage />,
   },
   {
     path: "/stores/:id",

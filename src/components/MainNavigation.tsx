@@ -1,14 +1,12 @@
-import {
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
 import React, { FC, useState } from "react";
 import { getHomeRoutePath } from "../routes/routePaths";
+import List from "@mui/material/List";
+import Drawer from "@mui/material/Drawer";
+import ListItem from "@mui/material/ListItem";
+import IconButton from "@mui/material/IconButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 
 type Props = {};
 

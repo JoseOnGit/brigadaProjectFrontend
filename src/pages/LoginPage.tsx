@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import { Link, Typography } from "@mui/material";
 import { getRegistrationRoutePath } from "../routes/routePaths";
 import { PageHeadline } from "../components/PageHeadline";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 type Props = {};
 
@@ -10,8 +11,8 @@ const LoginPage: FC<Props> = () => {
 
   return (
     <>
-      <PageHeadline text="Přihlášení" />
-      <Typography paragraph={true}>
+      <PageHeadline headline="Přihlášení" />
+      <Typography paragraph>
         Nový užívatel? <Link href={getRegistrationRoutePath()}>Registrace</Link>
       </Typography>
     </>

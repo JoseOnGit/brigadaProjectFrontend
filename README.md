@@ -8,9 +8,23 @@ You can let your part-time employees know that you need some help on your store.
 
 You get notification when store needs some extra help on the field. You get notifications also from other stores, so it might be good oportunity to get some extra shifts if you are interested. Also you can notificate store-managers that you have some extra time and you are free to come to work if someone needs your help.
 
-## Frontend
+## Frontend <!-- omit from toc -->
 
 **React, Typescript, Material UI**
+
+- [Available Scripts](#available-scripts)
+  - [`yarn start`](#yarn-start)
+  - [`yarn test`](#yarn-test)
+  - [`yarn build`](#yarn-build)
+  - [`yarn eject`](#yarn-eject)
+- [Commits](#commits)
+  - [Commit #7: Registration form + all texts to JSON](#commit-7-registration-form--all-texts-to-json)
+  - [Commit #6: Added react-hook-form and simple registration form](#commit-6-added-react-hook-form-and-simple-registration-form)
+  - [Commit #5: Login and Registration pages added](#commit-5-login-and-registration-pages-added)
+  - [Commit #4: Added Material UI - AppBar and Menu drawer components](#commit-4-added-material-ui---appbar-and-menu-drawer-components)
+  - [Commit #3: Router with PageWrapper added](#commit-3-router-with-pagewrapper-added)
+  - [Commit #2: Axios added and simple API call](#commit-2-axios-added-and-simple-api-call)
+  - [Commit #1: Create React app](#commit-1-create-react-app)
 
 ## Available Scripts
 
@@ -52,6 +66,52 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #7: Registration form + all texts to JSON
+
+Texts to JSON:
+
+- All texts are added to **texts.json** to keep them in one place. Make it easier to handle, manage and create translations in the future.
+- Texts are used in application as TXT object - `import TXT from "../contexts/texts.json";`
+
+Login:
+
+- added simple AuthProvider - no functionality yet
+
+Updated registration form:
+
+- form divided into sections (we use styled components)
+- added **SelectElement** component
+- we use **getAllStoresApiCall** to fetch stores for SelectElement component when RegistrationPage render.
+- we use getAddEmployeeApiCall to post and create new employee.
+
+Updated API calls:
+
+- added **setLoading** and **setError** to props in every call.
+
+Update of main navigation:
+
+- we use **sx** proprty of MaterialUI components to redefine its width, colors, paddings.
+- use of MaterialUI Icons.
+- menu items defined in simple array of objects.
+
+Update of 'Back' button:
+
+- we use **Button** component and icon form MaterialUI
+
+### Commit #6: Added react-hook-form and simple registration form
+
+New dependencies:
+
+- **react-hook-form**
+- **react-hook-form-mui**
+- **@mui/x-date-pickers**
+- **@mui/icons-material**
+- **dayjs**
+
+Updated registration form - we use components from new dependncies, like **FormContainer**,**TextFieldElement**, etc.
+
+### Commit #5: Login and Registration pages added
 
 ### Commit #4: Added Material UI - AppBar and Menu drawer components
 

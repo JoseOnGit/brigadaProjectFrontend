@@ -7,12 +7,46 @@ import IconButton from "@mui/material/IconButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import TXT from "../contexts/texts.json";
+import HomeIcon from "@mui/icons-material/Home";
+import PersonIcon from "@mui/icons-material/Person";
+import MenuIcon from "@mui/icons-material/Menu";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import InfoIcon from "@mui/icons-material/Info";
 
-type Props = {};
+const menuItemColor = "#ffffff";
+const menuBackgroundColor = "#1976d2";
 
-const MainNavigation: FC<Props> = () => {
-  console.log("%c⧭ MainNavigation component is rendered.. ", "color: #00bf00");
+const menuItems = [
+  {
+    label: TXT.mainNavigation.home,
+    route: getHomeRoutePath(),
+    icon: <HomeIcon />,
+  },
+  {
+    label: TXT.mainNavigation.profile,
+    route: getHomeRoutePath(),
+    icon: <PersonIcon />,
+  },
+  {
+    label: TXT.mainNavigation.calendar,
+    route: getHomeRoutePath(),
+    icon: <CalendarMonthIcon />,
+  },
+  {
+    label: TXT.mainNavigation.help,
+    route: getHomeRoutePath(),
+    icon: <HelpOutlineIcon />,
+  },
+  {
+    label: TXT.mainNavigation.about,
+    route: getHomeRoutePath(),
+    icon: <InfoIcon />,
+  },
+];
 
+const MainNavigation: FC = () => {
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 
   const toggleDrawer =
@@ -38,15 +72,34 @@ const MainNavigation: FC<Props> = () => {
         sx={{ ml: 2 }}
         onClick={toggleDrawer(true)}
       >
-        <div>M</div>
+        <MenuIcon />
       </IconButton>
-      <Drawer anchor={"right"} open={isNavOpen} onClose={toggleDrawer(false)}>
+      <Drawer
+        anchor={"right"}
+        open={isNavOpen}
+        onClose={toggleDrawer(false)}
+        PaperProps={{
+          sx: {
+            width: "50%",
+            backgroundColor: menuBackgroundColor,
+            color: menuItemColor,
+          },
+        }}
+      >
         <List>
-          {["Home", "Profile", "Calendar", "About"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton href={getHomeRoutePath()}>
-                <ListItemIcon>{index % 2 === 0 ? "In" : "@"}</ListItemIcon>
-                <ListItemText primary={text} />
+          {menuItems.map((menuItem) => (
+            <ListItem key={menuItem.label} disablePadding>
+              <ListItemButton
+                href={menuItem.route}
+                sx={{
+                  padding: "1.5rem",
+                  borderBottom: `1px solid ${menuItemColor}45`,
+                }}
+              >
+                <ListItemIcon sx={{ color: menuItemColor }}>
+                  {menuItem.icon}
+                </ListItemIcon>
+                <ListItemText primary={menuItem.label} />
               </ListItemButton>
             </ListItem>
           ))}

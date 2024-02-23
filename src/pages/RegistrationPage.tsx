@@ -1,85 +1,71 @@
-import React, { FC, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
+import TXT from "../contexts/texts.json";
 import { PageHeadline } from "../components/PageHeadline";
-import { FormSection } from "../components/FormSection";
-import Button from "@mui/material/Button";
-import { FormContainer, TextFieldElement } from "react-hook-form-mui";
+import { FormContainer } from "react-hook-form-mui";
 import { useNavigate } from "react-router-dom";
-
-type EmployeeType = {
-  name: string;
-  surname: string;
-  email: string;
-  phone: string;
-};
+import { FormSubmitButton } from "../components/FormSubmitButton";
+import { EmployeeForm } from "../components/EmployeeForm";
+import { getAddEmployeeApiCall } from "../api/apiCalls";
+import { ApiCallResponse } from "../types/commonTypes";
+import { ErrorMessage } from "../components/ErrorMessage";
+import { EmployeeType } from "../types/employeeTypes";
 
 const RegistrationPage: FC = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const [response, setResponse] = useState<ApiCallResponse>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  console.log("%c⧭ response ", "color: #006dcc", response);
 
   const handleSubmit = (data: EmployeeType) => {
     console.log("%c⧭ data to submit ", "color: #917399", data);
     setLoading(true);
+
+    getAddEmployeeApiCall(data, setResponse, setLoading, setError);
+
     setTimeout(() => {
       setLoading(false);
       navigate("/");
     }, 2000);
   };
 
-  const submitButtonLabel = loading ? "Pracuje se na tom..." : "Registrovat";
+  const initialValues: EmployeeType = useMemo(
+    () => ({
+      name: "",
+      surname: "",
+      email: "",
+      phone: "",
+      avatar: "",
+      base: "",
+      isAdult: false,
+      isCassa: false,
+      isMerch: false,
+      newPassword: "",
+      newPasswordRepeat: "",
+    }),
+    []
+  );
 
-  const initialValues = { name: "", surname: "" };
+  if (error) {
+    return <ErrorMessage error={error} />;
+  }
 
   return (
     <>
-      <PageHeadline headline="Registrace" bottomSpace="3rem" hasBackButton />
+      <PageHeadline
+        headline={TXT.registrationPage.headline}
+        hasBackButton
+        bottomSpace="3rem"
+      />
       <FormContainer defaultValues={initialValues} onSuccess={handleSubmit}>
-        <FormSection
-          headline="Kontaktní údaje"
-          text="Zadej jméno, email a tel. číslo, aby tě store-manager poznal a mohl v prípadě potřeby kontaktovat."
-        >
-          <TextFieldElement
-            name="name"
-            label="Jméno"
-            margin="normal"
-            fullWidth
-            required
-          />
-          <TextFieldElement
-            name="surname"
-            label="Příjmení"
-            margin="normal"
-            fullWidth
-            required
-          />
-          <TextFieldElement
-            name="email"
-            label="Email"
-            margin="normal"
-            fullWidth
-            required
-          />
-          <TextFieldElement
-            name="phone"
-            label="Tel. číslo"
-            margin="normal"
-            fullWidth
-            required
-          />
-        </FormSection>
-        <FormSection headline="Avatar">
-          <div></div>
-        </FormSection>
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          size="large"
-          disabled={loading}
-          fullWidth
-        >
-          {submitButtonLabel}
-        </Button>
+        <EmployeeForm />
+
+        <FormSubmitButton
+          label={TXT.registrationPage.submitButon}
+          loading={loading}
+        />
       </FormContainer>
     </>
   );

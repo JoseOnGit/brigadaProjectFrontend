@@ -1,0 +1,63 @@
+{
+  "applicationName": "Application",
+  "mainNavigation": {
+    "home": "Domů",
+    "profile": "Profil",
+    "calendar": "Kalendář",
+    "help": "Nápověda",
+    "about": "O aplikaci"
+  },
+  "common": {
+    "back": "ZPĚT",
+    "loading": "Pracuje se na tom..."
+  },
+  "loginPage": {
+    "headline": "Přihlášení",
+    "newUser": "Nový užívatel?",
+    "registrationLink": "Registrace",
+    "loginButton": "Přihlásit"
+  },
+  "registrationPage": {
+    "headline": "Registrace",
+    "section": {
+      "contact": {
+        "headline": "Kontaktní údaje",
+        "text": "Zadej jméno, email a tel. číslo, aby tě store-manager poznal a mohl v prípadě potřeby kontaktovat.",
+        "label": {
+          "name": "Jméno",
+          "surname": "Příjmení",
+          "email": "Email",
+          "phone": "Tel. číslo"
+        }
+      },
+      "avatar": {
+        "headline": "Avatar",
+        "button": "Přidej selfie"
+      },
+      "position": {
+        "headline": "Pozice",
+        "text": "Několik údajů o tvé pozici ve firmě, právomoci a zodpovědnost.",
+        "label": {
+          "base": "Domovský obchod",
+          "adult": "Bylo mi 18 let",
+          "cassa": "Kasa",
+          "merch": "Merchandising"
+        },
+        "tooltip": {
+          "baseError": "Omlouvame se, ale došlo k chybě. Nastav domovský obchod později ve svém profilu.",
+          "cassa": "Mám podepsanou hmotní zodpovědnost a můžu obsluhovat kasu.",
+          "merch": "Jsem součast Merchandising teamu."
+        }
+      },
+      "password": {
+        "headline": "Heslo",
+        "text": "Zadej heslo, které budeš užívat k prřihlášení k téhle aplikaci.",
+        "label": {
+          "password": "Heslo",
+          "repeatPassword": "Heslo znova"
+        }
+      }
+    },
+    "submitButon": "Registrovat"
+  }
+}

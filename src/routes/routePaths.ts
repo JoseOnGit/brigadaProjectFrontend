@@ -10,4 +10,13 @@ const getRegistrationRoutePath = () => {
   return "/registration";
 };
 
-export { getHomeRoutePath, getLoginRoutePath, getRegistrationRoutePath };
+const getProfileRoutePath = (id: number) => {
+  return `/employee/${id}`;
+};
+
+export {
+  getHomeRoutePath,
+  getLoginRoutePath,
+  getRegistrationRoutePath,
+  getProfileRoutePath,
+};

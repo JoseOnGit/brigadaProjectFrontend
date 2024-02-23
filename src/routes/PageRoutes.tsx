@@ -1,11 +1,10 @@
 import { FC } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MainPage } from "../pages/MainPage";
-import { PageWrapper } from "../pages/PageWrapper";
+import { PageWrapper } from "../components/PageWrapper";
 import { LoginPage } from "../pages/LoginPage";
 import { RegistrationPage } from "../pages/RegistrationPage";
-
-type Props = {};
+import { ProfilePage } from "../pages/ProfilePage";
 
 const routes = [
   {
@@ -21,12 +20,16 @@ const routes = [
     page: <RegistrationPage />,
   },
   {
+    path: "/employee/:id",
+    page: <ProfilePage />,
+  },
+  {
     path: "/stores/:id",
     page: <MainPage />,
   },
 ];
 
-const PageRoutes: FC<Props> = () => (
+const PageRoutes: FC = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<PageWrapper />}>

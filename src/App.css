@@ -2,12 +2,6 @@
   text-align: center;
 }
 
-.contentWrapper {
-  width: calc(100% - 2rem);
-  margin: 1rem;
-  text-align: left;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;

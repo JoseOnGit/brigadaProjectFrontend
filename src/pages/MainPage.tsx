@@ -1,25 +1,8 @@
-import React, { FC, useEffect, useState } from "react";
-import { getStoreApiCall } from "../api/apiCalls";
-import { useParams } from "react-router-dom";
+import React, { FC } from "react";
 import { getLoginRoutePath } from "../routes/routePaths";
 import Link from "@mui/material/Link";
 
-type Props = {};
-
-const MainPage: FC<Props> = () => {
-  console.log("%c⧭ MainPage component is rendered.. ", "color: #00bf00");
-  const { id } = useParams();
-  console.log("%c⧭ URL param: id: ", "color: #00a3cc", id);
-
-  const [stores, setStores] = useState();
-  console.log("%c⧭ stores ", "color: #00e600", stores);
-
-  useEffect(() => {
-    // if (stores) {
-    getStoreApiCall(parseInt(id || ""), setStores);
-    // }
-  }, [id]);
-
+const MainPage: FC = () => {
   return (
     <>
       <div>MainPage</div>;

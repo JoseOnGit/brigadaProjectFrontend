@@ -15,6 +15,7 @@ const FormSubmitButton: FC<Props> = ({ label, loading }) => (
     size="large"
     disabled={loading}
     fullWidth
+    sx={{ marginTop: "1rem", padding: "1rem 0rem" }}
   >
     {loading ? TXT.common.loading : label}
   </Button>

@@ -2,9 +2,11 @@ import { FC } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { MainPage } from "../pages/MainPage";
 import { PageWrapper } from "../components/PageWrapper";
+import { EditProfilePage } from "../pages/EditProfilePage";
+import { DashboardPage } from "../pages/DashboardPage";
 import { LoginPage } from "../pages/LoginPage";
-import { RegistrationPage } from "../pages/RegistrationPage";
-import { ProfilePage } from "../pages/ProfilePage";
+import { RegistrationPage2 } from "../pages/RegistrationPage2";
+import { RegistrationSuccessPage } from "../pages/RegistrationSuccessPage";
 
 const routes = [
   {
@@ -17,11 +19,20 @@ const routes = [
   },
   {
     path: "/registration",
-    page: <RegistrationPage />,
+    // page: <RegistrationPage />,
+    page: <RegistrationPage2 />,
   },
   {
-    path: "/employee/:id",
-    page: <ProfilePage />,
+    path: "/registration/success",
+    page: <RegistrationSuccessPage />,
+  },
+  {
+    path: "/dashboard",
+    page: <DashboardPage />,
+  },
+  {
+    path: "/employee/edit/:id",
+    page: <EditProfilePage />,
   },
   {
     path: "/stores/:id",

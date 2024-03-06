@@ -4,6 +4,8 @@ import { StoreApiType } from "../types/storesTypes";
 import { EmployeeApiType, EmployeeType } from "../types/employeeTypes";
 import { ApiCallResponse } from "../types/commonTypes";
 
+// STORES
+
 export const getAllStoresApiCall = async (
   setData: React.Dispatch<React.SetStateAction<StoreApiType[]>>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -32,6 +34,8 @@ export const getStoreApiCall = async (
     .catch((error: any) => setError(error))
     .finally(() => setLoading(false));
 };
+
+// EMPLOYEES
 
 export const getEmployeeApiCall = async (
   employeeId: number,

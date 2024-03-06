@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #8: Simple authentication system](#commit-8-simple-authentication-system)
   - [Commit #7: Registration form + all texts to JSON](#commit-7-registration-form--all-texts-to-json)
   - [Commit #6: Added react-hook-form and simple registration form](#commit-6-added-react-hook-form-and-simple-registration-form)
   - [Commit #5: Login and Registration pages added](#commit-5-login-and-registration-pages-added)
@@ -66,6 +67,23 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #8: Simple authentication system
+
+Authentication system
+
+- Simple auth system by https://www.bezkoder.com/react-express-authentication-jwt/
+- To register new userwhere we use only
+  - username
+  - email
+  - password
+- The back-end server uses Node.js Express with jsonwebtoken for JWT authentication and Sequelize for interacting with MySQL database.
+
+FormErrorHandler
+
+- component which use FormErrorProvider form react-hook-form-mui to change default error messages in forms.
+- also displays authentication messages comming from server
+- all server auth messages identified in one list/enum - authMessage
 
 ### Commit #7: Registration form + all texts to JSON
 

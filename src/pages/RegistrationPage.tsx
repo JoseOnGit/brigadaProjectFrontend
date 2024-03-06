@@ -11,6 +11,7 @@ import { ErrorMessage } from "../components/ErrorMessage";
 import { EmployeeType } from "../types/employeeTypes";
 
 const RegistrationPage: FC = () => {
+  console.log("🚀 ~ RegistrationPage is rendered....");
   const navigate = useNavigate();
 
   const [response, setResponse] = useState<ApiCallResponse>();

@@ -5,11 +5,22 @@
     "profile": "Profil",
     "calendar": "Kalendář",
     "help": "Nápověda",
-    "about": "O aplikaci"
+    "about": "O aplikaci",
+    "logout": "Odhlásit"
   },
   "common": {
     "back": "ZPĚT",
-    "loading": "Pracuje se na tom..."
+    "loading": "Pracuje se na tom...",
+    "message": {
+      "noUser": "Užívatel se nenašel.",
+      "required": "Pole je povinné.",
+      "emailPattern": "Nesprávny formát emailové adresy.",
+      "invalidPasword": "Nesprávne heslo.",
+      "userNotFound": "Užívatel neexistuje.",
+      "usernameIsInUse": "Užívatelské jméno už existuje.",
+      "emailIsInUse": "Užívatelský email už existuje.",
+      "userRegisteredSuccessfully": "Byl jsi úspěšně zaregistrován."
+    }
   },
   "loginPage": {
     "headline": "Přihlášení",
@@ -51,7 +62,7 @@
       },
       "password": {
         "headline": "Heslo",
-        "text": "Zadej heslo, které budeš užívat k prřihlášení k téhle aplikaci.",
+        "text": "Zadej heslo, které budeš užívat k přihlášení k téhle aplikaci.",
         "label": {
           "password": "Heslo",
           "repeatPassword": "Heslo znova"
@@ -59,5 +70,9 @@
       }
     },
     "submitButon": "Registrovat"
+  },
+  "profilePage": {
+    "headline": "Upravit profil",
+    "submitButon": "Uložit změny"
   }
 }

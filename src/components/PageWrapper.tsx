@@ -11,6 +11,10 @@ const ContentWrapper = styled.div`
   width: calc(100% - 2rem);
   margin: 1rem;
   text-align: left;
+  @media (min-width: 800px) {
+    max-width: 800px;
+    margin: 1rem auto;
+  }
 `;
 
 const PageWrapper: FC = () => (

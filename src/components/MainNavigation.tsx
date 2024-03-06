@@ -1,5 +1,5 @@
-import React, { FC, useState } from "react";
-import { getHomeRoutePath } from "../routes/routePaths";
+import React, { FC, ReactNode, useState } from "react";
+import { getHomeRoutePath, getLoginRoutePath } from "../routes/routePaths";
 import List from "@mui/material/List";
 import Drawer from "@mui/material/Drawer";
 import ListItem from "@mui/material/ListItem";
@@ -14,11 +14,20 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import InfoIcon from "@mui/icons-material/Info";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AuthService from "../services/auth.service";
 
 const menuItemColor = "#ffffff";
 const menuBackgroundColor = "#1976d2";
 
-const menuItems = [
+type MenuItemType = {
+  label: string;
+  route: string;
+  icon: ReactNode;
+  onClickHandler?: () => void;
+};
+
+const menuItems: MenuItemType[] = [
   {
     label: TXT.mainNavigation.home,
     route: getHomeRoutePath(),
@@ -43,6 +52,12 @@ const menuItems = [
     label: TXT.mainNavigation.about,
     route: getHomeRoutePath(),
     icon: <InfoIcon />,
+  },
+  {
+    label: TXT.mainNavigation.logout,
+    route: getLoginRoutePath(),
+    icon: <LogoutIcon />,
+    onClickHandler: () => AuthService.logout(),
   },
 ];
 
@@ -95,6 +110,7 @@ const MainNavigation: FC = () => {
                   padding: "1.5rem",
                   borderBottom: `1px solid ${menuItemColor}45`,
                 }}
+                onClick={menuItem.onClickHandler}
               >
                 <ListItemIcon sx={{ color: menuItemColor }}>
                   {menuItem.icon}

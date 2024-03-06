@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #10: Main navigation update - roles](#commit-10-main-navigation-update---roles)
   - [Commit #9: Security redirections and SuccessPage](#commit-9-security-redirections-and-successpage)
   - [Commit #8: Simple authentication system](#commit-8-simple-authentication-system)
   - [Commit #7: Registration form + all texts to JSON](#commit-7-registration-form--all-texts-to-json)
@@ -68,6 +69,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #10: Main navigation update - roles
+
+Added permissions to menu items based on user's role - user/moderator/admin
 
 ### Commit #9: Security redirections and SuccessPage
 

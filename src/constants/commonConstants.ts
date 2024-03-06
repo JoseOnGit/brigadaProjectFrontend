@@ -13,3 +13,9 @@ export enum authMessage {
   emailIsInUse = "email_is_in_use",
   userRegisteredSuccessfully = "user_registered_successfully",
 }
+
+export enum role {
+  USER = "ROLE_USER",
+  MODERATOR = "ROLE_MODERATOR",
+  ADMIN = "ROLE_ADMIN",
+}

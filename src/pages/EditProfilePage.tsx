@@ -1,10 +1,7 @@
-import React, { FC, useContext, useMemo, useState } from "react";
+import React, { FC, useMemo, useState } from "react";
 import TXT from "../contexts/texts.json";
-import { ApiCallResponse } from "../types/commonTypes";
 import { PageHeadline } from "../components/PageHeadline";
-import { ErrorMessage } from "../components/ErrorMessage";
 import { FormContainer } from "react-hook-form-mui";
-import { EmployeeForm } from "../components/EmployeeForm";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 import { EmployeeType } from "../types/employeeTypes";
 import { useNavigate } from "react-router-dom";
@@ -15,11 +12,11 @@ const EditProfilePage: FC<Props> = () => {
   console.log("🚀 ~ ProfilePage is rendered....");
   const navigate = useNavigate();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const user = {} as any;
 
-  const [response, setResponse] = useState<ApiCallResponse>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  // const [error, setError] = useState<string>("");
 
   const initialValues: EmployeeType = useMemo(
     () => ({
@@ -52,10 +49,6 @@ const EditProfilePage: FC<Props> = () => {
     }, 2000);
   };
 
-  if (error) {
-    return <ErrorMessage error={error} />;
-  }
-
   return (
     <>
       <PageHeadline
@@ -64,7 +57,7 @@ const EditProfilePage: FC<Props> = () => {
         bottomSpace="3rem"
       />
       <FormContainer defaultValues={initialValues} onSuccess={handleSubmit}>
-        <EmployeeForm />
+        {/* <EmployeeForm /> */}
 
         <FormSubmitButton
           label={TXT.profilePage.submitButon}

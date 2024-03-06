@@ -1,17 +1,17 @@
 import { FC } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { MainPage } from "../pages/MainPage";
 import { PageWrapper } from "../components/PageWrapper";
 import { EditProfilePage } from "../pages/EditProfilePage";
 import { DashboardPage } from "../pages/DashboardPage";
 import { LoginPage } from "../pages/LoginPage";
-import { RegistrationPage2 } from "../pages/RegistrationPage2";
-import { RegistrationSuccessPage } from "../pages/RegistrationSuccessPage";
+import { RegistrationPage } from "../pages/RegistrationPage";
+import { SuccessPage } from "../pages/SuccessPage";
 
 const routes = [
   {
     path: "/",
-    page: <MainPage />,
+    page: <Navigate to="/login" />,
   },
   {
     path: "/login",
@@ -19,19 +19,18 @@ const routes = [
   },
   {
     path: "/registration",
-    // page: <RegistrationPage />,
-    page: <RegistrationPage2 />,
+    page: <RegistrationPage />,
   },
   {
-    path: "/registration/success",
-    page: <RegistrationSuccessPage />,
+    path: "/success/:type",
+    page: <SuccessPage />,
   },
   {
     path: "/dashboard",
     page: <DashboardPage />,
   },
   {
-    path: "/employee/edit/:id",
+    path: "/profile",
     page: <EditProfilePage />,
   },
   {

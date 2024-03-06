@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #9: Security redirections and SuccessPage](#commit-9-security-redirections-and-successpage)
   - [Commit #8: Simple authentication system](#commit-8-simple-authentication-system)
   - [Commit #7: Registration form + all texts to JSON](#commit-7-registration-form--all-texts-to-json)
   - [Commit #6: Added react-hook-form and simple registration form](#commit-6-added-react-hook-form-and-simple-registration-form)
@@ -67,6 +68,21 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #9: Security redirections and SuccessPage
+
+PageWrapper update:
+
+- added security redirections for user loged in/out
+  - so when user is not logged in, he can se eno pages but 'login' or 'registration' pages
+  - vice versa, when user is already logged in, he should be able to see 'login' or 'registration' pages
+
+Success page
+
+- page to show success message after registration or login
+- handle redirection to final page afterwards
+
+Routes refactoring
 
 ### Commit #8: Simple authentication system
 

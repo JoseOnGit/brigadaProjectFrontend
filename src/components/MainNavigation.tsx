@@ -1,5 +1,9 @@
 import React, { FC, ReactNode, useState } from "react";
-import { getHomeRoutePath, getLoginRoutePath } from "../routes/routePaths";
+import {
+  getDashboardRoutePath,
+  getLoginRoutePath,
+  getProfileRoutePath,
+} from "../routes/routePaths";
 import List from "@mui/material/List";
 import Drawer from "@mui/material/Drawer";
 import ListItem from "@mui/material/ListItem";
@@ -30,27 +34,27 @@ type MenuItemType = {
 const menuItems: MenuItemType[] = [
   {
     label: TXT.mainNavigation.home,
-    route: getHomeRoutePath(),
+    route: getDashboardRoutePath(),
     icon: <HomeIcon />,
   },
   {
     label: TXT.mainNavigation.profile,
-    route: getHomeRoutePath(),
+    route: getProfileRoutePath(),
     icon: <PersonIcon />,
   },
   {
     label: TXT.mainNavigation.calendar,
-    route: getHomeRoutePath(),
+    route: getDashboardRoutePath(),
     icon: <CalendarMonthIcon />,
   },
   {
     label: TXT.mainNavigation.help,
-    route: getHomeRoutePath(),
+    route: getDashboardRoutePath(),
     icon: <HelpOutlineIcon />,
   },
   {
     label: TXT.mainNavigation.about,
-    route: getHomeRoutePath(),
+    route: getDashboardRoutePath(),
     icon: <InfoIcon />,
   },
   {

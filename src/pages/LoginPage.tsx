@@ -12,8 +12,8 @@ import { textFieldBasicProps } from "../constants/commonConstants";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import {
-  getDashboardRoutePath,
   getRegistrationRoutePath,
+  getSuccessRoutePath,
 } from "../routes/routePaths";
 import { FormErrorHandler } from "../components/FormErrorHandler";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +31,7 @@ const LoginPage: FC = () => {
     AuthService.login(data.username, data.password)
       .then(
         () => {
-          navigate(getDashboardRoutePath());
+          navigate(getSuccessRoutePath("login"));
           window.location.reload();
         },
         (error) => {

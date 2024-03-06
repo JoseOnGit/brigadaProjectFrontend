@@ -1,6 +1,4 @@
-const getHomeRoutePath = () => {
-  return "/";
-};
+import { SuccesPageTypes } from "../pages/SuccessPage";
 
 const getLoginRoutePath = () => {
   return "/login";
@@ -10,28 +8,22 @@ const getRegistrationRoutePath = () => {
   return "/registration";
 };
 
-const getRegistrationSuccessRoutePath = () => {
-  return "/registration/success";
-};
-
-const getProfileRoutePath = () => {
-  return "/profile";
-};
-
-const getEditProfileRoutePath = (id: number) => {
-  return `/employee/edit/${id}`;
+const getSuccessRoutePath = (type: SuccesPageTypes) => {
+  return `/success/${type}`;
 };
 
 const getDashboardRoutePath = () => {
   return `/dashboard`;
 };
 
+const getProfileRoutePath = () => {
+  return "/profile";
+};
+
 export {
-  getHomeRoutePath,
   getLoginRoutePath,
   getRegistrationRoutePath,
-  getRegistrationSuccessRoutePath,
+  getSuccessRoutePath,
   getProfileRoutePath,
-  getEditProfileRoutePath,
   getDashboardRoutePath,
 };

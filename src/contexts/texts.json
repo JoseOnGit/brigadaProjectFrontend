@@ -18,15 +18,15 @@
       "invalidPasword": "Nesprávne heslo.",
       "userNotFound": "Užívatel neexistuje.",
       "usernameIsInUse": "Užívatelské jméno už existuje.",
-      "emailIsInUse": "Užívatelský email už existuje.",
-      "userRegisteredSuccessfully": "Byl jsi úspěšně zaregistrován."
+      "emailIsInUse": "Užívatelský email už existuje."
     }
   },
   "loginPage": {
     "headline": "Přihlášení",
     "newUser": "Nový užívatel?",
     "registrationLink": "Registrace",
-    "loginButton": "Přihlásit"
+    "loginButton": "Přihlásit",
+    "submitMessage": "Vítejte..."
   },
   "registrationPage": {
     "headline": "Registrace",
@@ -69,7 +69,8 @@
         }
       }
     },
-    "submitButon": "Registrovat"
+    "submitButon": "Registrovat",
+    "submitMessage": "Byl jsi úspěšně zaregistrován. Budeš presměrován na příhlášení..."
   },
   "profilePage": {
     "headline": "Upravit profil",

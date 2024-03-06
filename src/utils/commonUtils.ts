@@ -26,9 +26,6 @@ export const getServerMessage = (response: string) => {
     case authMessage.emailIsInUse:
       return TXT.common.message.emailIsInUse;
 
-    case authMessage.userRegisteredSuccessfully:
-      return TXT.common.message.userRegisteredSuccessfully;
-
     default:
       return response;
   }

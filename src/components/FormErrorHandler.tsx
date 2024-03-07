@@ -26,11 +26,14 @@ const FormErrorHandler: FC<Props> = ({ children, error }) => {
         return TXT.common.message.userNotFound;
 
       // possible REGISTER messages from backend
-      case authMessage.usernameIsInUse:
-        return TXT.common.message.usernameIsInUse;
+      case authMessage.phoneIsInUse:
+        return TXT.common.message.phoneIsInUse;
 
       case authMessage.emailIsInUse:
         return TXT.common.message.emailIsInUse;
+
+      case authMessage.networkError:
+        return TXT.common.message.networkError;
 
       default:
         return response;
@@ -44,6 +47,9 @@ const FormErrorHandler: FC<Props> = ({ children, error }) => {
 
       case "pattern":
         return TXT.common.message.emailPattern;
+
+      case "validate":
+        return TXT.common.message.validate;
 
       default:
         return error.message || "";

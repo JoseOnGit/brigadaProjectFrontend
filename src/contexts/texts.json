@@ -15,11 +15,13 @@
     "message": {
       "noUser": "Užívatel se nenašel.",
       "required": "Pole je povinné.",
+      "validate": "Heslo musí být stejné.",
       "emailPattern": "Nesprávny formát emailové adresy.",
       "invalidPasword": "Nesprávne heslo.",
-      "userNotFound": "Užívatel neexistuje.",
-      "usernameIsInUse": "Užívatelské jméno už existuje.",
-      "emailIsInUse": "Užívatelský email už existuje."
+      "userNotFound": "Užívatel neexistuje. Zaregistrujte se prosím.",
+      "phoneIsInUse": "Tel. číslo je už registrováno.",
+      "emailIsInUse": "Užívatelský email je už registrován.",
+      "networkError": "Něco se posvavo. Zapracujem na opravě..."
     }
   },
   "loginPage": {
@@ -27,7 +29,7 @@
     "newUser": "Nový užívatel?",
     "registrationLink": "Registrace",
     "loginButton": "Přihlásit",
-    "submitMessage": "Vítejte..."
+    "submitMessage": "Vítej..."
   },
   "registrationPage": {
     "headline": "Registrace",
@@ -52,6 +54,12 @@
         "label": {
           "base": "Domovský obchod",
           "adult": "Bylo mi 18 let",
+          "level1": "jsem nováček",
+          "level2": "nechodím na pokladnu",
+          "level3": "umím s pokladnou",
+          "level4": "umím uzavřít obchod/uzávěrku",
+          "level5": "umím otevřít obchod/denní plán",
+          "level6": "jsem schopen zastoupit ve všem HPP",
           "cassa": "Kasa",
           "merch": "Merchandising"
         },
@@ -71,7 +79,8 @@
       }
     },
     "submitButon": "Registrovat",
-    "submitMessage": "Byl jsi úspěšně zaregistrován. Budeš presměrován na příhlášení..."
+    "submitMessage": "Byl jsi úspěšně zaregistrován. Budeš presměrován na příhlášení...",
+    "submitSubMessage": "Doporučujem uložit heslo do prohlížeče, pro autotomatické vyplnění při přihlášování."
   },
   "profilePage": {
     "headline": "Upravit profil",

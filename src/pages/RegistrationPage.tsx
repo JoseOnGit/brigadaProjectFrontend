@@ -1,17 +1,13 @@
 import React, { FC, useMemo, useState } from "react";
 import TXT from "../contexts/texts.json";
 import { PageHeadline } from "../components/PageHeadline";
-import {
-  FormContainer,
-  PasswordElement,
-  TextFieldElement,
-} from "react-hook-form-mui";
+import { FormContainer } from "react-hook-form-mui";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 import AuthService from "../services/auth.service";
-import { textFieldBasicProps } from "../constants/commonConstants";
 import { FormErrorHandler } from "../components/FormErrorHandler";
 import { getSuccessRoutePath } from "../routes/routePaths";
 import { useNavigate } from "react-router-dom";
+import { ProfileForm } from "../components/ProfileForm";
 
 const RegistrationPage: FC = () => {
   const navigate = useNavigate();
@@ -22,7 +18,13 @@ const RegistrationPage: FC = () => {
   const handleSubmit = (data: any) => {
     setLoading(true);
 
-    AuthService.register(data.username, data.email, data.password)
+    AuthService.register(
+      data.name,
+      data.surname,
+      data.email,
+      data.phone,
+      data.password
+    )
       .then(
         () => {
           navigate(getSuccessRoutePath("registration"));
@@ -44,8 +46,10 @@ const RegistrationPage: FC = () => {
 
   const initialValues = useMemo(
     () => ({
-      username: "",
+      name: "",
+      surname: "",
       email: "",
+      phone: "",
       password: "",
     }),
     []
@@ -61,22 +65,8 @@ const RegistrationPage: FC = () => {
 
       <FormContainer defaultValues={initialValues} onSuccess={handleSubmit}>
         <FormErrorHandler error={error}>
-          <TextFieldElement
-            name="username"
-            label={TXT.registrationPage.section.contact.label.name}
-            {...textFieldBasicProps}
-          />
-          <TextFieldElement
-            name="email"
-            label={TXT.registrationPage.section.contact.label.email}
-            type="email"
-            {...textFieldBasicProps}
-          />
-          <PasswordElement
-            name="password"
-            label={TXT.registrationPage.section.password.label.password}
-            {...textFieldBasicProps}
-          />
+          <ProfileForm />
+
           <FormSubmitButton
             label={TXT.registrationPage.submitButon}
             loading={loading}

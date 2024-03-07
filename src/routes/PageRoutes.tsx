@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { MainPage } from "../pages/MainPage";
 import { PageWrapper } from "../components/PageWrapper";
 import { EditProfilePage } from "../pages/EditProfilePage";
 import { DashboardPage } from "../pages/DashboardPage";
@@ -32,10 +31,6 @@ const routes = [
   {
     path: "/profile",
     page: <EditProfilePage />,
-  },
-  {
-    path: "/stores/:id",
-    page: <MainPage />,
   },
 ];
 

@@ -1,18 +1,14 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:3001/api/auth/";
+import { API_URL } from "../config/index";
 
 class AuthService {
-  login(username, password) {
+  login(email, password) {
     return axios
-      .post(API_URL + "signin", {
-        username,
+      .post(API_URL + "/auth/signin", {
+        email,
         password,
       })
       .then((response) => {
-        // prettier-ignore
-        console.log('%c⧭AuthService login response ', 'color: #1d3f73', response);
-
         if (response.data.accessToken) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
@@ -25,10 +21,12 @@ class AuthService {
     localStorage.removeItem("user");
   }
 
-  register(username, email, password) {
-    return axios.post(API_URL + "signup", {
-      username,
+  register(name, surname, email, phone, password) {
+    return axios.post(API_URL + "/auth/signup", {
+      name,
+      surname,
       email,
+      phone,
       password,
     });
   }

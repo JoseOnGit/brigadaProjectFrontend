@@ -19,7 +19,6 @@ import { FormErrorHandler } from "../components/FormErrorHandler";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage: FC = () => {
-  console.log("🚀 ~ LoginPage is rendered....");
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +27,7 @@ const LoginPage: FC = () => {
   const handleSubmit = (data: any) => {
     setLoading(true);
 
-    AuthService.login(data.username, data.password)
+    AuthService.login(data.email, data.password)
       .then(
         () => {
           navigate(getSuccessRoutePath("login"));
@@ -50,7 +49,7 @@ const LoginPage: FC = () => {
 
   const initialValues = useMemo(
     () => ({
-      username: "",
+      email: "",
       password: "",
     }),
     []
@@ -58,7 +57,7 @@ const LoginPage: FC = () => {
 
   return (
     <>
-      <PageHeadline headline={TXT.loginPage.headline} hasBackButton />
+      <PageHeadline headline={TXT.loginPage.headline} />
 
       <Typography paragraph>
         {TXT.loginPage.newUser}{" "}
@@ -70,8 +69,8 @@ const LoginPage: FC = () => {
       <FormContainer defaultValues={initialValues} onSuccess={handleSubmit}>
         <FormErrorHandler error={error}>
           <TextFieldElement
-            name="username"
-            label={TXT.registrationPage.section.contact.label.name}
+            name="email"
+            label={TXT.registrationPage.section.contact.label.email}
             {...textFieldBasicProps}
           />
           <PasswordElement

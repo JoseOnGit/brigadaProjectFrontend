@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, ReactNode, useEffect } from "react";
 import TXT from "../contexts/texts.json";
 import { useNavigate, useParams } from "react-router-dom";
 import { getDashboardRoutePath, getLoginRoutePath } from "../routes/routePaths";
@@ -7,11 +7,22 @@ import Typography from "@mui/material/Typography";
 
 export type SuccesPageTypes = "registration" | "login";
 
-const successPage = [
+type SuccessPageListType = {
+  type: SuccesPageTypes;
+  redirectTo: string;
+  icon?: ReactNode; // TO BE DONE
+  message?: string;
+  subMessage?: string;
+  delay?: number;
+};
+
+const successPageList: SuccessPageListType[] = [
   {
     type: "registration",
     redirectTo: getLoginRoutePath(),
     message: TXT.registrationPage.submitMessage,
+    subMessage: TXT.registrationPage.submitSubMessage,
+    delay: 8000,
   },
   {
     type: "login",
@@ -19,39 +30,52 @@ const successPage = [
     message: TXT.loginPage.submitMessage,
   },
 ];
-
-const SuccessMessageWrapper = styled.div`
-  width: 100%;
-  height: 40vh;
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-end;
-  justify-content: center;
-`;
+const SuccessMessageWrapper = styled("div")({
+  width: "100%",
+  height: "40vh",
+  display: "flex",
+  flexWrap: "wrap",
+  alignContent: "flex-end",
+  justifyContent: "center",
+});
 
 const SuccessPage: FC = () => {
   const navigate = useNavigate();
   const { type } = useParams();
 
-  const page = successPage.find((typeOfPage) => typeOfPage.type === type);
+  const page = successPageList.find((typeOfPage) => typeOfPage.type === type);
+
+  const delayBeforeRedirect = page?.delay ?? 2000;
 
   useEffect(() => {
     setTimeout(() => {
       const path = page?.redirectTo || getDashboardRoutePath();
       navigate(path);
-    }, 2000);
-  }, [page, navigate]);
+    }, delayBeforeRedirect);
+  }, [page, delayBeforeRedirect, navigate]);
 
   return (
     <SuccessMessageWrapper>
-      <Typography
-        align="center"
-        variant="h5"
-        component="div"
-        sx={{ flexGrow: 1 }}
-      >
-        {page?.message}
-      </Typography>
+      {page?.message && (
+        <Typography
+          align="center"
+          variant="h5"
+          component="div"
+          sx={{ flexGrow: 1 }}
+        >
+          {page.message}
+        </Typography>
+      )}
+      {page?.subMessage && (
+        <Typography
+          align="center"
+          variant="subtitle1"
+          component="div"
+          sx={{ flexGrow: 1, marginTop: "2rem" }}
+        >
+          {page.subMessage}
+        </Typography>
+      )}
     </SuccessMessageWrapper>
   );
 };

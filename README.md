@@ -18,6 +18,8 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #12: EmployeeLevel component](#commit-12-employeelevel-component)
+  - [Commit #11: Registration form update](#commit-11-registration-form-update)
   - [Commit #10: Main navigation update - roles](#commit-10-main-navigation-update---roles)
   - [Commit #9: Security redirections and SuccessPage](#commit-9-security-redirections-and-successpage)
   - [Commit #8: Simple authentication system](#commit-8-simple-authentication-system)
@@ -69,6 +71,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #12: EmployeeLevel component
+
+Is basically just usefull wrapper around Icon with Text.
+Component has a lot of options to set size, position and align text according to icon, set width, padding, gap, etc...
+
+### Commit #11: Registration form update
+
+- added fields for name, surname, phone to registration
+- login update - based on email address now
+
+- small refactors
 
 ### Commit #10: Main navigation update - roles
 

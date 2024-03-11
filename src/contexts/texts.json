@@ -18,7 +18,7 @@
       "validate": "Heslo musí být stejné.",
       "emailPattern": "Nesprávny formát emailové adresy.",
       "invalidPasword": "Nesprávne heslo.",
-      "userNotFound": "Užívatel neexistuje. Zaregistrujte se prosím.",
+      "userNotFound": "Užívatel neexistuje.",
       "phoneIsInUse": "Tel. číslo je už registrováno.",
       "emailIsInUse": "Užívatelský email je už registrován.",
       "networkError": "Něco se posvavo. Zapracujem na opravě..."
@@ -53,15 +53,12 @@
         "text": "Několik údajů o tvé pozici ve firmě, právomoci a zodpovědnost.",
         "label": {
           "base": "Domovský obchod",
-          "adult": "Bylo mi 18 let",
-          "level1": "jsem nováček",
-          "level2": "nechodím na pokladnu",
-          "level3": "umím s pokladnou",
-          "level4": "umím uzavřít obchod/uzávěrku",
-          "level5": "umím otevřít obchod/denní plán",
-          "level6": "jsem schopen zastoupit ve všem HPP",
-          "cassa": "Kasa",
-          "merch": "Merchandising"
+          "level1": "Jsem nováček.",
+          "level2": "Nechodím na pokladnu.",
+          "level3": "Umím s pokladnou.",
+          "level4": "Umím uzavřít obchod/uzávěrku.",
+          "level5": "Umím otevřít obchod/denní plán.",
+          "level6": "Jsem schopen zastoupit ve všem HPP."
         },
         "tooltip": {
           "baseError": "Omlouvame se, ale došlo k chybě. Nastav domovský obchod později ve svém profilu.",

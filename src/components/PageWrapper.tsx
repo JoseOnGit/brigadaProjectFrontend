@@ -14,15 +14,22 @@ import {
   getSuccessRoutePath,
 } from "../routes/routePaths";
 
-const ContentWrapper = styled.div`
-  width: calc(100% - 2rem);
-  margin: 1rem;
-  text-align: left;
-  @media (min-width: 800px) {
-    max-width: 800px;
-    margin: 1rem auto;
-  }
-`;
+const MAX_CONTENT_WIDTH = "50rem";
+
+// <!-- STYLED COMPONENTS
+const ToolbarWrapper = styled("div")({
+  width: "100%",
+  margin: "0 auto",
+  maxWidth: MAX_CONTENT_WIDTH,
+});
+const ContentWrapper = styled("div")({
+  width: "100%",
+  margin: "1rem auto",
+  padding: "1rem",
+  textAlign: "left",
+  maxWidth: MAX_CONTENT_WIDTH,
+});
+// STYLED COMPONENTS -->
 
 const PageWrapper: FC = () => {
   const navigate = useNavigate();
@@ -59,18 +66,21 @@ const PageWrapper: FC = () => {
   return (
     <>
       <AppBar position="sticky" color="primary" enableColorOnDark>
-        <Toolbar>
-          <Typography
-            align="left"
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
-            {TXT.applicationName}
-          </Typography>
-          <MainNavigation />
-        </Toolbar>
+        <ToolbarWrapper>
+          <Toolbar>
+            <Typography
+              align="left"
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              {TXT.applicationName}
+            </Typography>
+            <MainNavigation />
+          </Toolbar>
+        </ToolbarWrapper>
       </AppBar>
+
       <ContentWrapper>
         {(currentUser || isPublicPage) && <Outlet />}
       </ContentWrapper>

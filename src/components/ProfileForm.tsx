@@ -7,6 +7,10 @@ import {
   TextFieldElement,
 } from "react-hook-form-mui";
 import { textFieldBasicProps } from "../constants/commonConstants";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import { EmployeeLevel, LevelNumberType } from "./EmployeeLevel";
 
 type Props = {};
 
@@ -39,6 +43,22 @@ const ProfileForm: FC<Props> = () => {
   //   [stores]
   // );
 
+  const getRadioButtons = () => {
+    let radioButtons = [];
+
+    for (let i = 1; i < 6; i++) {
+      radioButtons.push(
+        <FormControlLabel
+          value={i}
+          control={<Radio />}
+          label={<EmployeeLevel level={i as LevelNumberType} />}
+        />
+      );
+    }
+
+    return radioButtons;
+  };
+
   return (
     <>
       <FormSection
@@ -67,6 +87,53 @@ const ProfileForm: FC<Props> = () => {
           // type="tel"
           {...textFieldBasicProps}
         />
+      </FormSection>
+
+      {/* <FormSection headline={TXT.registrationPage.section.avatar.headline}>
+        <Stack direction="row" spacing={2}>
+          <Avatar alt="Avatar" src="" />
+          <Button
+            component="label"
+            role={undefined}
+            endIcon={<KeyboardArrowRightIcon />}
+          >
+            {TXT.registrationPage.section.avatar.button}
+            <VisuallyHiddenInputForAvatar
+              type="file"
+              name="avatar"
+              accept="image/png, image/jpeg"
+            />
+          </Button>
+        </Stack>
+      </FormSection> */}
+
+      <FormSection
+        headline={TXT.registrationPage.section.position.headline}
+        text={TXT.registrationPage.section.position.text}
+      >
+        {/* <SelectElement
+          name="base"
+          label={
+            storesLoading
+              ? TXT.common.loading
+              : TXT.registrationPage.section.position.label.base
+          }
+          options={storesOptions}
+          required={!storesError}
+          disabled={!!storesError || !!storesLoading}
+          helperText={
+            storesError &&
+            TXT.registrationPage.section.position.tooltip.baseError
+          }
+          fullWidth
+        /> */}
+        <RadioGroup
+          aria-labelledby="employee-skill-level"
+          defaultValue={1}
+          name="level"
+        >
+          {getRadioButtons()}
+        </RadioGroup>
       </FormSection>
 
       <FormSection

@@ -53,6 +53,8 @@
         "text": "Několik údajů o tvé pozici ve firmě, právomoci a zodpovědnost.",
         "label": {
           "base": "Domovský obchod",
+          "onboardDate": "Datum nástupu",
+          "levelLabel": "Tvůj 'level' dovedností:",
           "level1": "Jsem nováček.",
           "level2": "Nechodím na pokladnu.",
           "level3": "Umím s pokladnou.",
@@ -77,7 +79,7 @@
     },
     "submitButon": "Registrovat",
     "submitMessage": "Byl jsi úspěšně zaregistrován. Budeš presměrován na příhlášení...",
-    "submitSubMessage": "Doporučujem uložit heslo do prohlížeče, pro autotomatické vyplnění při přihlášování."
+    "submitSubMessage": "Doporučujem uložit heslo do prohlížeče pro autotomatické vyplnění při přihlášování."
   },
   "profilePage": {
     "headline": "Upravit profil",

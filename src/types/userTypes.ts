@@ -3,6 +3,8 @@ export type CurrentUserType = {
   name: string;
   surname: string;
   email: string;
+  level: number;
+  onboardDate: string;
   roles: string[];
   accessToken: string;
 };

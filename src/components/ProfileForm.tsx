@@ -2,15 +2,16 @@ import React, { FC } from "react";
 import { FormSection } from "./FormSection";
 import TXT from "../contexts/texts.json";
 import {
+  DatePickerElement,
   PasswordElement,
   PasswordRepeatElement,
+  RadioButtonGroup,
   TextFieldElement,
 } from "react-hook-form-mui";
 import { textFieldBasicProps } from "../constants/commonConstants";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
 import { EmployeeLevel, LevelNumberType } from "./EmployeeLevel";
+import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
 
 type Props = {};
 
@@ -46,18 +47,17 @@ const ProfileForm: FC<Props> = () => {
   const getRadioButtons = () => {
     let radioButtons = [];
 
-    for (let i = 1; i < 6; i++) {
-      radioButtons.push(
-        <FormControlLabel
-          value={i}
-          control={<Radio />}
-          label={<EmployeeLevel level={i as LevelNumberType} />}
-        />
-      );
+    for (let i = 1; i <= 6; i++) {
+      radioButtons.push({
+        id: i,
+        label: <EmployeeLevel level={i as LevelNumberType} />,
+      });
     }
 
     return radioButtons;
   };
+
+  console.log("%c⧭ getRadioButtons ", "color: #86bf60", getRadioButtons());
 
   return (
     <>
@@ -127,13 +127,28 @@ const ProfileForm: FC<Props> = () => {
           }
           fullWidth
         /> */}
-        <RadioGroup
-          aria-labelledby="employee-skill-level"
-          defaultValue={1}
+
+        <DatePickerElement
+          name="onboardDate"
+          label={TXT.registrationPage.section.position.label.onboardDate}
+          maxDate={dayjs()}
+          sx={{
+            width: "100%",
+            margin: "1rem 0",
+          }}
+          required
+        />
+
+        <Typography paragraph sx={{ margin: "1rem 0" }}>
+          {TXT.registrationPage.section.position.label.levelLabel}
+        </Typography>
+
+        <RadioButtonGroup
           name="level"
-        >
-          {getRadioButtons()}
-        </RadioGroup>
+          type="number"
+          options={getRadioButtons()}
+          required
+        />
       </FormSection>
 
       <FormSection

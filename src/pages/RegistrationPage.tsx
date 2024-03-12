@@ -16,6 +16,7 @@ const RegistrationPage: FC = () => {
   const [error, setError] = useState<string>("");
 
   const handleSubmit = (data: any) => {
+    console.log("%c⧭ handleSubmit data ", "color: #40fff2", data);
     setLoading(true);
 
     AuthService.register(
@@ -23,6 +24,8 @@ const RegistrationPage: FC = () => {
       data.surname,
       data.email,
       data.phone,
+      data.onboardDate,
+      data.level,
       data.password
     )
       .then(
@@ -50,6 +53,8 @@ const RegistrationPage: FC = () => {
       surname: "",
       email: "",
       phone: "",
+      onboardDate: "",
+      level: null,
       password: "",
     }),
     []

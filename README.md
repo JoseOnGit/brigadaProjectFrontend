@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #12: Registration form update - select - stores](#commit-12-registration-form-update---select---stores)
   - [Commit #12: Registration form update - datePicker, radio](#commit-12-registration-form-update---datepicker-radio)
   - [Commit #12: EmployeeLevel component](#commit-12-employeelevel-component)
   - [Commit #11: Registration form update](#commit-11-registration-form-update)
@@ -72,6 +73,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #12: Registration form update - select - stores
+
+- added connection to backend Stores, so SelectElement is enabled.
 
 ### Commit #12: Registration form update - datePicker, radio
 

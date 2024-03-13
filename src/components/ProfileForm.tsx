@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { FormSection } from "./FormSection";
 import TXT from "../contexts/texts.json";
 import {
@@ -6,12 +6,16 @@ import {
   PasswordElement,
   PasswordRepeatElement,
   RadioButtonGroup,
+  SelectElement,
   TextFieldElement,
 } from "react-hook-form-mui";
 import { textFieldBasicProps } from "../constants/commonConstants";
 import { EmployeeLevel, LevelNumberType } from "./EmployeeLevel";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
+import StoreService from "../services/storeService";
+import { SelectOptionsType } from "../types/commonTypes";
+import { getStoresOptions } from "../utils/commonUtils";
 
 type Props = {};
 
@@ -29,27 +33,43 @@ type Props = {};
 
 const ProfileForm: FC<Props> = () => {
   console.log("🚀 ~ ProfileForm is rendered....");
-  // const [stores, setStores] = useState<StoreApiType[]>([]);
-  // const [storesLoading, setStoresLoading] = useState<boolean>(false);
-  // const [storesError, setStoresError] = useState<string>("");
+  const [stores, setStores] = useState([]);
+  const [storesLoading, setStoresLoading] = useState<boolean>(false);
+  const [storesError, setStoresError] = useState<string>("");
 
-  // useEffect(() => {
-  //   if (!stores.length && !storesLoading && !storesError) {
-  //     getAllStoresApiCall(setStores, setStoresLoading, setStoresError);
-  //   }
-  // }, [stores.length, storesLoading, storesError]);
+  useEffect(() => {
+    setStoresLoading(true);
 
-  // const storesOptions: SelectOptionsType = useMemo(
-  //   () => getStoresOptions(stores),
-  //   [stores]
-  // );
+    StoreService.getAllStoreNames()
+      .then(
+        (response) => {
+          setStores(response);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setStoresError(resMessage);
+        }
+      )
+      .finally(() => setStoresLoading(false));
+  }, []);
+
+  const storesOptions: SelectOptionsType = useMemo(
+    () => getStoresOptions(stores),
+    [stores]
+  );
 
   const getRadioButtons = () => {
     let radioButtons = [];
 
     for (let i = 1; i <= 6; i++) {
       radioButtons.push({
-        id: i,
+        id: i as number,
         label: <EmployeeLevel level={i as LevelNumberType} />,
       });
     }
@@ -111,8 +131,8 @@ const ProfileForm: FC<Props> = () => {
         headline={TXT.registrationPage.section.position.headline}
         text={TXT.registrationPage.section.position.text}
       >
-        {/* <SelectElement
-          name="base"
+        <SelectElement
+          name="baseId"
           label={
             storesLoading
               ? TXT.common.loading
@@ -126,7 +146,7 @@ const ProfileForm: FC<Props> = () => {
             TXT.registrationPage.section.position.tooltip.baseError
           }
           fullWidth
-        /> */}
+        />
 
         <DatePickerElement
           name="onboardDate"

@@ -24,6 +24,7 @@ const RegistrationPage: FC = () => {
       data.surname,
       data.email,
       data.phone,
+      data.baseId,
       data.onboardDate,
       data.level,
       data.password
@@ -53,6 +54,7 @@ const RegistrationPage: FC = () => {
       surname: "",
       email: "",
       phone: "",
+      baseId: "",
       onboardDate: "",
       level: null,
       password: "",

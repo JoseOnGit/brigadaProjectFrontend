@@ -9,6 +9,11 @@ export type SelectOptionType = {
   label: string;
 };
 
+export type NameType = {
+  id: number;
+  name: string;
+};
+
 export type SelectOptionsType = SelectOptionType[];
 
 export type ApiCallResponse = {

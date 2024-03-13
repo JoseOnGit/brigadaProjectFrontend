@@ -34,6 +34,15 @@ const DashboardProfile: FC<Props> = ({ currentUser }) => {
       >
         {currentUser.name}
       </Typography>
+      <Typography>
+        Surname: {currentUser.surname}
+        <br />
+        Phone: {currentUser.phone}
+        <br />
+        Email: {currentUser.email}
+        <br />
+        Base store: {currentUser.base?.name}
+      </Typography>
 
       <EditIconWrapper>
         <IconButton

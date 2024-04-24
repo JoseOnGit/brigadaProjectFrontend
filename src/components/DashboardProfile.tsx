@@ -10,6 +10,7 @@ type Props = {
   currentUser: CurrentUserType;
 };
 
+// < STYLED COMPONENTS
 const ProfileWrapper = styled("div")({
   width: "100%",
   position: "relative",
@@ -22,6 +23,7 @@ const EditIconWrapper = styled("div")({
   bottom: "1rem",
   right: "0rem",
 });
+// STYLED COMPONENTS >
 
 const DashboardProfile: FC<Props> = ({ currentUser }) => {
   return (

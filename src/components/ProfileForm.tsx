@@ -32,7 +32,6 @@ type Props = {};
 // });
 
 const ProfileForm: FC<Props> = () => {
-  console.log("🚀 ~ ProfileForm is rendered....");
   const [stores, setStores] = useState([]);
   const [storesLoading, setStoresLoading] = useState<boolean>(false);
   const [storesError, setStoresError] = useState<string>("");
@@ -76,8 +75,6 @@ const ProfileForm: FC<Props> = () => {
 
     return radioButtons;
   };
-
-  console.log("%c⧭ getRadioButtons ", "color: #86bf60", getRadioButtons());
 
   return (
     <>

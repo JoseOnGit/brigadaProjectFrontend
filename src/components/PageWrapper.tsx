@@ -16,7 +16,7 @@ import {
 
 const MAX_CONTENT_WIDTH = "50rem";
 
-// <!-- STYLED COMPONENTS
+// < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
   width: "100%",
   margin: "0 auto",
@@ -29,7 +29,7 @@ const ContentWrapper = styled("div")({
   textAlign: "left",
   maxWidth: MAX_CONTENT_WIDTH,
 });
-// STYLED COMPONENTS -->
+// STYLED COMPONENTS >
 
 const PageWrapper: FC = () => {
   const navigate = useNavigate();

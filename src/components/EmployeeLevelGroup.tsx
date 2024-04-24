@@ -12,8 +12,7 @@ type Props = {
 const defaultPadding = "0rem";
 
 const EmployeeLevelGroup: FC<Props> = ({ children, direction, padding }) => {
-  // STYLED COMPONENTS
-
+  // < STYLED COMPONENTS
   const LevelGroupWrapper = styled("div")({
     width: "fit-content",
     maxWidth: "100%",
@@ -21,6 +20,7 @@ const EmployeeLevelGroup: FC<Props> = ({ children, direction, padding }) => {
     flexDirection: direction || "row",
     padding: padding || defaultPadding,
   });
+  //  STYLED COMPONENTS >
 
   return <LevelGroupWrapper>{children}</LevelGroupWrapper>;
 };

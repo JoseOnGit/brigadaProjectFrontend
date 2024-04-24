@@ -277,8 +277,7 @@ const EmployeeLevel: FC<Props> = ({
       ? "right"
       : defaultTextAlignment;
 
-  // STYLED COMPONENTS
-
+  // < STYLED COMPONENTS
   const LevelWrapper = styled("div")({
     display: displayBlock ? "block" : defaultDisplay,
     maxWidth: "100%",
@@ -300,6 +299,7 @@ const EmployeeLevel: FC<Props> = ({
   const LevelIcon = styled("div")({
     fontSize: sizeOfIcon,
   });
+  // STYLED COMPONENTS >
 
   const renderEmployeeLevel = () => {
     return (

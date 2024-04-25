@@ -16,6 +16,7 @@ const ProfileWrapper = styled("div")({
   position: "relative",
   padding: "3rem 0 2rem 0",
   borderBottom: "1px solid #999999",
+  marginBottom: "2rem",
 });
 
 const EditIconWrapper = styled("div")({
@@ -32,7 +33,7 @@ const DashboardProfile: FC<Props> = ({ currentUser }) => {
         align="center"
         variant="h3"
         component="div"
-        sx={{ fontWeight: "bold" }}
+        sx={{ fontWeight: "bold", marginBottom: "3rem" }}
       >
         {currentUser.name}
       </Typography>

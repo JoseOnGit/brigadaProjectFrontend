@@ -42,3 +42,21 @@ export const changeDayInStorageList = (
     window.location.reload();
   }
 };
+
+export const removeFromStorageList = (
+  listName: string,
+  itemData: any,
+  reload?: boolean
+) => {
+  const storageList = getFromStorage(listName);
+
+  const updatedList = storageList.filter(
+    (pickedDay: any) => pickedDay.day !== itemData.day
+  );
+
+  localStorage.setItem(listName, JSON.stringify(updatedList));
+
+  if (reload) {
+    window.location.reload();
+  }
+};

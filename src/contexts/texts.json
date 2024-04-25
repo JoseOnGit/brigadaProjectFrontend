@@ -82,6 +82,8 @@
     "submitSubMessage": "Doporučujem uložit heslo do prohlížeče pro autotomatické vyplnění při přihlášování."
   },
   "dashboardPage": {
+    "callToAction1": "Máš čas na brigádu, ale není nahlášená?",
+    "callToAction2": "Dej vědět store-managerům, možná se něco najde...",
     "calendarButton": "Kalendář"
   },
   "calendarPage": {
@@ -98,10 +100,14 @@
     "message": {
       "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou brigadu"
     },
-    "submitButton": "Potvrdit"
+    "submitButton": "Pokračovat"
   },
   "pickedDaysPage": {
-    "headline": "Vybrané brigády"
+    "headline": "Vybrané brigády",
+    "label": "Más vybrané brigády, které jsi nepotvrdil",
+    "wholeDay": "Celý den",
+    "backButton": "Vybrat další brigádu",
+    "submitButton": "Potvrdit a odeslat správu"
   },
   "profilePage": {
     "headline": "Profil",

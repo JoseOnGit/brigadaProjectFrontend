@@ -77,12 +77,34 @@
         }
       }
     },
-    "submitButon": "Registrovat",
+    "submitButton": "Registrovat",
     "submitMessage": "Byl jsi úspěšně zaregistrován. Budeš presměrován na příhlášení...",
     "submitSubMessage": "Doporučujem uložit heslo do prohlížeče pro autotomatické vyplnění při přihlášování."
   },
+  "dashboardPage": {
+    "calendarButton": "Kalendář"
+  },
+  "calendarPage": {
+    "headline": "Kalendář",
+    "chooseDate": "Vyber den kdy máš volno a chtěl bys brigádu."
+  },
+  "timePickPage": {
+    "chooseTime": "Dej nám vědět odkdy dokdy můžeš...",
+    "label": {
+      "timeStart": "V kolik můžeš začít",
+      "timeEnd": "V kolik končíš",
+      "wholeDay": "Můžu celý den"
+    },
+    "message": {
+      "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou brigadu"
+    },
+    "submitButton": "Potvrdit"
+  },
+  "pickedDaysPage": {
+    "headline": "Vybrané brigády"
+  },
   "profilePage": {
-    "headline": "Upravit profil",
-    "submitButon": "Uložit změny"
+    "headline": "Profil",
+    "submitButton": "Uložit změny"
   }
 }

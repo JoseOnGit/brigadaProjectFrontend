@@ -1,5 +1,6 @@
 import React, { FC, Fragment, ReactNode, useState } from "react";
 import {
+  getCalendarRoutePath,
   getDashboardRoutePath,
   getLoginRoutePath,
   getProfileRoutePath,
@@ -57,7 +58,7 @@ const menuItems: MenuItemType[] = [
   {
     icon: <CalendarMonthIcon />,
     label: TXT.mainNavigation.calendar,
-    route: getDashboardRoutePath(),
+    route: getCalendarRoutePath(),
     permission: [role.USER, role.MODERATOR, role.ADMIN],
   },
   {

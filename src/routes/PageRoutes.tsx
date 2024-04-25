@@ -6,6 +6,9 @@ import { DashboardPage } from "../pages/DashboardPage";
 import { LoginPage } from "../pages/LoginPage";
 import { RegistrationPage } from "../pages/RegistrationPage";
 import { SuccessPage } from "../pages/SuccessPage";
+import { CalendarPage } from "../pages/CalendarPage";
+import { TimePickPage } from "../pages/TimePickPage";
+import { PickedDaysPage } from "../pages/PickedDaysPage";
 
 const routes = [
   {
@@ -31,6 +34,18 @@ const routes = [
   {
     path: "/profile",
     page: <EditProfilePage />,
+  },
+  {
+    path: "/calendar",
+    page: <CalendarPage />,
+  },
+  {
+    path: "/calendar/request/:date",
+    page: <TimePickPage />,
+  },
+  {
+    path: "/calendar/request/all",
+    page: <PickedDaysPage />,
   },
 ];
 

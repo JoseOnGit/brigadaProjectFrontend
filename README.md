@@ -18,6 +18,8 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #14: Branch 7-calendar-page: Added: Calendar + PickTime - List of selected days](#commit-14-branch-7-calendar-page-added-calendar--picktime---list-of-selected-days)
+  - [Commit #13: Branch 7-calendar-page: Comments \& console clenup](#commit-13-branch-7-calendar-page-comments--console-clenup)
   - [Commit #12: Registration form update - select - stores](#commit-12-registration-form-update---select---stores)
   - [Commit #12: Registration form update - datePicker, radio](#commit-12-registration-form-update---datepicker-radio)
   - [Commit #12: EmployeeLevel component](#commit-12-employeelevel-component)
@@ -73,6 +75,15 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #14: Branch 7-calendar-page: Added: Calendar + PickTime - List of selected days
+
+- calendar page with DateCalendar element from MUI - selected date leads to new page...
+- pickTime page with two MobileTimePicker elements from MUI for start and end of brigada
+- - on submit write pickedDay to localStorage and lead to new page...
+- list of pickedDays - here should be all pickedDays with possibility to edit them and finally confirm them.
+
+### Commit #13: Branch 7-calendar-page: Comments & console clenup
 
 ### Commit #12: Registration form update - select - stores
 

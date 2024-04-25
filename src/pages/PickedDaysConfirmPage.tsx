@@ -11,7 +11,7 @@ import { FormSubmitButton } from "../components/FormSubmitButton";
 
 type Props = {};
 
-const PickedDaysPage: FC<Props> = () => {
+const PickedDaysConfirmPage: FC<Props> = () => {
   const navigate = useNavigate();
 
   const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
@@ -29,7 +29,10 @@ const PickedDaysPage: FC<Props> = () => {
 
   return (
     <div>
-      <PageHeadline headline={TXT.pickedDaysPage.headline} bottomSpace="3rem" />
+      <PageHeadline
+        headline={TXT.pickedDaysConfirmPage.headline}
+        bottomSpace="3rem"
+      />
 
       <PickedDaysList pickedDays={pickedDays} />
       <Button
@@ -40,14 +43,14 @@ const PickedDaysPage: FC<Props> = () => {
         sx={{ marginTop: "1rem", padding: "1rem 0rem" }}
         onClick={() => navigate(getCalendarRoutePath())}
       >
-        {TXT.pickedDaysPage.backButton}
+        {TXT.pickedDaysConfirmPage.backButton}
       </Button>
       <FormSubmitButton
         onClick={handleSubmit}
-        label={TXT.pickedDaysPage.submitButton}
+        label={TXT.pickedDaysConfirmPage.submitButton}
       />
     </div>
   );
 };
 
-export { PickedDaysPage };
+export { PickedDaysConfirmPage };

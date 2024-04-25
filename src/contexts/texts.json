@@ -84,6 +84,7 @@
   "dashboardPage": {
     "callToAction1": "Máš čas na brigádu, ale není nahlášená?",
     "callToAction2": "Dej vědět store-managerům, možná se něco najde...",
+    "todayButton": "Chci brigádu na dnes",
     "calendarButton": "Kalendář"
   },
   "calendarPage": {
@@ -102,7 +103,7 @@
     },
     "submitButton": "Pokračovat"
   },
-  "pickedDaysPage": {
+  "pickedDaysConfirmPage": {
     "headline": "Vybrané brigády",
     "label": "Más vybrané brigády, které jsi nepotvrdil",
     "wholeDay": "Celý den",

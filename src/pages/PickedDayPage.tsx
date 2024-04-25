@@ -8,7 +8,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeadline } from "../components/PageHeadline";
-import { getPickedDaysRoutePath } from "../routes/routePaths";
+import { getPickedDaysConfirmRoutePath } from "../routes/routePaths";
 import { PickedDayType } from "../types/brigadaTypes";
 import {
   addToStorageList,
@@ -19,7 +19,7 @@ import Alert from "@mui/material/Alert";
 
 type Props = {};
 
-const TimePickPage: FC<Props> = () => {
+const PickedDayPage: FC<Props> = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { date: selectedDate } = params;
@@ -77,7 +77,7 @@ const TimePickPage: FC<Props> = () => {
       ? changeDayInStorageList("pickedDays", pickedDay)
       : addToStorageList("pickedDays", pickedDay);
 
-    navigate(getPickedDaysRoutePath());
+    navigate(getPickedDaysConfirmRoutePath());
   };
 
   return (
@@ -152,4 +152,4 @@ const TimePickPage: FC<Props> = () => {
   );
 };
 
-export { TimePickPage };
+export { PickedDayPage };

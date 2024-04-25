@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
 import CloseIcon from "@mui/icons-material/Close";
-import { getTimePickRoutePath } from "../routes/routePaths";
+import { getPickedDayRoutePath } from "../routes/routePaths";
 import { removeFromStorageList } from "../utils/storageUtils";
 
 type PickedDayVariant = "selected" | "confirmed";
@@ -43,14 +43,14 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
       <div>
         {" "}
         {pickedDay.wholeDay
-          ? TXT.pickedDaysPage.wholeDay
+          ? TXT.pickedDaysConfirmPage.wholeDay
           : `${dayjs(pickedDay.timeStart).format("H:MM")} - ${dayjs(
               pickedDay.timeEnd
             ).format("HH:MM")}`}
       </div>
       <div>
         <IconButton
-          href={getTimePickRoutePath(pickedDay.day)}
+          href={getPickedDayRoutePath(pickedDay.day)}
           aria-label="edit picked day"
           color="primary"
         >

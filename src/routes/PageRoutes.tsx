@@ -7,8 +7,8 @@ import { LoginPage } from "../pages/LoginPage";
 import { RegistrationPage } from "../pages/RegistrationPage";
 import { SuccessPage } from "../pages/SuccessPage";
 import { CalendarPage } from "../pages/CalendarPage";
-import { TimePickPage } from "../pages/TimePickPage";
-import { PickedDaysPage } from "../pages/PickedDaysPage";
+import { PickedDayPage } from "../pages/PickedDayPage";
+import { PickedDaysConfirmPage } from "../pages/PickedDaysConfirmPage";
 
 const routes = [
   {
@@ -41,11 +41,11 @@ const routes = [
   },
   {
     path: "/calendar/request/:date",
-    page: <TimePickPage />,
+    page: <PickedDayPage />,
   },
   {
     path: "/calendar/request/all",
-    page: <PickedDaysPage />,
+    page: <PickedDaysConfirmPage />,
   },
 ];
 

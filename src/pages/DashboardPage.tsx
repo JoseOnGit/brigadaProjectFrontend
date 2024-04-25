@@ -5,12 +5,18 @@ import { DashboardProfile } from "../components/DashboardProfile";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 import { useNavigate } from "react-router-dom";
 import TXT from "../contexts/texts.json";
-import { getCalendarRoutePath } from "../routes/routePaths";
+import {
+  getCalendarRoutePath,
+  getPickedDayRoutePath,
+} from "../routes/routePaths";
 import { PickedDaysList } from "../components/PickedDaysList";
 import { getFromStorage } from "../utils/storageUtils";
 import { PickedDayType } from "../types/brigadaTypes";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
+import Button from "@mui/material/Button";
+import dayjs from "dayjs";
+import { getDateFormatForURL } from "../utils/commonUtils";
 
 type Props = {};
 
@@ -47,6 +53,20 @@ const DashboardPage: FC<Props> = () => {
         <br />
         {TXT.dashboardPage.callToAction2}
       </Typography>
+
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        fullWidth
+        sx={{ marginTop: "1rem", padding: "1rem 0rem" }}
+        onClick={() => {
+          const today = getDateFormatForURL(dayjs());
+          navigate(getPickedDayRoutePath(today));
+        }}
+      >
+        {TXT.dashboardPage.todayButton}
+      </Button>
 
       <FormSubmitButton
         onClick={() => navigate(getCalendarRoutePath())}

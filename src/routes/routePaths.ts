@@ -24,11 +24,11 @@ const getCalendarRoutePath = () => {
   return "/calendar";
 };
 
-const getTimePickRoutePath = (date: string) => {
+const getPickedDayRoutePath = (date: string) => {
   return `/calendar/request/${date}`;
 };
 
-const getPickedDaysRoutePath = () => {
+const getPickedDaysConfirmRoutePath = () => {
   return "/calendar/request/all";
 };
 
@@ -39,6 +39,6 @@ export {
   getProfileRoutePath,
   getDashboardRoutePath,
   getCalendarRoutePath,
-  getTimePickRoutePath,
-  getPickedDaysRoutePath,
+  getPickedDayRoutePath,
+  getPickedDaysConfirmRoutePath,
 };

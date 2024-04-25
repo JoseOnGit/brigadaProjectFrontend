@@ -6,3 +6,7 @@ export const getStoresOptions = (stores: StoreApiType[]): SelectOptionsType =>
     id: store.id,
     label: store.name,
   }));
+
+export const getDateFormatForURL = (value: any) => {
+  return value.format("MM.DD.YYYY");
+};

@@ -77,12 +77,44 @@
         }
       }
     },
-    "submitButon": "Registrovat",
+    "submitButton": "Registrovat",
     "submitMessage": "Byl jsi úspěšně zaregistrován. Budeš presměrován na příhlášení...",
     "submitSubMessage": "Doporučujem uložit heslo do prohlížeče pro autotomatické vyplnění při přihlášování."
   },
+  "dashboardPage": {
+    "callToAction1": "Máš čas na brigádu, ale není nahlášená?",
+    "callToAction2": "Dej vědět store-managerům, možná se něco najde...",
+    "todayButton": "Chci brigádu na dnes",
+    "calendarButton": "Kalendář"
+  },
+  "calendarPage": {
+    "headline": "Kalendář",
+    "chooseDate": "Vyber den kdy máš volno a chtěl bys brigádu."
+  },
+  "pickedDayPage": {
+    "chooseTime": "Dej nám vědět odkdy dokdy můžeš...",
+    "label": {
+      "timeStart": "V kolik můžeš začít",
+      "timeEnd": "V kolik končíš",
+      "wholeDay": "Můžu celý den"
+    },
+    "message": {
+      "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou žádost o brigádu",
+      "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádu. Změnu musíš potvrdit a poslat novou správu."
+    },
+    "submitButton": "Pokračovat"
+  },
+  "pickedDaysConfirmPage": {
+    "headline": "Vybrané brigády",
+    "labelPicked": "Más zatím nepotvrzenou žádost o brigádu:",
+    "labelRequest": "Nahlášená žádost o brigádu",
+    "wholeDay": "Celý den",
+    "backButton": "Vybrat další brigádu",
+    "submitButton": "Potvrdit a odeslat správu",
+    "submitMessage": "Žádost potvrzena. Během chvíle bude na obchody odeslána správa..."
+  },
   "profilePage": {
-    "headline": "Upravit profil",
-    "submitButon": "Uložit změny"
+    "headline": "Profil",
+    "submitButton": "Uložit změny"
   }
 }

@@ -60,7 +60,7 @@ const EditProfilePage: FC<Props> = () => {
         {/* <EmployeeForm /> */}
 
         <FormSubmitButton
-          label={TXT.profilePage.submitButon}
+          label={TXT.profilePage.submitButton}
           loading={loading}
         />
       </FormContainer>

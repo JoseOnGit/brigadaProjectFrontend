@@ -20,10 +20,25 @@ const getProfileRoutePath = () => {
   return "/profile";
 };
 
+const getCalendarRoutePath = () => {
+  return "/calendar";
+};
+
+const getPickedDayRoutePath = (date: string) => {
+  return `/calendar/request/${date}`;
+};
+
+const getPickedDaysConfirmRoutePath = () => {
+  return "/calendar/request/all";
+};
+
 export {
   getLoginRoutePath,
   getRegistrationRoutePath,
   getSuccessRoutePath,
   getProfileRoutePath,
   getDashboardRoutePath,
+  getCalendarRoutePath,
+  getPickedDayRoutePath,
+  getPickedDaysConfirmRoutePath,
 };

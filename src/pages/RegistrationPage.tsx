@@ -75,7 +75,7 @@ const RegistrationPage: FC = () => {
           <ProfileForm />
 
           <FormSubmitButton
-            label={TXT.registrationPage.submitButon}
+            label={TXT.registrationPage.submitButton}
             loading={loading}
           />
         </FormErrorHandler>

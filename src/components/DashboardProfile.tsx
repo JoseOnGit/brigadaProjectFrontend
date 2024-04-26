@@ -10,11 +10,13 @@ type Props = {
   currentUser: CurrentUserType;
 };
 
+// < STYLED COMPONENTS
 const ProfileWrapper = styled("div")({
   width: "100%",
   position: "relative",
   padding: "3rem 0 2rem 0",
   borderBottom: "1px solid #999999",
+  marginBottom: "2rem",
 });
 
 const EditIconWrapper = styled("div")({
@@ -22,6 +24,7 @@ const EditIconWrapper = styled("div")({
   bottom: "1rem",
   right: "0rem",
 });
+// STYLED COMPONENTS >
 
 const DashboardProfile: FC<Props> = ({ currentUser }) => {
   return (
@@ -30,7 +33,7 @@ const DashboardProfile: FC<Props> = ({ currentUser }) => {
         align="center"
         variant="h3"
         component="div"
-        sx={{ fontWeight: "bold" }}
+        sx={{ fontWeight: "bold", marginBottom: "3rem" }}
       >
         {currentUser.name}
       </Typography>

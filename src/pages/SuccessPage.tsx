@@ -5,7 +5,7 @@ import { getDashboardRoutePath, getLoginRoutePath } from "../routes/routePaths";
 import styled from "@emotion/styled";
 import Typography from "@mui/material/Typography";
 
-export type SuccesPageTypes = "registration" | "login";
+export type SuccesPageTypes = "registration" | "login" | "confirmed";
 
 type SuccessPageListType = {
   type: SuccesPageTypes;
@@ -28,6 +28,12 @@ const successPageList: SuccessPageListType[] = [
     type: "login",
     redirectTo: getDashboardRoutePath(),
     message: TXT.loginPage.submitMessage,
+  },
+  {
+    type: "confirmed",
+    redirectTo: getDashboardRoutePath(),
+    message: TXT.pickedDaysConfirmPage.submitMessage,
+    delay: 8000,
   },
 ];
 const SuccessMessageWrapper = styled("div")({

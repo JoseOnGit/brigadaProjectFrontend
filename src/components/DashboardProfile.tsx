@@ -5,6 +5,7 @@ import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
 import { getProfileRoutePath } from "../routes/routePaths";
 import styled from "@emotion/styled";
+import { EmployeeLevelRating } from "./EmployeeLevelRating";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -37,15 +38,11 @@ const DashboardProfile: FC<Props> = ({ currentUser }) => {
       >
         {currentUser.name}
       </Typography>
-      <Typography>
-        Surname: {currentUser.surname}
-        <br />
-        Phone: {currentUser.phone}
-        <br />
-        Email: {currentUser.email}
-        <br />
-        Base store: {currentUser.base?.name}
+      <Typography sx={{ marginBottom: "1rem" }}>
+        {currentUser.base?.name}
       </Typography>
+
+      <EmployeeLevelRating level={currentUser.level} />
 
       <EditIconWrapper>
         <IconButton

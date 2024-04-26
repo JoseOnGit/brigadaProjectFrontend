@@ -1,5 +1,7 @@
 export type PickedDayVariant = "selected" | "confirmed";
 
+export type DirectionType = "row" | "column";
+
 export type TextFieldPropsType = {
   margin: "normal" | "dense" | "none" | undefined;
   fullWidth: boolean;

@@ -47,7 +47,7 @@ const menuItems: MenuItemType[] = [
     icon: <PersonIcon />,
     label: TXT.mainNavigation.profile,
     route: getProfileRoutePath(),
-    permission: [role.USER],
+    permission: [role.USER, role.MODERATOR],
   },
   {
     icon: <PeopleAltIcon />,

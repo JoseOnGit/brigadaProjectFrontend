@@ -1,12 +1,20 @@
 import React, { FC, useEffect } from "react";
 import TXT from "../contexts/texts.json";
+import AuthService from "../services/auth.service";
 import { PageHeadline } from "../components/PageHeadline";
 import { PickedDaysList } from "../components/PickedDaysList";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { getFromStorage } from "../utils/storageUtils";
-import { PickedDayType } from "../types/brigadaTypes";
-import { getCalendarRoutePath } from "../routes/routePaths";
+import {
+  addToStorageList,
+  getFromStorage,
+  removeStorageList,
+} from "../utils/storageUtils";
+import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import {
+  getCalendarRoutePath,
+  getDashboardRoutePath,
+} from "../routes/routePaths";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 
 type Props = {};
@@ -14,17 +22,25 @@ type Props = {};
 const PickedDaysConfirmPage: FC<Props> = () => {
   const navigate = useNavigate();
 
+  const currentUser = AuthService.getCurrentUser();
   const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
 
   useEffect(() => {
     if (pickedDays.length === 0) {
-      navigate(getCalendarRoutePath());
+      navigate(getDashboardRoutePath());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickedDays]);
 
   const handleSubmit = () => {
-    console.log("%c⧭ pickedDays ", "color: #bfffc8");
+    const userRequest: RequestType[] = pickedDays.map((pickedDay) => {
+      return {
+        userId: currentUser.id,
+        ...pickedDay,
+      };
+    });
+    userRequest.map((request) => addToStorageList("reqestsUser", request));
+    removeStorageList("pickedDays", true);
   };
 
   return (
@@ -34,7 +50,7 @@ const PickedDaysConfirmPage: FC<Props> = () => {
         bottomSpace="3rem"
       />
 
-      <PickedDaysList pickedDays={pickedDays} />
+      <PickedDaysList pickedDays={pickedDays} type="selected" />
       <Button
         variant="text"
         color="primary"

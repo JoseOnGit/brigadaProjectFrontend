@@ -8,8 +8,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import CloseIcon from "@mui/icons-material/Close";
 import { getPickedDayRoutePath } from "../routes/routePaths";
 import { removeFromStorageList } from "../utils/storageUtils";
-
-type PickedDayVariant = "selected" | "confirmed";
+import { PickedDayVariant } from "../types/commonTypes";
 
 type Props = {
   pickedDay: PickedDayType;
@@ -24,7 +23,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
     gap: "2rem",
     width: "100%",
     padding: "0.5rem",
-    background: type === "confirmed" ? "green" : "#F8FFA7",
+    background: type === "confirmed" ? "#A7FFB0" : "#F8FFA7",
     marginBottom: "0.5rem",
     borderTop: "1px solid #898989",
     borderBottom: "1px solid #898989",
@@ -32,7 +31,8 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
   });
 
   const handleRemove = () => {
-    removeFromStorageList("pickedDays", pickedDay, true);
+    const storageList = type === "selected" ? "pickedDays" : "reqestsUser";
+    removeFromStorageList(storageList, pickedDay, true);
   };
 
   return (
@@ -40,6 +40,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
       <div>
         <strong>{dayjs(pickedDay.day).format("D. MMMM YYYY")}</strong>
       </div>
+
       <div>
         {" "}
         {pickedDay.wholeDay
@@ -48,6 +49,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
               pickedDay.timeEnd
             ).format("HH:MM")}`}
       </div>
+
       <div>
         <IconButton
           href={getPickedDayRoutePath(pickedDay.day)}

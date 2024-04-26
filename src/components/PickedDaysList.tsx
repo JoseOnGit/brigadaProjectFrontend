@@ -5,9 +5,11 @@ import { PickedDay } from "./PickedDay";
 import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
+import { PickedDayVariant } from "../types/commonTypes";
 
 type Props = {
   pickedDays: PickedDayType[];
+  type: PickedDayVariant;
 };
 
 // < STYLED COMPONENTS
@@ -17,21 +19,27 @@ const PickedDaysListWrapper = styled("div")({
 });
 // STYLED COMPONENTS >
 
-const PickedDaysList: FC<Props> = ({ pickedDays }) => {
+const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
+  console.log("%c⧭ pickedDays", "color: #408059", pickedDays);
+
   return (
     <PickedDaysListWrapper>
       <Typography
         paragraph
         sx={{
           marginBottom: "1rem",
+          fontWeight: "bold",
         }}
       >
-        {TXT.pickedDaysConfirmPage.label}
+        {type === "selected"
+          ? TXT.pickedDaysConfirmPage.labelPicked
+          : TXT.pickedDaysConfirmPage.labelRequest}
       </Typography>
+
       {pickedDays
         .sort((a, b) => dayjs(a.day).valueOf() - dayjs(b.day).valueOf())
         .map((day, index) => (
-          <PickedDay key={index} pickedDay={day} type="selected" />
+          <PickedDay key={index} pickedDay={day} type={type} />
         ))}
     </PickedDaysListWrapper>
   );

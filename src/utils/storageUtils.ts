@@ -60,3 +60,11 @@ export const removeFromStorageList = (
     window.location.reload();
   }
 };
+
+export const removeStorageList = (listName: string, reload?: boolean) => {
+  localStorage.removeItem(listName);
+
+  if (reload) {
+    window.location.reload();
+  }
+};

@@ -18,6 +18,8 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #17: Branch 7-calendar-page: Confirm PickedDay to RequestUser](#commit-17-branch-7-calendar-page-confirm-pickedday-to-requestuser)
+  - [Commit #16: Branch 7-calendar-page: Small refactoring](#commit-16-branch-7-calendar-page-small-refactoring)
   - [Commit #15: Branch 7-calendar-page: PickedDays update - list](#commit-15-branch-7-calendar-page-pickeddays-update---list)
   - [Commit #14: Branch 7-calendar-page: Added: Calendar + PickTime - List of selected days](#commit-14-branch-7-calendar-page-added-calendar--picktime---list-of-selected-days)
   - [Commit #13: Branch 7-calendar-page: Comments \& console clenup](#commit-13-branch-7-calendar-page-comments--console-clenup)
@@ -76,6 +78,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #17: Branch 7-calendar-page: Confirm PickedDay to RequestUser
+
+### Commit #16: Branch 7-calendar-page: Small refactoring
 
 ### Commit #15: Branch 7-calendar-page: PickedDays update - list
 

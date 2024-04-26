@@ -1,3 +1,5 @@
+export type PickedDayVariant = "selected" | "confirmed";
+
 export type TextFieldPropsType = {
   margin: "normal" | "dense" | "none" | undefined;
   fullWidth: boolean;

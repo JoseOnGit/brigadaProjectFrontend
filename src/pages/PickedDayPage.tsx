@@ -9,11 +9,12 @@ import { FormSubmitButton } from "../components/FormSubmitButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeadline } from "../components/PageHeadline";
 import { getPickedDaysConfirmRoutePath } from "../routes/routePaths";
-import { PickedDayType } from "../types/brigadaTypes";
+import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import {
   addToStorageList,
   changeDayInStorageList,
   getFromStorage,
+  removeFromStorageList,
 } from "../utils/storageUtils";
 import Alert from "@mui/material/Alert";
 
@@ -25,37 +26,52 @@ const PickedDayPage: FC<Props> = () => {
   const { date: selectedDate } = params;
 
   const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
-
-  console.log("%c⧭ pickedDays ", "color: #731d6d", pickedDays);
-  console.log("%c⧭ selectedDate ", "color: #731d6d", selectedDate);
+  const reqestsUser: RequestType[] = getFromStorage("reqestsUser");
 
   const alreadyPicked = pickedDays.find(
     (pickedDay) => pickedDay.day === selectedDate
   );
+  const alreadyRequested = reqestsUser.find(
+    (pickedDay) => pickedDay.day === selectedDate
+  );
 
-  console.log("%c⧭ alreadyPicked ", "color: #006dcc", alreadyPicked);
+  const initialTimeStart =
+    alreadyRequested && !alreadyRequested.wholeDay
+      ? dayjs(alreadyRequested?.timeStart)
+      : alreadyPicked && !alreadyPicked.wholeDay
+      ? dayjs(alreadyPicked?.timeStart)
+      : null;
+
+  const initialTimeEnd =
+    alreadyRequested && !alreadyRequested.wholeDay
+      ? dayjs(alreadyRequested?.timeEnd)
+      : alreadyPicked && !alreadyPicked.wholeDay
+      ? dayjs(alreadyPicked?.timeEnd)
+      : null;
+
+  const initialWholeDay = alreadyRequested
+    ? alreadyRequested.wholeDay
+    : alreadyPicked
+    ? alreadyPicked.wholeDay
+    : false;
+
+  const initialMessage = alreadyRequested
+    ? TXT.pickedDayPage.message.alreadyRequested
+    : alreadyPicked
+    ? TXT.pickedDayPage.message.alreadyPicked
+    : "";
 
   const [selectedTimeStart, setSelectedTimeStart] = useState<Dayjs | null>(
-    alreadyPicked && !alreadyPicked.wholeDay
-      ? dayjs(alreadyPicked?.timeStart)
-      : null
+    initialTimeStart
   );
   const [selectedTimeEnd, setSelectedTimeEnd] = useState<Dayjs | null>(
-    alreadyPicked && !alreadyPicked.wholeDay
-      ? dayjs(alreadyPicked?.timeEnd)
-      : null
+    initialTimeEnd
   );
-  const [isWholeDaySelected, setIsWholeDaySelected] = useState<boolean>(
-    alreadyPicked ? alreadyPicked.wholeDay : false
-  );
-  console.log("%c⧭ selectedTimeStart ", "color: #e57373", selectedTimeStart);
-  console.log("%c⧭ selectedTimeEnd ", "color: #e57373", selectedTimeEnd);
-  console.log("%c⧭ isWholeDaySelected ", "color: #e57373", isWholeDaySelected);
+  const [isWholeDaySelected, setIsWholeDaySelected] =
+    useState<boolean>(initialWholeDay);
 
   const enableButton =
     (selectedTimeStart && selectedTimeEnd) || isWholeDaySelected;
-
-  console.log("%c⧭ enableButton ", "color: #997326", enableButton);
 
   const handleTimeStartSelect = (value: any) => {
     setSelectedTimeStart(value);
@@ -73,7 +89,14 @@ const PickedDayPage: FC<Props> = () => {
       wholeDay: isWholeDaySelected,
     };
 
-    alreadyPicked
+    const changeRequestToPicked = () => {
+      addToStorageList("pickedDays", pickedDay);
+      removeFromStorageList("reqestsUser", pickedDay);
+    };
+
+    alreadyRequested
+      ? changeRequestToPicked()
+      : alreadyPicked
       ? changeDayInStorageList("pickedDays", pickedDay)
       : addToStorageList("pickedDays", pickedDay);
 
@@ -87,13 +110,13 @@ const PickedDayPage: FC<Props> = () => {
         hasBackButton
       />
 
-      {alreadyPicked && (
+      {(alreadyPicked || alreadyRequested) && (
         <Alert
           variant="standard"
           severity="warning"
           sx={{ marginBottom: "1rem", padding: "0.75rem 1rem" }}
         >
-          {TXT.timePickPage.message.alreadyPicked}
+          {initialMessage}
         </Alert>
       )}
 
@@ -103,11 +126,11 @@ const PickedDayPage: FC<Props> = () => {
           marginBottom: "1rem",
         }}
       >
-        {TXT.timePickPage.chooseTime}
+        {TXT.pickedDayPage.chooseTime}
       </Typography>
 
       <MobileTimePicker
-        label={TXT.timePickPage.label.timeStart}
+        label={TXT.pickedDayPage.label.timeStart}
         value={selectedTimeStart}
         onChange={handleTimeStartSelect}
         disabled={isWholeDaySelected}
@@ -118,7 +141,7 @@ const PickedDayPage: FC<Props> = () => {
       />
 
       <MobileTimePicker
-        label={TXT.timePickPage.label.timeEnd}
+        label={TXT.pickedDayPage.label.timeEnd}
         value={selectedTimeEnd}
         onChange={handleTimeEndSelect}
         disabled={isWholeDaySelected}
@@ -137,7 +160,7 @@ const PickedDayPage: FC<Props> = () => {
             onChange={() => setIsWholeDaySelected(!isWholeDaySelected)}
           />
         }
-        label={TXT.timePickPage.label.wholeDay}
+        label={TXT.pickedDayPage.label.wholeDay}
         sx={{
           marginTop: "1rem",
         }}
@@ -145,7 +168,7 @@ const PickedDayPage: FC<Props> = () => {
 
       <FormSubmitButton
         onClick={handleSubmit}
-        label={TXT.timePickPage.submitButton}
+        label={TXT.pickedDayPage.submitButton}
         disabled={!enableButton}
       />
     </>

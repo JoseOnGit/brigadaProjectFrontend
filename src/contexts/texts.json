@@ -91,7 +91,7 @@
     "headline": "Kalendář",
     "chooseDate": "Vyber den kdy máš volno a chtěl bys brigádu."
   },
-  "timePickPage": {
+  "pickedDayPage": {
     "chooseTime": "Dej nám vědět odkdy dokdy můžeš...",
     "label": {
       "timeStart": "V kolik můžeš začít",
@@ -99,13 +99,15 @@
       "wholeDay": "Můžu celý den"
     },
     "message": {
-      "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou brigadu"
+      "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou žádost o brigádu",
+      "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádu. Změnu musíš potvrdit a poslat novou správu."
     },
     "submitButton": "Pokračovat"
   },
   "pickedDaysConfirmPage": {
     "headline": "Vybrané brigády",
-    "label": "Más vybrané brigády, které jsi nepotvrdil",
+    "labelPicked": "Más zatím nepotvrzenou žádost o brigádu:",
+    "labelRequest": "Nahlášená žádost o brigádu",
     "wholeDay": "Celý den",
     "backButton": "Vybrat další brigádu",
     "submitButton": "Potvrdit a odeslat správu"

@@ -44,7 +44,7 @@ type PositionsType =
 
 // ALL LEVELS LIST
 
-const employeeLevels: EmployeeLevelType[] = [
+export const employeeLevels: EmployeeLevelType[] = [
   {
     id: 1,
     icon: ChildCareIcon,
@@ -161,7 +161,7 @@ const defaultDisplay = "inline-block";
 const defaultTextAlignment = "left";
 const defaultLabelPosition = "right";
 const defaultTooltipPosition = "top";
-const disabledColor = "#00000042";
+const disabledColor = "#00000012";
 
 // PROPERTIES
 
@@ -310,7 +310,9 @@ const EmployeeLevel: FC<Props> = ({
               <SvgIcon
                 component={displayedLevel.icon}
                 fontSize={isCustomSize ? "inherit" : sizeOfIcon}
-                color={disabled ? "disabled" : "inherit"}
+                sx={{
+                  fill: `${disabled ? disabledColor : "inherit"}`,
+                }}
               />
             </LevelIcon>
           )}

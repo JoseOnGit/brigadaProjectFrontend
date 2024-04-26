@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import React, { FC, ReactNode } from "react";
-
-type DirectionType = "row" | "column";
+import { DirectionType } from "../types/commonTypes";
 
 type Props = {
   children: ReactNode;

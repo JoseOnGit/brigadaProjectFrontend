@@ -110,7 +110,8 @@
     "labelRequest": "Nahlášená žádost o brigádu",
     "wholeDay": "Celý den",
     "backButton": "Vybrat další brigádu",
-    "submitButton": "Potvrdit a odeslat správu"
+    "submitButton": "Potvrdit a odeslat správu",
+    "submitMessage": "Žádost potvrzena. Během chvíle bude na obchody odeslána správa..."
   },
   "profilePage": {
     "headline": "Profil",

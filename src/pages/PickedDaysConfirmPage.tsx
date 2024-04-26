@@ -13,7 +13,7 @@ import {
 import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import {
   getCalendarRoutePath,
-  getDashboardRoutePath,
+  getSuccessRoutePath,
 } from "../routes/routePaths";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 
@@ -27,7 +27,7 @@ const PickedDaysConfirmPage: FC<Props> = () => {
 
   useEffect(() => {
     if (pickedDays.length === 0) {
-      navigate(getDashboardRoutePath());
+      navigate(getCalendarRoutePath());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pickedDays]);
@@ -39,6 +39,8 @@ const PickedDaysConfirmPage: FC<Props> = () => {
         ...pickedDay,
       };
     });
+    navigate(getSuccessRoutePath("confirmed"));
+
     userRequest.map((request) => addToStorageList("reqestsUser", request));
     removeStorageList("pickedDays", true);
   };

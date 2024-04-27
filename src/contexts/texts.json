@@ -82,9 +82,16 @@
     "submitSubMessage": "Doporučujem uložit heslo do prohlížeče pro autotomatické vyplnění při přihlášování."
   },
   "dashboardPage": {
-    "callToAction1": "Máš čas na brigádu, ale není nahlášená?",
-    "callToAction2": "Dej vědět store-managerům, možná se něco najde...",
-    "todayButton": "Chci brigádu na dnes",
+    "user": {
+      "callToAction1": "Máš čas na brigádu, ale není nahlášená?",
+      "callToAction2": "Dej vědět store-managerům, možná se něco najde...",
+      "todayButton": "Chci brigádu na dnes"
+    },
+    "store": {
+      "callToAction1": "Potřebuješ výpomoc na obchod?",
+      "callToAction2": "Dej vědět všem briádnikům, možná se někdo najde...",
+      "todayButton": "Chci brigádnika na dnes"
+    },
     "calendarButton": "Kalendář"
   },
   "calendarPage": {

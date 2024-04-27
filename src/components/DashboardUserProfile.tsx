@@ -6,6 +6,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import { getProfileRoutePath } from "../routes/routePaths";
 import styled from "@emotion/styled";
 import { EmployeeLevelRating } from "./EmployeeLevelRating";
+import Avatar from "@mui/material/Avatar";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -15,9 +16,12 @@ type Props = {
 const ProfileWrapper = styled("div")({
   width: "100%",
   position: "relative",
-  padding: "3rem 0 2rem 0",
+  padding: "1rem 0 3rem 0",
   borderBottom: "1px solid #999999",
   marginBottom: "2rem",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 });
 
 const EditIconWrapper = styled("div")({
@@ -27,14 +31,17 @@ const EditIconWrapper = styled("div")({
 });
 // STYLED COMPONENTS >
 
-const DashboardProfile: FC<Props> = ({ currentUser }) => {
+const DashboardUserProfile: FC<Props> = ({ currentUser }) => {
   return (
     <ProfileWrapper>
+      <Avatar
+        sx={{ width: "5rem", height: "5rem" }}
+      >{`${currentUser.name[0]}`}</Avatar>
       <Typography
         align="center"
         variant="h3"
         component="div"
-        sx={{ fontWeight: "bold", marginBottom: "3rem" }}
+        sx={{ fontWeight: "bold", marginTop: "2rem", marginBottom: "2rem" }}
       >
         {currentUser.name}
       </Typography>
@@ -57,4 +64,4 @@ const DashboardProfile: FC<Props> = ({ currentUser }) => {
   );
 };
 
-export { DashboardProfile };
+export { DashboardUserProfile };

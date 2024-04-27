@@ -33,7 +33,7 @@ const successPageList: SuccessPageListType[] = [
     type: "confirmed",
     redirectTo: getDashboardRoutePath(),
     message: TXT.pickedDaysConfirmPage.submitMessage,
-    delay: 8000,
+    delay: 4000,
   },
 ];
 const SuccessMessageWrapper = styled("div")({

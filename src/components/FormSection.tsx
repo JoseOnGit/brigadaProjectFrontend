@@ -8,9 +8,11 @@ type Props = {
   text?: string;
 };
 
-const Section = styled.div`
-  padding-bottom: 2rem;
-`;
+// < STYLED COMPONENTS
+const Section = styled("div")({
+  paddingBottom: "2rem",
+});
+//  STYLED COMPONENTS >
 
 const FormSection: FC<Props> = ({ headline, children, text }) => (
   <Section>

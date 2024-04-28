@@ -16,8 +16,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { getUser, userLoadingSelector, userSelector } from "../slices/user";
 import { Loader } from "./Loader";
-
-const MAX_CONTENT_WIDTH = "50rem";
+import { MAX_CONTENT_WIDTH } from "../constants/commonConstants";
 
 // < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
@@ -107,11 +106,7 @@ const PageWrapper: FC = () => {
 
       <ContentWrapper>
         {/* Show Loader while user data is refetched */}
-        {(!currentUserInStorage || !currentUser.id) && !isPublicPage ? (
-          <Loader />
-        ) : (
-          <Outlet />
-        )}
+        {!currentUser.id && !isPublicPage ? <Loader /> : <Outlet />}
       </ContentWrapper>
     </>
   );

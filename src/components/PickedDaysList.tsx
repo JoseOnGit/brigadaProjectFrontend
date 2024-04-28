@@ -20,8 +20,6 @@ const PickedDaysListWrapper = styled("div")({
 // STYLED COMPONENTS >
 
 const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
-  console.log("%c⧭ pickedDays", "color: #408059", pickedDays);
-
   return (
     <PickedDaysListWrapper>
       <Typography

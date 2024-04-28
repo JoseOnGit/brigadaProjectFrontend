@@ -50,7 +50,13 @@ export const getUser = createAsyncThunk<CurrentUserType, RequestBodyUser>(
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    removeOnLogout(state) {
+      if (state.userDetail.id) {
+        state.userDetail = {} as CurrentUserType;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -77,6 +83,8 @@ export const userSlice = createSlice({
       });
   },
 });
+
+export const { removeOnLogout } = userSlice.actions;
 
 export const userSelector = (state: RootState): CurrentUserType =>
   state.user?.userDetail;

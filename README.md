@@ -18,6 +18,8 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #22: Branch: 12-add-redux-instead-of-localStore: Types, constants, links, refactoring](#commit-22-branch-12-add-redux-instead-of-localstore-types-constants-links-refactoring)
+  - [Commit #21: Branch: 12-add-redux-instead-of-localStore: Redux - Login and GetUser](#commit-21-branch-12-add-redux-instead-of-localstore-redux---login-and-getuser)
   - [Commit #20: Branch: 10-create-store-profile-on-dashboard: Dashboard - Store](#commit-20-branch-10-create-store-profile-on-dashboard-dashboard---store)
   - [Commit #19: Branch: 7-calendar-page: Dashboard - Profile update](#commit-19-branch-7-calendar-page-dashboard---profile-update)
   - [Commit #18: Branch: 7-calendar-page: Confirm PickedDay to RequestUser - success page](#commit-18-branch-7-calendar-page-confirm-pickedday-to-requestuser---success-page)
@@ -81,6 +83,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #22: Branch: 12-add-redux-instead-of-localStore: Types, constants, links, refactoring
+
+### Commit #21: Branch: 12-add-redux-instead-of-localStore: Redux - Login and GetUser
 
 ### Commit #20: Branch: 10-create-store-profile-on-dashboard: Dashboard - Store
 

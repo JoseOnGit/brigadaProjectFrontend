@@ -1,12 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { role } from "../constants/commonConstants";
+import { ROLE } from "../constants/commonConstants";
 import { DashboardStore } from "../components/DashboardStore";
 import { DashboardUser } from "../components/DashboardUser";
 import { useAppSelector } from "../redux/hooks";
 import { userSelector } from "../slices/user";
-
-type Props = {};
 
 // < STYLED COMPONENTS
 const Dashboard = styled("div")({
@@ -15,7 +13,7 @@ const Dashboard = styled("div")({
 });
 // STYLED COMPONENTS >
 
-const DashboardPage: FC<Props> = () => {
+const DashboardPage: FC = () => {
   const userStatus = useAppSelector(userSelector);
   const [currentUser, setCurrentUser] = useState(userStatus);
 
@@ -25,7 +23,7 @@ const DashboardPage: FC<Props> = () => {
 
   return (
     <Dashboard>
-      {currentUser.roles.includes(role.MODERATOR) ? (
+      {currentUser.roles.includes(ROLE.MODERATOR) ? (
         <DashboardStore currentUser={currentUser} />
       ) : (
         <DashboardUser currentUser={currentUser} />

@@ -1,14 +1,13 @@
 import styled from "@emotion/styled";
 import React, { FC, ReactNode } from "react";
 import { DirectionType } from "../types/commonTypes";
+import { DEFAULT_EMPLOYEE_LEVEL_GROUP_PADDING } from "../constants/commonConstants";
 
 type Props = {
   children: ReactNode;
   direction?: DirectionType;
   padding?: string;
 };
-
-const defaultPadding = "0rem";
 
 const EmployeeLevelGroup: FC<Props> = ({ children, direction, padding }) => {
   // < STYLED COMPONENTS
@@ -17,7 +16,7 @@ const EmployeeLevelGroup: FC<Props> = ({ children, direction, padding }) => {
     maxWidth: "100%",
     display: "flex",
     flexDirection: direction || "row",
-    padding: padding || defaultPadding,
+    padding: padding || DEFAULT_EMPLOYEE_LEVEL_GROUP_PADDING,
   });
   //  STYLED COMPONENTS >
 

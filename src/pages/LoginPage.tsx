@@ -7,7 +7,7 @@ import {
   TextFieldElement,
 } from "react-hook-form-mui";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import { textFieldBasicProps } from "../constants/commonConstants";
+import { TEXT_FIELD_COMMON_PROPS } from "../constants/commonConstants";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import {
@@ -31,6 +31,7 @@ const LoginPage: FC = () => {
 
     dispatch(login({ email, password })).then((response) => {
       navigate(getSuccessRoutePath("login"));
+      // window.location.reload();
     });
   };
 
@@ -48,7 +49,7 @@ const LoginPage: FC = () => {
 
       <Typography paragraph>
         {TXT.loginPage.newUser}{" "}
-        <Link href={getRegistrationRoutePath()}>
+        <Link onClick={() => navigate(getRegistrationRoutePath())}>
           {TXT.loginPage.registrationLink}
         </Link>
       </Typography>
@@ -58,12 +59,12 @@ const LoginPage: FC = () => {
           <TextFieldElement
             name="email"
             label={TXT.registrationPage.section.contact.label.email}
-            {...textFieldBasicProps}
+            {...TEXT_FIELD_COMMON_PROPS}
           />
           <PasswordElement
             name="password"
             label={TXT.registrationPage.section.password.label.password}
-            {...textFieldBasicProps}
+            {...TEXT_FIELD_COMMON_PROPS}
           />
           <FormSubmitButton
             label={TXT.loginPage.loginButton}

@@ -21,8 +21,10 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AuthService from "../services/auth.service";
+import AuthService from "../services/authService";
 import { role } from "../constants/commonConstants";
+import { useAppSelector } from "../redux/hooks";
+import { userSelector } from "../slices/user";
 
 const menuItemColor = "#ffffff";
 const menuBackgroundColor = "#1976d2";
@@ -84,7 +86,7 @@ const menuItems: MenuItemType[] = [
 ];
 
 const MainNavigation: FC = () => {
-  const currentUser = AuthService.getCurrentUser();
+  const currentUser = useAppSelector(userSelector);
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 

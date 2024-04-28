@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
 import TXT from "../contexts/texts.json";
 import { PageHeadline } from "../components/PageHeadline";
 import {
@@ -7,7 +7,6 @@ import {
   TextFieldElement,
 } from "react-hook-form-mui";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import AuthService from "../services/auth.service";
 import { textFieldBasicProps } from "../constants/commonConstants";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
@@ -17,34 +16,22 @@ import {
 } from "../routes/routePaths";
 import { FormErrorHandler } from "../components/FormErrorHandler";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { login, userErrorSelector, userLoadingSelector } from "../slices/user";
 
 const LoginPage: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const userStatus = useAppSelector(userLoadingSelector);
+  const userError = useAppSelector(userErrorSelector);
 
   const handleSubmit = (data: any) => {
-    setLoading(true);
+    const { email, password } = data;
 
-    AuthService.login(data.email, data.password)
-      .then(
-        () => {
-          navigate(getSuccessRoutePath("login"));
-          window.location.reload();
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-
-          setError(resMessage);
-        }
-      )
-      .finally(() => setLoading(false));
+    dispatch(login({ email, password })).then((response) => {
+      navigate(getSuccessRoutePath("login"));
+    });
   };
 
   const initialValues = useMemo(
@@ -67,7 +54,7 @@ const LoginPage: FC = () => {
       </Typography>
 
       <FormContainer defaultValues={initialValues} onSuccess={handleSubmit}>
-        <FormErrorHandler error={error}>
+        <FormErrorHandler error={userError}>
           <TextFieldElement
             name="email"
             label={TXT.registrationPage.section.contact.label.email}
@@ -80,7 +67,7 @@ const LoginPage: FC = () => {
           />
           <FormSubmitButton
             label={TXT.loginPage.loginButton}
-            loading={loading}
+            loading={userStatus === "loading"}
           />
         </FormErrorHandler>
       </FormContainer>

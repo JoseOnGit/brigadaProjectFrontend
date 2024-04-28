@@ -1,9 +1,10 @@
-import React, { FC } from "react";
-import AuthService from "../services/auth.service";
+import React, { FC, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { role } from "../constants/commonConstants";
 import { DashboardStore } from "../components/DashboardStore";
 import { DashboardUser } from "../components/DashboardUser";
+import { useAppSelector } from "../redux/hooks";
+import { userSelector } from "../slices/user";
 
 type Props = {};
 
@@ -15,7 +16,12 @@ const Dashboard = styled("div")({
 // STYLED COMPONENTS >
 
 const DashboardPage: FC<Props> = () => {
-  const currentUser = AuthService.getCurrentUser();
+  const userStatus = useAppSelector(userSelector);
+  const [currentUser, setCurrentUser] = useState(userStatus);
+
+  useEffect(() => {
+    setCurrentUser(userStatus);
+  }, [userStatus]);
 
   return (
     <Dashboard>

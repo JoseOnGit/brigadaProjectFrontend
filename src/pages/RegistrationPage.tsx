@@ -3,7 +3,7 @@ import TXT from "../contexts/texts.json";
 import { PageHeadline } from "../components/PageHeadline";
 import { FormContainer } from "react-hook-form-mui";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import AuthService from "../services/auth.service";
+import AuthService from "../services/authService";
 import { FormErrorHandler } from "../components/FormErrorHandler";
 import { getSuccessRoutePath } from "../routes/routePaths";
 import { useNavigate } from "react-router-dom";

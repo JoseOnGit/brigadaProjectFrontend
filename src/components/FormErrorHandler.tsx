@@ -6,7 +6,7 @@ import { FieldError, FormErrorProvider } from "react-hook-form-mui";
 
 type Props = {
   children: ReactNode;
-  error: string;
+  error: string | null;
 };
 
 const FormErrorHandler: FC<Props> = ({ children, error }) => {

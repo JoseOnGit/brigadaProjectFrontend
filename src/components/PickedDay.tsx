@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getPickedDayRoutePath } from "../routes/routePaths";
 import { removeFromStorageList } from "../utils/storageUtils";
 import { PickedDayVariant } from "../types/commonTypes";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   pickedDay: PickedDayType;
@@ -16,6 +17,8 @@ type Props = {
 };
 
 const PickedDay: FC<Props> = ({ pickedDay, type }) => {
+  const navigate = useNavigate();
+
   const PickedDayWrapper = styled("div")({
     display: "flex",
     alignItems: "center",
@@ -32,7 +35,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
 
   const handleRemove = () => {
     const storageList = type === "selected" ? "pickedDays" : "reqestsUser";
-    removeFromStorageList(storageList, pickedDay, true);
+    removeFromStorageList(storageList, pickedDay);
   };
 
   return (
@@ -52,7 +55,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
 
       <div>
         <IconButton
-          href={getPickedDayRoutePath(pickedDay.day)}
+          onClick={() => navigate(getPickedDayRoutePath(pickedDay.day))}
           aria-label="edit picked day"
           color="primary"
         >

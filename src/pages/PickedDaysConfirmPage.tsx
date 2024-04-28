@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from "react";
 import TXT from "../contexts/texts.json";
-import AuthService from "../services/auth.service";
 import { PageHeadline } from "../components/PageHeadline";
 import { PickedDaysList } from "../components/PickedDaysList";
 import Button from "@mui/material/Button";
@@ -16,13 +15,15 @@ import {
   getSuccessRoutePath,
 } from "../routes/routePaths";
 import { FormSubmitButton } from "../components/FormSubmitButton";
+import { userSelector } from "../slices/user";
+import { useAppSelector } from "../redux/hooks";
 
 type Props = {};
 
 const PickedDaysConfirmPage: FC<Props> = () => {
   const navigate = useNavigate();
 
-  const currentUser = AuthService.getCurrentUser();
+  const currentUser = useAppSelector(userSelector);
   const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
 
   useEffect(() => {
@@ -39,10 +40,10 @@ const PickedDaysConfirmPage: FC<Props> = () => {
         ...pickedDay,
       };
     });
-    navigate(getSuccessRoutePath("confirmed"));
 
     userRequest.map((request) => addToStorageList("reqestsUser", request));
-    removeStorageList("pickedDays", true);
+    removeStorageList("pickedDays");
+    navigate(getSuccessRoutePath("confirmed"));
   };
 
   return (

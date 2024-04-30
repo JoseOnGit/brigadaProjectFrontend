@@ -7,6 +7,7 @@ import { getProfileRoutePath } from "../routes/routePaths";
 import styled from "@emotion/styled";
 import { EmployeeLevelRating } from "./EmployeeLevelRating";
 import Avatar from "@mui/material/Avatar";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -32,6 +33,8 @@ const EditIconWrapper = styled("div")({
 // STYLED COMPONENTS >
 
 const DashboardUserProfile: FC<Props> = ({ currentUser }) => {
+  const navigate = useNavigate();
+
   return (
     <ProfileWrapper>
       <Avatar
@@ -53,9 +56,9 @@ const DashboardUserProfile: FC<Props> = ({ currentUser }) => {
 
       <EditIconWrapper>
         <IconButton
-          href={getProfileRoutePath()}
           aria-label="edit profile"
           color="primary"
+          onClick={() => navigate(getProfileRoutePath())}
         >
           <CreateIcon />
         </IconButton>

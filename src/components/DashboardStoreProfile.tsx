@@ -9,6 +9,7 @@ import Avatar from "@mui/material/Avatar";
 import StoreService from "../services/storeService";
 import { StoreApiType } from "../types/storesTypes";
 import { Loader } from "./Loader";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -35,12 +36,11 @@ const EditIconWrapper = styled("div")({
 // STYLED COMPONENTS >
 
 const DashboardStoreProfile: FC<Props> = ({ currentUser }) => {
+  const navigate = useNavigate();
+
   const [stores, setStores] = useState<StoreApiType[]>([]);
   const [storesLoading, setStoresLoading] = useState<boolean>(true);
   const [storesError, setStoresError] = useState<string>("");
-
-  console.log("%c⧭ currentUser ", "color: #994d75", currentUser);
-  console.log("%c⧭ stores ", "color: #994d75", stores);
 
   useEffect(() => {
     setStoresLoading(true);
@@ -94,9 +94,9 @@ const DashboardStoreProfile: FC<Props> = ({ currentUser }) => {
 
       <EditIconWrapper>
         <IconButton
-          href={getProfileRoutePath()}
           aria-label="edit profile"
           color="primary"
+          onClick={() => navigate(getProfileRoutePath())}
         >
           <CreateIcon />
         </IconButton>

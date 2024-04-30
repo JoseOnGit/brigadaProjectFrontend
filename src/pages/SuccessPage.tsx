@@ -4,8 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getDashboardRoutePath, getLoginRoutePath } from "../routes/routePaths";
 import styled from "@emotion/styled";
 import Typography from "@mui/material/Typography";
-
-export type SuccesPageTypes = "registration" | "login" | "confirmed";
+import { SuccesPageTypes } from "../types/commonTypes";
 
 type SuccessPageListType = {
   type: SuccesPageTypes;
@@ -16,7 +15,7 @@ type SuccessPageListType = {
   delay?: number;
 };
 
-const successPageList: SuccessPageListType[] = [
+const SUCCESS_PAGE_LIST: SuccessPageListType[] = [
   {
     type: "registration",
     redirectTo: getLoginRoutePath(),
@@ -36,6 +35,8 @@ const successPageList: SuccessPageListType[] = [
     delay: 4000,
   },
 ];
+
+// < STYLED COMPONENTS
 const SuccessMessageWrapper = styled("div")({
   width: "100%",
   height: "40vh",
@@ -44,12 +45,13 @@ const SuccessMessageWrapper = styled("div")({
   alignContent: "flex-end",
   justifyContent: "center",
 });
+//  STYLED COMPONENTS >
 
 const SuccessPage: FC = () => {
   const navigate = useNavigate();
   const { type } = useParams();
 
-  const page = successPageList.find((typeOfPage) => typeOfPage.type === type);
+  const page = SUCCESS_PAGE_LIST.find((typeOfPage) => typeOfPage.type === type);
 
   const delayBeforeRedirect = page?.delay ?? 2000;
 

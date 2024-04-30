@@ -1,5 +1,5 @@
 import axios from "axios";
-import authHeader from "./auth-header";
+import authHeader from "./authHeader";
 import { API_URL } from "../config/index";
 
 class UserService {

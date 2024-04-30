@@ -6,9 +6,6 @@ import {
   getCalendarRoutePath,
   getPickedDayRoutePath,
 } from "../routes/routePaths";
-import { PickedDaysList } from "./PickedDaysList";
-import { getFromStorage } from "../utils/storageUtils";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
@@ -23,28 +20,15 @@ type Props = {
 const DashboardStore: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
 
-  const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
-  const reqestsUser: RequestType[] = getFromStorage("reqestsUser");
-
   const today = getDateFormatForURL(dayjs());
-
-  const isPickedToday = !!pickedDays.find(
-    (pickedDay) => pickedDay.day === today
-  );
-  const isReqestedToday = !!reqestsUser.find(
-    (pickedDay) => pickedDay.day === today
-  );
 
   return (
     <div>
       <DashboardStoreProfile currentUser={currentUser} />
 
-      {reqestsUser.length !== 0 && (
+      {/* {reqestsUser.length !== 0 && (
         <PickedDaysList pickedDays={reqestsUser} type="confirmed" />
-      )}
-      {pickedDays.length !== 0 && (
-        <PickedDaysList pickedDays={pickedDays} type="selected" />
-      )}
+      )} */}
 
       <Typography
         paragraph
@@ -65,7 +49,7 @@ const DashboardStore: FC<Props> = ({ currentUser }) => {
         size="large"
         fullWidth
         sx={{ marginTop: "1rem", padding: "1rem 0rem" }}
-        disabled={isPickedToday || isReqestedToday}
+        // disabled={isPickedToday || isReqestedToday}
         onClick={() => {
           navigate(getPickedDayRoutePath(today));
         }}

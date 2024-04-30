@@ -1,4 +1,4 @@
-import { SuccesPageTypes } from "../pages/SuccessPage";
+import { SuccesPageTypes } from "../types/commonTypes";
 
 const getLoginRoutePath = () => {
   return "/login";

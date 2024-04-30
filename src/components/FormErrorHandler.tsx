@@ -1,12 +1,12 @@
 import React, { FC, ReactNode, useEffect } from "react";
 import TXT from "../contexts/texts.json";
 import Alert from "@mui/material/Alert";
-import { authMessage } from "../constants/commonConstants";
+import { AUTH_MESSAGE } from "../constants/commonConstants";
 import { FieldError, FormErrorProvider } from "react-hook-form-mui";
 
 type Props = {
   children: ReactNode;
-  error: string;
+  error: string | null;
 };
 
 const FormErrorHandler: FC<Props> = ({ children, error }) => {
@@ -19,20 +19,20 @@ const FormErrorHandler: FC<Props> = ({ children, error }) => {
   const getServerMessage = (response: string) => {
     switch (response) {
       // possible LOGIN messages from backend
-      case authMessage.invalidPassword:
+      case AUTH_MESSAGE.invalidPassword:
         return TXT.common.message.invalidPasword;
 
-      case authMessage.userNotFound:
+      case AUTH_MESSAGE.userNotFound:
         return TXT.common.message.userNotFound;
 
       // possible REGISTER messages from backend
-      case authMessage.phoneIsInUse:
+      case AUTH_MESSAGE.phoneIsInUse:
         return TXT.common.message.phoneIsInUse;
 
-      case authMessage.emailIsInUse:
+      case AUTH_MESSAGE.emailIsInUse:
         return TXT.common.message.emailIsInUse;
 
-      case authMessage.networkError:
+      case AUTH_MESSAGE.networkError:
         return TXT.common.message.networkError;
 
       default:

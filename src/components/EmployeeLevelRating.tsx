@@ -4,6 +4,7 @@ import {
   LevelNumberType,
   employeeLevels,
 } from "./EmployeeLevel";
+import styled from "@emotion/styled";
 
 type Props = {
   level: number;
@@ -11,14 +12,17 @@ type Props = {
 };
 
 const EmployeeLevelRating: FC<Props> = ({ level, col }) => {
-  console.log("%c⧭ level ", "color: #99adcc", level);
-  console.log("%c⧭ col ", "color: #99adcc", col);
+  // < STYLED COMPONENTS
+  const LevelRatingWrapper = styled("div")({
+    display: "flex",
+    flexDirection: col ? "column" : "row",
+  });
+  //  STYLED COMPONENTS >
 
   const renderLevels = () => {
     let allLlevels: ReactNode[] = [];
 
     for (let i = 1; i < employeeLevels.length + 1; i++) {
-      console.log("%c⧭ i ", "color: #f279ca", i);
       allLlevels.push(
         <EmployeeLevel
           key={i}
@@ -31,7 +35,7 @@ const EmployeeLevelRating: FC<Props> = ({ level, col }) => {
     return allLlevels;
   };
 
-  return <div>{renderLevels()}</div>;
+  return <LevelRatingWrapper>{renderLevels()}</LevelRatingWrapper>;
 };
 
 export { EmployeeLevelRating };

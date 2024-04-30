@@ -1,4 +1,4 @@
-import React, { FC, Fragment, ReactNode, useState } from "react";
+import React, { FC, Fragment, ReactNode, useMemo, useState } from "react";
 import {
   getCalendarRoutePath,
   getDashboardRoutePath,
@@ -21,8 +21,11 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AuthService from "../services/auth.service";
-import { role } from "../constants/commonConstants";
+import { ROLE } from "../constants/commonConstants";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { userSelector } from "../slices/user";
+import { useNavigate } from "react-router-dom";
+import { removeOnLogout } from "../slices/user";
 
 const menuItemColor = "#ffffff";
 const menuBackgroundColor = "#1976d2";
@@ -33,10 +36,11 @@ type MenuItemType = {
   icon: ReactNode;
   permission: string[];
   bottom?: boolean;
+  logout?: boolean;
   onClickHandler?: () => void;
 };
 
-const menuItems: MenuItemType[] = [
+const MENU_ITEMS: MenuItemType[] = [
   {
     icon: <HomeIcon />,
     label: TXT.mainNavigation.home,
@@ -47,19 +51,19 @@ const menuItems: MenuItemType[] = [
     icon: <PersonIcon />,
     label: TXT.mainNavigation.profile,
     route: getProfileRoutePath(),
-    permission: [role.USER, role.MODERATOR],
+    permission: [ROLE.USER, ROLE.MODERATOR],
   },
   {
     icon: <PeopleAltIcon />,
     label: TXT.mainNavigation.employees,
     route: "",
-    permission: [role.MODERATOR, role.ADMIN],
+    permission: [ROLE.MODERATOR, ROLE.ADMIN],
   },
   {
     icon: <CalendarMonthIcon />,
     label: TXT.mainNavigation.calendar,
     route: getCalendarRoutePath(),
-    permission: [role.USER, role.MODERATOR, role.ADMIN],
+    permission: [ROLE.USER, ROLE.MODERATOR, ROLE.ADMIN],
   },
   {
     icon: <HelpOutlineIcon />,
@@ -77,14 +81,16 @@ const menuItems: MenuItemType[] = [
     icon: <LogoutIcon />,
     label: TXT.mainNavigation.logout,
     route: getLoginRoutePath(),
-    permission: [role.USER, role.MODERATOR, role.ADMIN],
-    onClickHandler: () => AuthService.logout(),
+    permission: [ROLE.USER, ROLE.MODERATOR, ROLE.ADMIN],
+    logout: true,
     bottom: true,
   },
 ];
 
 const MainNavigation: FC = () => {
-  const currentUser = AuthService.getCurrentUser();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector(userSelector);
 
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
 
@@ -114,12 +120,17 @@ const MainNavigation: FC = () => {
       (hasPermission || !menuItem.permission.length) && (
         <ListItem key={menuItem.label} disablePadding>
           <ListItemButton
-            href={menuItem.route}
             sx={{
               padding: "1.5rem",
               ...border,
             }}
-            onClick={menuItem.onClickHandler}
+            onClick={() => {
+              if (menuItem.logout) {
+                dispatch(removeOnLogout());
+              }
+              setIsNavOpen(false);
+              navigate(menuItem.route);
+            }}
           >
             <ListItemIcon sx={{ color: menuItemColor }}>
               {menuItem.icon}
@@ -130,6 +141,20 @@ const MainNavigation: FC = () => {
       )
     );
   };
+
+  const menuItemsTop = useMemo(() => {
+    return MENU_ITEMS.filter((menuItem) => !menuItem.bottom).map((menuItem) =>
+      renderMenuItem(menuItem)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [MENU_ITEMS, currentUser]);
+
+  const menuItemsBottom = useMemo(() => {
+    return MENU_ITEMS.filter((menuItem) => menuItem.bottom).map((menuItem) =>
+      renderMenuItem(menuItem, true)
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [MENU_ITEMS, currentUser]);
 
   return (
     <Fragment key={"MainNavigation"}>
@@ -164,16 +189,8 @@ const MainNavigation: FC = () => {
             padding: "0rem",
           }}
         >
-          <div>
-            {menuItems
-              .filter((menuItem) => !menuItem.bottom)
-              .map((menuItem) => renderMenuItem(menuItem))}
-          </div>
-          <div>
-            {menuItems
-              .filter((menuItem) => menuItem.bottom)
-              .map((menuItem) => renderMenuItem(menuItem, true))}
-          </div>
+          <div>{menuItemsTop}</div>
+          <div>{menuItemsBottom}</div>
         </List>
       </Drawer>
     </Fragment>

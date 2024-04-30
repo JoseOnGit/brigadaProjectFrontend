@@ -6,10 +6,7 @@ import { FormSubmitButton } from "../components/FormSubmitButton";
 import { EmployeeType } from "../types/employeeTypes";
 import { useNavigate } from "react-router-dom";
 
-type Props = {};
-
-const EditProfilePage: FC<Props> = () => {
-  console.log("🚀 ~ ProfilePage is rendered....");
+const EditProfilePage: FC = () => {
   const navigate = useNavigate();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

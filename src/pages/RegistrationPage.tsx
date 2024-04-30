@@ -3,32 +3,35 @@ import TXT from "../contexts/texts.json";
 import { PageHeadline } from "../components/PageHeadline";
 import { FormContainer } from "react-hook-form-mui";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import AuthService from "../services/auth.service";
 import { FormErrorHandler } from "../components/FormErrorHandler";
 import { getSuccessRoutePath } from "../routes/routePaths";
 import { useNavigate } from "react-router-dom";
 import { ProfileForm } from "../components/ProfileForm";
+import { register } from "../slices/user";
+import { useAppDispatch } from "../redux/hooks";
 
 const RegistrationPage: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const handleSubmit = (data: any) => {
-    console.log("%c⧭ handleSubmit data ", "color: #40fff2", data);
     setLoading(true);
 
-    AuthService.register(
-      data.name,
-      data.surname,
-      data.email,
-      data.phone,
-      data.baseId,
-      data.onboardDate,
-      data.level,
-      data.password
-    )
+    const newUser = {
+      name: data.name,
+      surname: data.surname,
+      email: data.email,
+      phone: data.phone,
+      baseId: data.baseId,
+      onboardDate: data.onboardDate,
+      level: data.level,
+      password: data.password,
+    };
+
+    dispatch(register(newUser))
       .then(
         () => {
           navigate(getSuccessRoutePath("registration"));

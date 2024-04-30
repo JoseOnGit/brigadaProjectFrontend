@@ -9,12 +9,12 @@ import {
   SelectElement,
   TextFieldElement,
 } from "react-hook-form-mui";
-import { textFieldBasicProps } from "../constants/commonConstants";
+import { TEXT_FIELD_COMMON_PROPS } from "../constants/commonConstants";
 import { EmployeeLevel, LevelNumberType } from "./EmployeeLevel";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 import StoreService from "../services/storeService";
-import { SelectOptionsType } from "../types/commonTypes";
+import { SelectOptionType } from "../types/commonTypes";
 import { getStoresOptions } from "../utils/commonUtils";
 
 type Props = {};
@@ -58,7 +58,7 @@ const ProfileForm: FC<Props> = () => {
       .finally(() => setStoresLoading(false));
   }, []);
 
-  const storesOptions: SelectOptionsType = useMemo(
+  const storesOptions: SelectOptionType[] = useMemo(
     () => getStoresOptions(stores),
     [stores]
   );
@@ -85,24 +85,24 @@ const ProfileForm: FC<Props> = () => {
         <TextFieldElement
           name="name"
           label={TXT.registrationPage.section.contact.label.name}
-          {...textFieldBasicProps}
+          {...TEXT_FIELD_COMMON_PROPS}
         />
         <TextFieldElement
           name="surname"
           label={TXT.registrationPage.section.contact.label.surname}
-          {...textFieldBasicProps}
+          {...TEXT_FIELD_COMMON_PROPS}
         />
         <TextFieldElement
           name="email"
           label={TXT.registrationPage.section.contact.label.email}
           type="email"
-          {...textFieldBasicProps}
+          {...TEXT_FIELD_COMMON_PROPS}
         />
         <TextFieldElement
           name="phone"
           label={TXT.registrationPage.section.contact.label.phone}
           // type="tel"
-          {...textFieldBasicProps}
+          {...TEXT_FIELD_COMMON_PROPS}
         />
       </FormSection>
 
@@ -175,13 +175,13 @@ const ProfileForm: FC<Props> = () => {
         <PasswordElement
           name="password"
           label={TXT.registrationPage.section.password.label.password}
-          {...textFieldBasicProps}
+          {...TEXT_FIELD_COMMON_PROPS}
         />
         <PasswordRepeatElement
           name="passwordRepeat"
           passwordFieldName="password"
           label={TXT.registrationPage.section.password.label.repeatPassword}
-          {...textFieldBasicProps}
+          {...TEXT_FIELD_COMMON_PROPS}
         />
       </FormSection>
     </>

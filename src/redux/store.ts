@@ -1,9 +1,10 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import userReducer from "../slices/user";
+// import pickedDaysReducer from "../slices/pickedDays";
 
 const reducer = {
   user: userReducer,
-  // pickedDays: userReducer,
+  // pickedDays: pickedDaysReducer,
   // requestsUser: userReducer,
 };
 

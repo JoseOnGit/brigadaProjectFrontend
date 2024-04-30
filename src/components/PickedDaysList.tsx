@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import TXT from "../contexts/texts.json";
 import { PickedDayType } from "../types/brigadaTypes";
 import { PickedDay } from "./PickedDay";
-import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { PickedDayVariant } from "../types/commonTypes";
@@ -35,7 +34,9 @@ const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
       </Typography>
 
       {pickedDays
-        .sort((a, b) => dayjs(a.day).valueOf() - dayjs(b.day).valueOf())
+        // .sort((a: PickedDayType, b: PickedDayType) => {
+        //   return dayjs(a.day).valueOf() - dayjs(b.day).valueOf();
+        // })
         .map((day, index) => (
           <PickedDay key={index} pickedDay={day} type={type} />
         ))}

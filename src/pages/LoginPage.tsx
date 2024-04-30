@@ -29,7 +29,9 @@ const LoginPage: FC = () => {
   const handleSubmit = (data: any) => {
     const { email, password } = data;
 
-    dispatch(login({ email, password })).then((response) => {
+    dispatch(login({ email, password })).then((response: any) => {
+      // for some reason we get 'fulfilled' state even when there's error
+      // in that case error is returned in payload, so we check if there's error message
       if (!response.payload.response?.data?.message) {
         navigate(getSuccessRoutePath("login"));
         // window.location.reload();

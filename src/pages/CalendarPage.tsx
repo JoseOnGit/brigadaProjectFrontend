@@ -6,15 +6,17 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { useNavigate } from "react-router-dom";
 import { getPickedDayRoutePath } from "../routes/routePaths";
 import { getFromStorage } from "../utils/storageUtils";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import { RequestType } from "../types/brigadaTypes";
 import { PickedDaysList } from "../components/PickedDaysList";
 import { getDateFormatForURL } from "../utils/commonUtils";
+import { useAppSelector } from "../redux/hooks";
+import { pickedDaysSelector } from "../slices/user";
 
 const CalendarPage: FC = () => {
   const navigate = useNavigate();
   // removeStorageList("reqestsUser", true);
 
-  const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
+  const pickedDays = useAppSelector(pickedDaysSelector);
   const reqestsUser: RequestType[] = getFromStorage("reqestsUser");
 
   const handleDateSelect = (value: any) => {

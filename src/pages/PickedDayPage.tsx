@@ -11,16 +11,18 @@ import { PageHeadline } from "../components/PageHeadline";
 import { getPickedDaysConfirmRoutePath } from "../routes/routePaths";
 import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import {
-  addToStorageList,
   changeDayInStorageList,
   getFromStorage,
   removeFromStorageList,
 } from "../utils/storageUtils";
 import Alert from "@mui/material/Alert";
+import { useAppDispatch } from "../redux/hooks";
+import { addPickedDay } from "../slices/user";
 
 type Props = {};
 
 const PickedDayPage: FC<Props> = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const { date: selectedDate } = params;
@@ -90,7 +92,7 @@ const PickedDayPage: FC<Props> = () => {
     };
 
     const changeRequestToPicked = () => {
-      addToStorageList("pickedDays", pickedDay);
+      dispatch(addPickedDay(pickedDay));
       removeFromStorageList("reqestsUser", pickedDay);
     };
 
@@ -98,7 +100,7 @@ const PickedDayPage: FC<Props> = () => {
       ? changeRequestToPicked()
       : alreadyPicked
       ? changeDayInStorageList("pickedDays", pickedDay)
-      : addToStorageList("pickedDays", pickedDay);
+      : dispatch(addPickedDay(pickedDay));
 
     navigate(getPickedDaysConfirmRoutePath());
   };

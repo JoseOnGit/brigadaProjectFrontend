@@ -3,6 +3,7 @@ import { CurrentUserType, RegistrationUserType } from "../types/userTypes";
 import { RootState } from "../redux/store";
 import AuthService from "../services/authService";
 import { NameType } from "../types/commonTypes";
+import { PickedDayType } from "../types/brigadaTypes";
 
 export interface RequestBodyUser {
   email: string;
@@ -31,12 +32,14 @@ export type ErrorPayload = {
 };
 export interface UserState {
   userDetail: CurrentUserType;
+  pickedDays: PickedDayType[];
   status: "idle" | "loading" | "failed";
   error: string | null;
 }
 
 const initialState: UserState = {
   userDetail: {} as CurrentUserType,
+  pickedDays: [],
   status: "idle",
   error: null,
 };
@@ -109,6 +112,9 @@ export const userSlice = createSlice({
         localStorage.clear();
       }
     },
+    addPickedDay(state, action) {
+      state.pickedDays = [...state.pickedDays, action.payload];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -162,10 +168,13 @@ export const userSlice = createSlice({
   },
 });
 
-export const { removeOnLogout } = userSlice.actions;
+export const { removeOnLogout, addPickedDay } = userSlice.actions;
 
 export const userSelector = (state: RootState): CurrentUserType =>
   state.user?.userDetail;
+
+export const pickedDaysSelector = (state: RootState): PickedDayType[] =>
+  state.user?.pickedDays;
 
 export const userLoadingSelector = (state: RootState): string =>
   state.user?.status;

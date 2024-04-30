@@ -4,18 +4,14 @@ import { PageHeadline } from "../components/PageHeadline";
 import { PickedDaysList } from "../components/PickedDaysList";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import {
-  addToStorageList,
-  getFromStorage,
-  removeStorageList,
-} from "../utils/storageUtils";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import { addToStorageList, removeStorageList } from "../utils/storageUtils";
+import { RequestType } from "../types/brigadaTypes";
 import {
   getCalendarRoutePath,
   getSuccessRoutePath,
 } from "../routes/routePaths";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import { userSelector } from "../slices/user";
+import { userSelector, pickedDaysSelector } from "../slices/user";
 import { useAppSelector } from "../redux/hooks";
 
 type Props = {};
@@ -24,7 +20,7 @@ const PickedDaysConfirmPage: FC<Props> = () => {
   const navigate = useNavigate();
 
   const currentUser = useAppSelector(userSelector);
-  const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
+  const pickedDays = useAppSelector(pickedDaysSelector);
 
   useEffect(() => {
     if (pickedDays.length === 0) {

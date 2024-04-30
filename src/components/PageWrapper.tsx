@@ -14,8 +14,12 @@ import {
   getSuccessRoutePath,
 } from "../routes/routePaths";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { getUser, userLoadingSelector, userSelector } from "../slices/user";
-import { Loader } from "./Loader";
+import {
+  getUser,
+  userErrorSelector,
+  userLoadingSelector,
+  userSelector,
+} from "../slices/user";
 import { MAX_CONTENT_WIDTH } from "../constants/commonConstants";
 
 // < STYLED COMPONENTS
@@ -40,6 +44,7 @@ const PageWrapper: FC = () => {
 
   const currentUser = useAppSelector(userSelector);
   const currentUserLoading = useAppSelector(userLoadingSelector);
+  const currentUserError = useAppSelector(userErrorSelector);
 
   const currentUserInStorage = AuthService.getCurrentUserFromStorage();
 
@@ -71,7 +76,8 @@ const PageWrapper: FC = () => {
     if (
       !currentUserInStorage &&
       !isPublicPage &&
-      currentUserLoading !== "loading"
+      currentUserLoading !== "loading" &&
+      !currentUserError
     ) {
       navigate(getLoginRoutePath());
     }
@@ -79,7 +85,7 @@ const PageWrapper: FC = () => {
     // if there IS current user,
     // then don't let him see pages like 'login' or 'register'
     // and always redirect to 'dashboard' of user
-    if (currentUser.id && isPublicPage) {
+    if (currentUser.id && isPublicPage && !currentUserError) {
       navigate(getDashboardRoutePath());
     }
 
@@ -106,7 +112,8 @@ const PageWrapper: FC = () => {
 
       <ContentWrapper>
         {/* Show Loader while user data is refetched */}
-        {!currentUser.id && !isPublicPage ? <Loader /> : <Outlet />}
+        {/* {!currentUser.id && !isPublicPage ? <Loader /> : <Outlet />} */}
+        <Outlet />
       </ContentWrapper>
     </>
   );

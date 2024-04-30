@@ -30,8 +30,10 @@ const LoginPage: FC = () => {
     const { email, password } = data;
 
     dispatch(login({ email, password })).then((response) => {
-      navigate(getSuccessRoutePath("login"));
-      // window.location.reload();
+      if (!response.payload.response?.data?.message) {
+        navigate(getSuccessRoutePath("login"));
+        // window.location.reload();
+      }
     });
   };
 

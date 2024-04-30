@@ -21,7 +21,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AuthService from "../services/authService";
 import { ROLE } from "../constants/commonConstants";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { userSelector } from "../slices/user";
@@ -47,7 +46,6 @@ const MENU_ITEMS: MenuItemType[] = [
     label: TXT.mainNavigation.home,
     route: getDashboardRoutePath(),
     permission: [],
-    onClickHandler: () => AuthService.logout(),
   },
   {
     icon: <PersonIcon />,
@@ -85,7 +83,6 @@ const MENU_ITEMS: MenuItemType[] = [
     route: getLoginRoutePath(),
     permission: [ROLE.USER, ROLE.MODERATOR, ROLE.ADMIN],
     logout: true,
-    onClickHandler: () => AuthService.logout(),
     bottom: true,
   },
 ];
@@ -129,7 +126,6 @@ const MainNavigation: FC = () => {
             }}
             onClick={() => {
               if (menuItem.logout) {
-                AuthService.logout();
                 dispatch(removeOnLogout());
               }
               setIsNavOpen(false);

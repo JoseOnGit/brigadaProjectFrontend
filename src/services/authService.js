@@ -24,10 +24,6 @@ class AuthService {
       });
   }
 
-  logout() {
-    localStorage.clear();
-  }
-
   register(name, surname, email, phone, baseId, onboardDate, level, password) {
     return axios.post(API_URL + "/auth/signup", {
       name,

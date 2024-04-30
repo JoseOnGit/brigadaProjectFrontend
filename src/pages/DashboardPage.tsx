@@ -5,6 +5,7 @@ import { DashboardStore } from "../components/DashboardStore";
 import { DashboardUser } from "../components/DashboardUser";
 import { useAppSelector } from "../redux/hooks";
 import { userSelector } from "../slices/user";
+import { Loader } from "../components/Loader";
 
 // < STYLED COMPONENTS
 const Dashboard = styled("div")({
@@ -20,6 +21,12 @@ const DashboardPage: FC = () => {
   useEffect(() => {
     setCurrentUser(userStatus);
   }, [userStatus]);
+
+  // in case we refresh page we refetch user data,
+  // untill it's done we show Loader
+  if (!currentUser.id) {
+    return <Loader />;
+  }
 
   return (
     <Dashboard>

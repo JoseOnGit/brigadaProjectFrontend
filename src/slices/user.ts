@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CurrentUserType } from "../types/userTypes";
+import { CurrentUserType, RegistrationUserType } from "../types/userTypes";
 import { RootState } from "../redux/store";
 import AuthService from "../services/authService";
+import { NameType } from "../types/commonTypes";
 
 export interface RequestBodyUser {
   email: string;
@@ -11,6 +12,23 @@ export interface RequestBodyLogin {
   email: string;
   password: string;
 }
+export interface RequestBodyRegister {
+  name: string;
+  surname: string;
+  phone: string;
+  email: string;
+  baseId?: NameType | undefined;
+  level: number;
+  onboardDate: string;
+  password: string;
+}
+export type ErrorPayload = {
+  register: {
+    data: {
+      message: string;
+    };
+  };
+};
 export interface UserState {
   userDetail: CurrentUserType;
   status: "idle" | "loading" | "failed";
@@ -23,9 +41,10 @@ const initialState: UserState = {
   error: null,
 };
 
-export const login = createAsyncThunk<CurrentUserType, RequestBodyLogin>(
+export const login = createAsyncThunk(
   "user/login",
-  async ({ email, password }) => {
+  async (data: RequestBodyLogin) => {
+    const { email, password } = data;
     try {
       const response = await AuthService.login(email, password);
       return response;
@@ -35,9 +54,42 @@ export const login = createAsyncThunk<CurrentUserType, RequestBodyLogin>(
   }
 );
 
-export const getUser = createAsyncThunk<CurrentUserType, RequestBodyUser>(
+export const register = createAsyncThunk(
+  "user/register",
+  async (data: RegistrationUserType) => {
+    const {
+      name,
+      surname,
+      email,
+      phone,
+      baseId,
+      onboardDate,
+      level,
+      password,
+    } = data;
+
+    try {
+      const response = await AuthService.register(
+        name,
+        surname,
+        email,
+        phone,
+        baseId,
+        onboardDate,
+        level,
+        password
+      );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
   "user/getUser",
-  async ({ email, token }) => {
+  async (data: RequestBodyUser) => {
+    const { email, token } = data;
     try {
       const response = await AuthService.getuser(email, token);
       return response;
@@ -54,22 +106,35 @@ export const userSlice = createSlice({
     removeOnLogout(state) {
       if (state.userDetail.id) {
         state.userDetail = {} as CurrentUserType;
+        localStorage.clear();
       }
     },
   },
   extraReducers: (builder) => {
     builder
+
+      // LOGIN
       .addCase(login.pending, (state) => {
         state.status = "loading";
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.userDetail = action.payload;
+        // for some reason we get 'fulfilled' state even when there's error
+        // in that case error is returned in payload, so we check if there's error message
+        if (action.payload.response?.data?.message) {
+          state.userDetail = {} as CurrentUserType;
+          state.status = "failed";
+          state.error = action.payload.response?.data?.message || null;
+        } else {
+          state.userDetail = action.payload;
+          state.status = "idle";
+        }
       })
       .addCase(login.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
       })
+
+      // GET USER
       .addCase(getUser.pending, (state) => {
         state.status = "loading";
       })
@@ -78,6 +143,19 @@ export const userSlice = createSlice({
         state.userDetail = action.payload;
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message || null;
+      })
+
+      // REGISTER
+      .addCase(register.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.status = "idle";
+        // state.userDetail = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || null;
       });

@@ -10,15 +10,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PageHeadline } from "../components/PageHeadline";
 import { getPickedDaysConfirmRoutePath } from "../routes/routePaths";
 import { PickedDayType } from "../types/brigadaTypes";
-import {
-  changeDayInStorageList,
-  removeFromStorageList,
-} from "../utils/storageUtils";
 import Alert from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   addPickedDay,
+  changePickedDay,
   pickedDaysSelector,
+  removeRequest,
   requestsSelector,
 } from "../slices/user";
 
@@ -31,12 +29,12 @@ const PickedDayPage: FC<Props> = () => {
   const { date: selectedDate } = params;
 
   const pickedDays = useAppSelector(pickedDaysSelector);
-  const reqestsUser = useAppSelector(requestsSelector);
+  const requests = useAppSelector(requestsSelector);
 
   const alreadyPicked = pickedDays.find(
     (pickedDay) => pickedDay.day === selectedDate
   );
-  const alreadyRequested = reqestsUser.find(
+  const alreadyRequested = requests.find(
     (pickedDay) => pickedDay.day === selectedDate
   );
 
@@ -95,14 +93,16 @@ const PickedDayPage: FC<Props> = () => {
     };
 
     const changeRequestToPicked = () => {
-      dispatch(addPickedDay(pickedDay));
-      removeFromStorageList("reqestsUser", pickedDay);
+      if (alreadyRequested) {
+        dispatch(addPickedDay(pickedDay));
+        dispatch(removeRequest(alreadyRequested));
+      }
     };
 
     alreadyRequested
       ? changeRequestToPicked()
       : alreadyPicked
-      ? changeDayInStorageList("pickedDays", pickedDay)
+      ? dispatch(changePickedDay(pickedDay))
       : dispatch(addPickedDay(pickedDay));
 
     navigate(getPickedDaysConfirmRoutePath());

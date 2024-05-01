@@ -4,7 +4,7 @@ import { RootState } from "../redux/store";
 import AuthService from "../services/authService";
 import RequestService from "../services/requestService";
 import { NameType } from "../types/commonTypes";
-import { PickedDayType } from "../types/brigadaTypes";
+import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import { Dayjs } from "dayjs";
 
 export interface RequestBodyUser {
@@ -26,11 +26,12 @@ export interface RequestBodyRegister {
   password: string;
 }
 export interface RequestBodyRequest {
+  id?: number;
   userId: number;
   day: string;
   timeStart: Dayjs | string;
   timeEnd: Dayjs | string;
-  wholeDay: boolean;
+  wholeDay: string;
 }
 export interface UserState {
   userDetail: {
@@ -39,19 +40,13 @@ export interface UserState {
     error: string | null;
   };
   requestsDetail: {
-    requests: RequestBodyRequest[];
+    requests: RequestType[];
     status: "init" | "loading" | "success" | "failed";
+    loaded?: number | null;
     error: string | null;
   };
   pickedDays: PickedDayType[];
 }
-// export interface UserState {
-//   userDetail: CurrentUserType;
-//   pickedDays: PickedDayType[];
-//   requests: RequestBodyRequest[];
-//   status: "idle" | "loading" | "failed";
-//   error: string | null;
-// }
 
 const initialState: UserState = {
   userDetail: {
@@ -62,6 +57,7 @@ const initialState: UserState = {
   requestsDetail: {
     requests: [],
     status: "init",
+    loaded: null,
     error: null,
   },
   pickedDays: [],
@@ -127,7 +123,7 @@ export const getUser = createAsyncThunk(
 
 export const addRequest = createAsyncThunk(
   "request/addReqest",
-  async (request: RequestBodyRequest) => {
+  async (request: RequestType) => {
     try {
       const response = await RequestService.createNewRequest(request);
       return response;
@@ -154,6 +150,18 @@ export const getUserRequests = createAsyncThunk(
   async (userId: number) => {
     try {
       const response = await RequestService.getUserRequests(userId);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const removeRequest = createAsyncThunk(
+  "request/removeRequest",
+  async (request: RequestType) => {
+    try {
+      const response = await RequestService.removeRequest(request);
       return response;
     } catch (error) {
       return error;
@@ -257,15 +265,22 @@ export const userSlice = createSlice({
         state.requestsDetail.error = null;
       })
       .addCase(addRequest.fulfilled, (state, action) => {
-        state.requestsDetail.status = "success";
-        state.requestsDetail.requests = [
-          ...state.requestsDetail.requests,
-          action.payload,
-        ];
-        state.pickedDays = state.pickedDays.filter((pickedDay) => {
-          return pickedDay.day !== action.payload.day;
-        });
-        state.requestsDetail.error = null;
+        if (action.payload.response?.data?.message) {
+          state.requestsDetail.status = "failed";
+          state.requestsDetail.requests = [];
+          state.requestsDetail.error =
+            action.payload.response?.data?.message || null;
+        } else {
+          state.requestsDetail.status = "success";
+          state.requestsDetail.requests = [
+            ...state.requestsDetail.requests,
+            action.payload,
+          ];
+          state.pickedDays = state.pickedDays.filter(
+            (pickedDay) => pickedDay.day !== action.payload.day
+          );
+          state.requestsDetail.error = null;
+        }
       })
       .addCase(addRequest.rejected, (state, action) => {
         state.requestsDetail.status = "failed";
@@ -278,9 +293,25 @@ export const userSlice = createSlice({
         state.requestsDetail.error = null;
       })
       .addCase(getAllRequests.fulfilled, (state, action) => {
-        state.requestsDetail.requests = action.payload;
-        state.requestsDetail.status = "success";
-        state.requestsDetail.error = null;
+        if (action.payload.response?.data?.message) {
+          state.requestsDetail.status = "failed";
+          state.requestsDetail.requests = [];
+          state.requestsDetail.error =
+            action.payload.response?.data?.message || null;
+        } else {
+          state.requestsDetail.status = "success";
+          state.requestsDetail.requests = action.payload.map(
+            (request: RequestBodyRequest): RequestType => ({
+              id: request.id,
+              userId: request.userId,
+              day: request.day,
+              timeStart: request.timeStart,
+              timeEnd: request.timeEnd,
+              wholeDay: request.wholeDay === "1" ? true : false,
+            })
+          );
+          state.requestsDetail.error = null;
+        }
       })
       .addCase(getAllRequests.rejected, (state, action) => {
         state.requestsDetail.status = "failed";
@@ -299,7 +330,16 @@ export const userSlice = createSlice({
           state.requestsDetail.error =
             action.payload.response?.data?.message || null;
         } else {
-          state.requestsDetail.requests = action.payload;
+          state.requestsDetail.requests = action.payload.map(
+            (request: RequestBodyRequest): RequestType => ({
+              id: request.id,
+              userId: request.userId,
+              day: request.day,
+              timeStart: request.timeStart,
+              timeEnd: request.timeEnd,
+              wholeDay: request.wholeDay === "1" ? true : false,
+            })
+          );
           state.requestsDetail.status = "success";
         }
         state.requestsDetail.error = null;
@@ -307,6 +347,33 @@ export const userSlice = createSlice({
       .addCase(getUserRequests.rejected, (state, action) => {
         state.requestsDetail.status = "failed";
         state.requestsDetail.error = action.error.message || null;
+      })
+
+      // REMOVE REQUEST
+      .addCase(removeRequest.pending, (state, action) => {
+        state.requestsDetail.status = "loading";
+        state.requestsDetail.loaded = action.meta.arg.id;
+        state.requestsDetail.error = null;
+      })
+      .addCase(removeRequest.fulfilled, (state, action) => {
+        if (action.payload.response?.data?.message) {
+          state.requestsDetail.status = "failed";
+          state.requestsDetail.error =
+            action.payload.response?.data?.message || null;
+          state.requestsDetail.loaded = null;
+        } else {
+          state.requestsDetail.requests = state.requestsDetail.requests.filter(
+            (request: any) => request.id !== action.meta.arg.id
+          );
+          state.requestsDetail.status = "success";
+          state.requestsDetail.error = null;
+          state.requestsDetail.loaded = null;
+        }
+      })
+      .addCase(removeRequest.rejected, (state, action) => {
+        state.requestsDetail.status = "failed";
+        state.requestsDetail.error = action.error.message || null;
+        state.requestsDetail.loaded = null;
       });
   },
 });
@@ -330,11 +397,14 @@ export const userErrorSelector = (state: RootState): string | null =>
 export const pickedDaysSelector = (state: RootState): PickedDayType[] =>
   state.user?.pickedDays;
 
-export const requestsSelector = (state: RootState): RequestBodyRequest[] =>
+export const requestsSelector = (state: RootState): RequestType[] =>
   state.user?.requestsDetail.requests;
 
 export const requestsLoadingSelector = (state: RootState): string =>
   state.user?.requestsDetail.status;
+
+export const requestsLoadedIdSelector = (state: RootState): number | null =>
+  state.user?.requestsDetail.loaded || null;
 
 export const requestsErrorSelector = (state: RootState): string | null =>
   state.user?.requestsDetail.error;

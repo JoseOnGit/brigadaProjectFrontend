@@ -14,7 +14,7 @@ const CalendarPage: FC = () => {
   const navigate = useNavigate();
 
   const pickedDays = useAppSelector(pickedDaysSelector);
-  const reqestsUser = useAppSelector(requestsSelector);
+  const requests = useAppSelector(requestsSelector);
 
   const handleDateSelect = (value: any) => {
     const selectedDate = getDateFormatForURL(value);
@@ -29,8 +29,8 @@ const CalendarPage: FC = () => {
         bottomSpace="3rem"
       />
 
-      {reqestsUser.length !== 0 && (
-        <PickedDaysList pickedDays={reqestsUser} type="confirmed" />
+      {requests.length !== 0 && (
+        <PickedDaysList pickedDays={requests} type="confirmed" />
       )}
       {pickedDays.length !== 0 && (
         <PickedDaysList pickedDays={pickedDays} type="selected" />

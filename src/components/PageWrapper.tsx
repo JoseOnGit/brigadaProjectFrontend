@@ -15,15 +15,15 @@ import {
 } from "../routes/routePaths";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
+  getAllRequests,
   getUser,
   getUserRequests,
   requestsLoadingSelector,
-  requestsSelector,
   userErrorSelector,
   userLoadingSelector,
   userSelector,
 } from "../slices/user";
-import { MAX_CONTENT_WIDTH } from "../constants/commonConstants";
+import { MAX_CONTENT_WIDTH, ROLE } from "../constants/commonConstants";
 
 // < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
@@ -64,7 +64,7 @@ const PageWrapper: FC = () => {
     // but we have accessToken in localStorage,
     // then refetch user data.
     // (eg. when we refresh page)
-    if (currentUserInStorage && !currentUser.email) {
+    if (currentUserInStorage && !currentUser?.email) {
       dispatch(
         getUser({
           email: currentUserInStorage.email,
@@ -80,11 +80,13 @@ const PageWrapper: FC = () => {
   useEffect(() => {
     // when we refetch user we have to refetch also requests
     if (
-      currentUser.id !== undefined &&
+      currentUser?.id !== undefined &&
       userRrequestsLoading !== "loading" &&
       userWasRefetched
     ) {
-      dispatch(getUserRequests(currentUser.id));
+      currentUser.roles.includes(ROLE.MODERATOR)
+        ? dispatch(getAllRequests())
+        : dispatch(getUserRequests(currentUser.id));
       setUserWasRefetched(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,12 +109,14 @@ const PageWrapper: FC = () => {
     // if there IS current user,
     // then don't let him see pages like 'login' or 'register'
     // and always redirect to 'dashboard' of user
-    if (currentUser.id && isPublicPage && !currentUserError) {
+    if (currentUser?.id && isPublicPage && !currentUserError) {
       navigate(getDashboardRoutePath());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, currentUserInStorage]);
+
+  // as it always refresh window after login, it also always fetch user and requests
 
   return (
     <>

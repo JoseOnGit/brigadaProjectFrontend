@@ -28,5 +28,15 @@ class RequestService {
         return response.data;
       });
   }
+  removeRequest(request) {
+    return axios
+      .delete(API_URL + "/request/remove", {
+        data: request,
+        headers: authHeader(),
+      })
+      .then((response) => {
+        return response.data;
+      });
+  }
 }
 export default RequestService = new RequestService();

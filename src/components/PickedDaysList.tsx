@@ -5,6 +5,12 @@ import { PickedDay } from "./PickedDay";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { PickedDayVariant } from "../types/commonTypes";
+import { useAppSelector } from "../redux/hooks";
+import {
+  requestsLoadedIdSelector,
+  requestsLoadingSelector,
+} from "../slices/user";
+import { Loader } from "./Loader";
 
 type Props = {
   pickedDays: PickedDayType[];
@@ -19,6 +25,9 @@ const PickedDaysListWrapper = styled("div")({
 // STYLED COMPONENTS >
 
 const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
+  const requestsLoading = useAppSelector(requestsLoadingSelector);
+  const requestsLoaded = useAppSelector(requestsLoadedIdSelector);
+
   return (
     <PickedDaysListWrapper>
       <Typography
@@ -33,13 +42,17 @@ const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
           : TXT.pickedDaysConfirmPage.labelRequest}
       </Typography>
 
-      {pickedDays
-        // .sort((a: PickedDayType, b: PickedDayType) => {
-        //   return dayjs(a.day).valueOf() - dayjs(b.day).valueOf();
-        // })
-        .map((day, index) => (
-          <PickedDay key={index} pickedDay={day} type={type} />
-        ))}
+      {requestsLoading === "loading" && !requestsLoaded ? (
+        <Loader />
+      ) : (
+        pickedDays
+          // .sort((a: PickedDayType, b: PickedDayType) => {
+          //   return dayjs(a.day).valueOf() - dayjs(b.day).valueOf();
+          // })
+          .map((day, index) => (
+            <PickedDay key={index} pickedDay={day} type={type} />
+          ))
+      )}
     </PickedDaysListWrapper>
   );
 };

@@ -24,15 +24,14 @@ const DashboardUser: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
 
   const pickedDays = useAppSelector(pickedDaysSelector);
-  const reqestsUser = useAppSelector(requestsSelector);
-  console.log("%c⧭ reqestsUser ", "color: #00b300", reqestsUser);
+  const requests = useAppSelector(requestsSelector);
 
   const today = getDateFormatForURL(dayjs());
 
   const isPickedToday = !!pickedDays?.find(
     (pickedDay) => pickedDay.day === today
   );
-  const isReqestedToday = !!reqestsUser?.find(
+  const isReqestedToday = !!requests?.find(
     (pickedDay) => pickedDay.day === today
   );
 
@@ -40,8 +39,8 @@ const DashboardUser: FC<Props> = ({ currentUser }) => {
     <div>
       <DashboardUserProfile currentUser={currentUser} />
 
-      {reqestsUser.length !== 0 && (
-        <PickedDaysList pickedDays={reqestsUser} type="confirmed" />
+      {requests.length !== 0 && (
+        <PickedDaysList pickedDays={requests} type="confirmed" />
       )}
       {pickedDays.length !== 0 && (
         <PickedDaysList pickedDays={pickedDays} type="selected" />

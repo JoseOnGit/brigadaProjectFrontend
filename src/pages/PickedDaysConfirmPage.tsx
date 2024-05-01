@@ -4,19 +4,19 @@ import { PageHeadline } from "../components/PageHeadline";
 import { PickedDaysList } from "../components/PickedDaysList";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { addToStorageList, removeStorageList } from "../utils/storageUtils";
 import { RequestType } from "../types/brigadaTypes";
 import {
   getCalendarRoutePath,
   getSuccessRoutePath,
 } from "../routes/routePaths";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import { userSelector, pickedDaysSelector } from "../slices/user";
-import { useAppSelector } from "../redux/hooks";
+import { userSelector, pickedDaysSelector, addRequest } from "../slices/user";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 
 type Props = {};
 
 const PickedDaysConfirmPage: FC<Props> = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const currentUser = useAppSelector(userSelector);
@@ -30,15 +30,15 @@ const PickedDaysConfirmPage: FC<Props> = () => {
   }, [pickedDays]);
 
   const handleSubmit = () => {
-    const userRequest: RequestType[] = pickedDays.map((pickedDay) => {
+    const userRequests: RequestType[] = pickedDays.map((pickedDay) => {
       return {
         userId: currentUser.id,
         ...pickedDay,
       };
     });
 
-    userRequest.map((request) => addToStorageList("reqestsUser", request));
-    removeStorageList("pickedDays");
+    console.log("%c⧭ userRequests ", "color: #d90000", userRequests);
+    userRequests.map((request) => dispatch(addRequest(request)));
     navigate(getSuccessRoutePath("confirmed"));
   };
 

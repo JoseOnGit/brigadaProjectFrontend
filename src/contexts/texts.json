@@ -107,7 +107,7 @@
     },
     "message": {
       "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou žádost o brigádu",
-      "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádu. Změnu musíš potvrdit a poslat novou správu."
+      "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádu. Žádost bude zrušená. Změnu pak musíš potvrdit a poslat novou správu."
     },
     "submitButton": "Pokračovat"
   },

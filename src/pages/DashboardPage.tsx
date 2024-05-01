@@ -24,13 +24,13 @@ const DashboardPage: FC = () => {
 
   // in case we refresh page we refetch user data,
   // untill it's done we show Loader
-  if (!currentUser.id) {
+  if (!currentUser?.id) {
     return <Loader />;
   }
 
   return (
     <Dashboard>
-      {currentUser.roles.includes(ROLE.MODERATOR) ? (
+      {currentUser?.roles.includes(ROLE.MODERATOR) ? (
         <DashboardStore currentUser={currentUser} />
       ) : (
         <DashboardUser currentUser={currentUser} />

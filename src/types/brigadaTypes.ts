@@ -1,6 +1,7 @@
 import { Dayjs } from "dayjs";
 
 export type PickedDayType = {
+  id?: number;
   day: string;
   timeStart: Dayjs | string;
   timeEnd: Dayjs | string;
@@ -8,7 +9,8 @@ export type PickedDayType = {
 };
 
 export type RequestType = {
-  userId: number;
+  id?: number;
+  userId?: number;
   day: string;
   timeStart: Dayjs | string;
   timeEnd: Dayjs | string;

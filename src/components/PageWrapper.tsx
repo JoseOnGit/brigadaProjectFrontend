@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MainNavigation } from "./MainNavigation";
 import AppBar from "@mui/material/AppBar";
@@ -15,12 +15,15 @@ import {
 } from "../routes/routePaths";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
+  getAllRequests,
   getUser,
+  getUserRequests,
+  requestsLoadingSelector,
   userErrorSelector,
   userLoadingSelector,
   userSelector,
 } from "../slices/user";
-import { MAX_CONTENT_WIDTH } from "../constants/commonConstants";
+import { MAX_CONTENT_WIDTH, ROLE } from "../constants/commonConstants";
 
 // < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
@@ -45,8 +48,11 @@ const PageWrapper: FC = () => {
   const currentUser = useAppSelector(userSelector);
   const currentUserLoading = useAppSelector(userLoadingSelector);
   const currentUserError = useAppSelector(userErrorSelector);
+  const userRrequestsLoading = useAppSelector(requestsLoadingSelector);
 
   const currentUserInStorage = AuthService.getCurrentUserFromStorage();
+
+  const [userWasRefetched, setUserWasRefetched] = useState(false);
 
   const isPublicPage =
     location.pathname === getLoginRoutePath() ||
@@ -57,16 +63,34 @@ const PageWrapper: FC = () => {
     // if currentUser is not in Redux,
     // but we have accessToken in localStorage,
     // then refetch user data.
-    if (currentUserInStorage && !currentUser.email) {
+    // (eg. when we refresh page)
+    if (currentUserInStorage && !currentUser?.email) {
       dispatch(
         getUser({
           email: currentUserInStorage.email,
           token: currentUserInStorage.accessToken,
         })
       );
+      setUserWasRefetched(true);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    // when we refetch user we have to refetch also requests
+    if (
+      currentUser?.id !== undefined &&
+      userRrequestsLoading !== "loading" &&
+      userWasRefetched
+    ) {
+      currentUser.roles.includes(ROLE.MODERATOR)
+        ? dispatch(getAllRequests())
+        : dispatch(getUserRequests(currentUser.id));
+      setUserWasRefetched(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, userRrequestsLoading, userWasRefetched]);
 
   useEffect(() => {
     // if there IS NO current user in locale storage,
@@ -85,12 +109,14 @@ const PageWrapper: FC = () => {
     // if there IS current user,
     // then don't let him see pages like 'login' or 'register'
     // and always redirect to 'dashboard' of user
-    if (currentUser.id && isPublicPage && !currentUserError) {
+    if (currentUser?.id && isPublicPage && !currentUserError) {
       navigate(getDashboardRoutePath());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, currentUserInStorage]);
+
+  // as it always refresh window after login, it also always fetch user and requests
 
   return (
     <>
@@ -111,8 +137,6 @@ const PageWrapper: FC = () => {
       </AppBar>
 
       <ContentWrapper>
-        {/* Show Loader while user data is refetched */}
-        {/* {!currentUser.id && !isPublicPage ? <Loader /> : <Outlet />} */}
         <Outlet />
       </ContentWrapper>
     </>

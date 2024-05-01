@@ -32,27 +32,39 @@ export interface RequestBodyRequest {
   timeEnd: Dayjs | string;
   wholeDay: boolean;
 }
-export type ErrorPayload = {
-  register: {
-    data: {
-      message: string;
-    };
-  };
-};
 export interface UserState {
-  userDetail: CurrentUserType;
+  userDetail: {
+    user: CurrentUserType;
+    status: "init" | "loading" | "success" | "failed";
+    error: string | null;
+  };
+  requestsDetail: {
+    requests: RequestBodyRequest[];
+    status: "init" | "loading" | "success" | "failed";
+    error: string | null;
+  };
   pickedDays: PickedDayType[];
-  requests: RequestBodyRequest[];
-  status: "idle" | "loading" | "failed";
-  error: string | null;
 }
+// export interface UserState {
+//   userDetail: CurrentUserType;
+//   pickedDays: PickedDayType[];
+//   requests: RequestBodyRequest[];
+//   status: "idle" | "loading" | "failed";
+//   error: string | null;
+// }
 
 const initialState: UserState = {
-  userDetail: {} as CurrentUserType,
+  userDetail: {
+    user: {} as CurrentUserType,
+    status: "init",
+    error: null,
+  },
+  requestsDetail: {
+    requests: [],
+    status: "init",
+    error: null,
+  },
   pickedDays: [],
-  requests: [],
-  status: "idle",
-  error: null,
 };
 
 export const login = createAsyncThunk(
@@ -154,8 +166,8 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     removeOnLogout(state) {
-      if (state.userDetail.id) {
-        state.userDetail = {} as CurrentUserType;
+      if (state.userDetail.user.id) {
+        state.userDetail.user = {} as CurrentUserType;
         localStorage.clear();
       }
     },
@@ -181,104 +193,120 @@ export const userSlice = createSlice({
 
       // LOGIN
       .addCase(login.pending, (state) => {
-        state.status = "loading";
+        state.userDetail.status = "loading";
+        state.userDetail.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         // for some reason we get 'fulfilled' state even when there's error
         // in that case error is returned in payload, so we check if there's error message
         if (action.payload.response?.data?.message) {
-          state.userDetail = {} as CurrentUserType;
-          state.status = "failed";
-          state.error = action.payload.response?.data?.message || null;
+          state.userDetail.user = {} as CurrentUserType;
+          state.userDetail.status = "failed";
+          state.userDetail.error =
+            action.payload.response?.data?.message || null;
         } else {
           state.userDetail = action.payload;
-          state.status = "idle";
+          state.userDetail.status = "success";
+          state.userDetail.error = null;
         }
       })
       .addCase(login.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        state.userDetail.status = "failed";
+        state.userDetail.error = action.error.message || null;
       })
 
       // GET USER
       .addCase(getUser.pending, (state) => {
-        state.status = "loading";
+        state.userDetail.status = "loading";
+        state.userDetail.error = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         if (action.payload.response?.data?.message) {
-          state.userDetail = {} as CurrentUserType;
-          state.status = "failed";
-          state.error = action.payload.response?.data?.message || null;
+          state.userDetail.user = {} as CurrentUserType;
+          state.userDetail.status = "failed";
+          state.userDetail.error =
+            action.payload.response?.data?.message || null;
         } else {
-          state.userDetail = action.payload;
-          state.status = "idle";
+          state.userDetail.user = action.payload;
+          state.userDetail.status = "success";
+          state.userDetail.error = null;
         }
-        state.status = "idle";
-        state.userDetail = action.payload;
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        state.userDetail.status = "failed";
+        state.userDetail.error = action.error.message || null;
       })
 
       // REGISTER
       .addCase(register.pending, (state) => {
-        state.status = "loading";
+        state.userDetail.status = "loading";
+        state.userDetail.error = null;
       })
       .addCase(register.fulfilled, (state) => {
-        state.status = "idle";
+        state.userDetail.status = "success";
+        state.userDetail.error = null;
       })
       .addCase(register.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        state.userDetail.status = "failed";
+        state.userDetail.error = action.error.message || null;
       })
 
       // ADD REQUEST
       .addCase(addRequest.pending, (state) => {
-        state.status = "loading";
+        state.requestsDetail.status = "loading";
+        state.requestsDetail.error = null;
       })
       .addCase(addRequest.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.requests = [...state.requests, action.payload];
+        state.requestsDetail.status = "success";
+        state.requestsDetail.requests = [
+          ...state.requestsDetail.requests,
+          action.payload,
+        ];
         state.pickedDays = state.pickedDays.filter((pickedDay) => {
           return pickedDay.day !== action.payload.day;
         });
+        state.requestsDetail.error = null;
       })
       .addCase(addRequest.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        state.requestsDetail.status = "failed";
+        state.requestsDetail.error = action.error.message || null;
       })
 
       // GET ALL REQUEST
       .addCase(getAllRequests.pending, (state) => {
-        state.status = "loading";
+        state.requestsDetail.status = "loading";
+        state.requestsDetail.error = null;
       })
       .addCase(getAllRequests.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.requests = action.payload;
+        state.requestsDetail.requests = action.payload;
+        state.requestsDetail.status = "success";
+        state.requestsDetail.error = null;
       })
       .addCase(getAllRequests.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        state.requestsDetail.status = "failed";
+        state.requestsDetail.error = action.error.message || null;
       })
 
       // GET USER REQUEST
       .addCase(getUserRequests.pending, (state) => {
-        state.status = "loading";
+        state.requestsDetail.status = "loading";
+        state.requestsDetail.error = null;
       })
       .addCase(getUserRequests.fulfilled, (state, action) => {
         if (action.payload.response?.data?.message) {
-          state.requests = [];
-          state.status = "failed";
-          state.error = action.payload.response?.data?.message || null;
+          state.requestsDetail.requests = [];
+          state.requestsDetail.status = "failed";
+          state.requestsDetail.error =
+            action.payload.response?.data?.message || null;
         } else {
-          state.requests = action.payload;
-          state.status = "idle";
+          state.requestsDetail.requests = action.payload;
+          state.requestsDetail.status = "success";
         }
+        state.requestsDetail.error = null;
       })
       .addCase(getUserRequests.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message || null;
+        state.requestsDetail.status = "failed";
+        state.requestsDetail.error = action.error.message || null;
       });
   },
 });
@@ -291,24 +319,24 @@ export const {
 } = userSlice.actions;
 
 export const userSelector = (state: RootState): CurrentUserType =>
-  state.user?.userDetail;
+  state.user?.userDetail.user;
 
 export const userLoadingSelector = (state: RootState): string =>
-  state.user?.status;
+  state.user?.userDetail.status;
 
 export const userErrorSelector = (state: RootState): string | null =>
-  state.user?.error;
+  state.user?.userDetail.error;
 
 export const pickedDaysSelector = (state: RootState): PickedDayType[] =>
   state.user?.pickedDays;
 
 export const requestsSelector = (state: RootState): RequestBodyRequest[] =>
-  state.user?.requests;
+  state.user?.requestsDetail.requests;
 
 export const requestsLoadingSelector = (state: RootState): string =>
-  state.user?.status;
+  state.user?.requestsDetail.status;
 
 export const requestsErrorSelector = (state: RootState): string | null =>
-  state.user?.error;
+  state.user?.requestsDetail.error;
 
 export default userSlice.reducer;

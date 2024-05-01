@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #26: Branch: 14-send-request-by-user-to-database: Redux refactor](#commit-26-branch-14-send-request-by-user-to-database-redux-refactor)
   - [Commit #25: Branch: 14-send-request-by-user-to-database: Requests added](#commit-25-branch-14-send-request-by-user-to-database-requests-added)
   - [Commit #24: Branch: 12-add-redux-instead-of-localStore: Redux - PickedDays](#commit-24-branch-12-add-redux-instead-of-localstore-redux---pickeddays)
   - [Commit #23: Branch: 12-add-redux-instead-of-localStore: Redux - Registration](#commit-23-branch-12-add-redux-instead-of-localstore-redux---registration)
@@ -86,6 +87,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #26: Branch: 14-send-request-by-user-to-database: Redux refactor
 
 ### Commit #25: Branch: 14-send-request-by-user-to-database: Requests added
 

@@ -8,15 +8,13 @@ import {
   getPickedDayRoutePath,
 } from "../routes/routePaths";
 import { PickedDaysList } from "./PickedDaysList";
-import { getFromStorage } from "../utils/storageUtils";
-import { RequestType } from "../types/brigadaTypes";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 import { getDateFormatForURL } from "../utils/commonUtils";
 import { CurrentUserType } from "../types/userTypes";
 import { useAppSelector } from "../redux/hooks";
-import { pickedDaysSelector } from "../slices/user";
+import { pickedDaysSelector, requestsSelector } from "../slices/user";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -26,14 +24,15 @@ const DashboardUser: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
 
   const pickedDays = useAppSelector(pickedDaysSelector);
-  const reqestsUser: RequestType[] = getFromStorage("reqestsUser");
+  const reqestsUser = useAppSelector(requestsSelector);
+  console.log("%c⧭ reqestsUser ", "color: #00b300", reqestsUser);
 
   const today = getDateFormatForURL(dayjs());
 
-  const isPickedToday = !!pickedDays.find(
+  const isPickedToday = !!pickedDays?.find(
     (pickedDay) => pickedDay.day === today
   );
-  const isReqestedToday = !!reqestsUser.find(
+  const isReqestedToday = !!reqestsUser?.find(
     (pickedDay) => pickedDay.day === today
   );
 

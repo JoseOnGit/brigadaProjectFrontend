@@ -34,7 +34,7 @@ const LoginPage: FC = () => {
       // in that case error is returned in payload, so we check if there's error message
       if (!response.payload.response?.data?.message) {
         navigate(getSuccessRoutePath("login"));
-        // window.location.reload();
+        window.location.reload();
       }
     });
   };

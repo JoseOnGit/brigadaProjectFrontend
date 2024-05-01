@@ -9,15 +9,18 @@ import { FormSubmitButton } from "../components/FormSubmitButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeadline } from "../components/PageHeadline";
 import { getPickedDaysConfirmRoutePath } from "../routes/routePaths";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import { PickedDayType } from "../types/brigadaTypes";
 import {
   changeDayInStorageList,
-  getFromStorage,
   removeFromStorageList,
 } from "../utils/storageUtils";
 import Alert from "@mui/material/Alert";
-import { useAppDispatch } from "../redux/hooks";
-import { addPickedDay } from "../slices/user";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  addPickedDay,
+  pickedDaysSelector,
+  requestsSelector,
+} from "../slices/user";
 
 type Props = {};
 
@@ -27,8 +30,8 @@ const PickedDayPage: FC<Props> = () => {
   const params = useParams();
   const { date: selectedDate } = params;
 
-  const pickedDays: PickedDayType[] = getFromStorage("pickedDays");
-  const reqestsUser: RequestType[] = getFromStorage("reqestsUser");
+  const pickedDays = useAppSelector(pickedDaysSelector);
+  const reqestsUser = useAppSelector(requestsSelector);
 
   const alreadyPicked = pickedDays.find(
     (pickedDay) => pickedDay.day === selectedDate

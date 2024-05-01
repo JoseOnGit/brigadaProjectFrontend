@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { MainNavigation } from "./MainNavigation";
 import AppBar from "@mui/material/AppBar";
@@ -16,6 +16,9 @@ import {
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   getUser,
+  getUserRequests,
+  requestsLoadingSelector,
+  requestsSelector,
   userErrorSelector,
   userLoadingSelector,
   userSelector,
@@ -45,8 +48,11 @@ const PageWrapper: FC = () => {
   const currentUser = useAppSelector(userSelector);
   const currentUserLoading = useAppSelector(userLoadingSelector);
   const currentUserError = useAppSelector(userErrorSelector);
+  const userRrequestsLoading = useAppSelector(requestsLoadingSelector);
 
   const currentUserInStorage = AuthService.getCurrentUserFromStorage();
+
+  const [userWasRefetched, setUserWasRefetched] = useState(false);
 
   const isPublicPage =
     location.pathname === getLoginRoutePath() ||
@@ -57,6 +63,7 @@ const PageWrapper: FC = () => {
     // if currentUser is not in Redux,
     // but we have accessToken in localStorage,
     // then refetch user data.
+    // (eg. when we refresh page)
     if (currentUserInStorage && !currentUser.email) {
       dispatch(
         getUser({
@@ -64,9 +71,24 @@ const PageWrapper: FC = () => {
           token: currentUserInStorage.accessToken,
         })
       );
+      setUserWasRefetched(true);
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    // when we refetch user we have to refetch also requests
+    if (
+      currentUser.id !== undefined &&
+      userRrequestsLoading !== "loading" &&
+      userWasRefetched
+    ) {
+      dispatch(getUserRequests(currentUser.id));
+      setUserWasRefetched(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, userRrequestsLoading, userWasRefetched]);
 
   useEffect(() => {
     // if there IS NO current user in locale storage,
@@ -111,8 +133,6 @@ const PageWrapper: FC = () => {
       </AppBar>
 
       <ContentWrapper>
-        {/* Show Loader while user data is refetched */}
-        {/* {!currentUser.id && !isPublicPage ? <Loader /> : <Outlet />} */}
         <Outlet />
       </ContentWrapper>
     </>

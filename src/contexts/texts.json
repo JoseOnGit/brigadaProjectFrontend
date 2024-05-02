@@ -92,7 +92,8 @@
       "userList": {
         "label": "Volní brigádnici",
         "detail": {
-          "workTime": "Čas brigády",
+          "requestDate": "Datum brigády",
+          "requestTime": "Čas brigády",
           "base": "Domovský obchod",
           "level": "'Level' dovedností",
           "email": "Email",

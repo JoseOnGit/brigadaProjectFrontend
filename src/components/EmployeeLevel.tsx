@@ -167,7 +167,7 @@ const disabledColor = "#00000012";
 
 type Props = {
   level: LevelNumberType;
-  size?: SizeType;
+  size?: SizeType | string;
   iconSize?: any;
   labelSize?: SizeType;
   labelPosition?: PositionsType;
@@ -249,7 +249,7 @@ const EmployeeLevel: FC<Props> = ({
     sizeOfIcon !== "large";
 
   // Label - 'labelSize' overwrites 'size' prop.
-  const getCorrectLabelSizeType = (size: SizeType) =>
+  const getCorrectLabelSizeType = (size: SizeType | string) =>
     fontSizes.find((fontSize) => fontSize.type === size)?.fontSize;
 
   const sizeOfLabel = labelSize

@@ -10,9 +10,10 @@ type Props = {
   level: number;
   col?: boolean;
   labelOn?: boolean;
+  size?: string;
 };
 
-const EmployeeLevelRating: FC<Props> = ({ level, col, labelOn }) => {
+const EmployeeLevelRating: FC<Props> = ({ level, col, labelOn, size }) => {
   // < STYLED COMPONENTS
   const LevelRatingWrapper = styled("div")({
     display: "flex",
@@ -30,6 +31,7 @@ const EmployeeLevelRating: FC<Props> = ({ level, col, labelOn }) => {
           level={i as LevelNumberType}
           disabled={i > level}
           hideLabel={!labelOn}
+          size={size ? size : "medium"}
         />
       );
     }

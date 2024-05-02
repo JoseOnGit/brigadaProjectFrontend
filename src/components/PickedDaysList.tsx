@@ -28,6 +28,9 @@ const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
   const requestsLoading = useAppSelector(requestsLoadingSelector);
   const requestsLoaded = useAppSelector(requestsLoadedIdSelector);
 
+  // we can't sort origin array 'pickedDays' - it runs TypeScript error
+  const newPickedDays = [...pickedDays];
+
   return (
     <PickedDaysListWrapper>
       <Typography
@@ -45,10 +48,10 @@ const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
       {requestsLoading === "loading" && !requestsLoaded ? (
         <Loader />
       ) : (
-        pickedDays
-          // .sort((a: PickedDayType, b: PickedDayType) => {
-          //   return dayjs(a.day).valueOf() - dayjs(b.day).valueOf();
-          // })
+        newPickedDays
+          .sort((a: PickedDayType, b: PickedDayType) =>
+            a.day.localeCompare(b.day)
+          )
           .map((day, index) => (
             <PickedDay key={index} pickedDay={day} type={type} />
           ))

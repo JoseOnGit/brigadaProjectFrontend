@@ -11,7 +11,6 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import dayjs from "dayjs";
 import { ArrowDropDownIcon } from "@mui/x-date-pickers/icons";
 import { EmployeeLevelRating } from "./EmployeeLevelRating";
 import { getWorkTime } from "../utils/commonUtils";
@@ -28,7 +27,7 @@ const RequestByUserWrapper = styled("div")({
   gap: "2rem",
   width: "100%",
   minHeight: "3.6rem",
-  padding: "0.5rem",
+  padding: "0 0.5rem",
 });
 
 const NameWrapper = styled("div")({
@@ -37,13 +36,14 @@ const NameWrapper = styled("div")({
   alignItems: "flex-start",
 });
 const DetailsWrapper = styled("div")({
-  marginLeft: "0rem",
   textAlign: "left",
 });
 const LevelWrapper = styled("div")({
   marginLeft: "1rem",
-  textAlign: "left",
 });
+// const LevelNegativeWrapper = styled("div")({
+//   marginLeft: "-0.5rem",
+// });
 //  STYLED COMPONENTS >
 
 const RequestByUser: FC<Props> = ({ request, requestUser }) => {
@@ -60,7 +60,7 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
           expandIcon={<ArrowDropDownIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
-          sx={{ padding: 0, margin: 0, div: { margin: 0 } }}
+          sx={{ padding: 0, margin: 0 }}
         >
           <RequestByUserWrapper>
             <div>
@@ -78,19 +78,13 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
                 {requestUser.name} {requestUser.surname}
               </Typography>
 
-              <Typography
-                paragraph
-                sx={{ fontSize: "0.9rem", lineHeight: "0.9rem" }}
-              >
+              <Typography sx={{ fontSize: "0.9rem", lineHeight: "0.9rem" }}>
                 {requestUser.base?.name}
               </Typography>
 
-              <Typography
-                paragraph
-                sx={{ marginBottom: "0", fontWeight: "bold" }}
-              >
-                {dayjs(request.day).format("D.MMM.YYYY")}
-              </Typography>
+              {/* <LevelNegativeWrapper>
+                <EmployeeLevelRating level={requestUser.level} size={"1rem"} />
+              </LevelNegativeWrapper> */}
             </NameWrapper>
           </RequestByUserWrapper>
         </AccordionSummary>
@@ -99,7 +93,7 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
           <DetailsWrapper>
             <Typography sx={{ marginTop: "0.5rem" }}>
               <strong>
-                {TXT.dashboardPage.store.userList.detail.workTime}:
+                {TXT.dashboardPage.store.userList.detail.requestTime}:
               </strong>{" "}
               {getWorkTime(request)}
             </Typography>

@@ -12,6 +12,7 @@
   "common": {
     "back": "ZPĚT",
     "loading": "Pracuje se na tom...",
+    "wholeDay": "Celý den",
     "message": {
       "noUser": "Užívatel se nenašel.",
       "required": "Pole je povinné.",
@@ -88,6 +89,18 @@
       "todayButton": "Chci brigádu na dnes"
     },
     "store": {
+      "userList": {
+        "label": "Volní brigádnici",
+        "detail": {
+          "workTime": "Čas brigády",
+          "base": "Domovský obchod",
+          "level": "'Level' dovedností",
+          "email": "Email",
+          "phone": "Tel.",
+          "buttonCall": "Volat",
+          "buttonMail": "Napsat"
+        }
+      },
       "callToAction1": "Potřebuješ výpomoc na obchod?",
       "callToAction2": "Dej vědět všem briádnikům, možná se někdo najde...",
       "todayButton": "Chci brigádnika na dnes"
@@ -115,7 +128,6 @@
     "headline": "Vybrané brigády",
     "labelPicked": "Más zatím nepotvrzenou žádost o brigádu:",
     "labelRequest": "Nahlášená žádost o brigádu",
-    "wholeDay": "Celý den",
     "backButton": "Vybrat další brigádu",
     "submitButton": "Potvrdit a odeslat správu",
     "submitMessage": "Žádost potvrzena. Během chvíle bude na obchody odeslána správa..."

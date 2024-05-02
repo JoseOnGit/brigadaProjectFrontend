@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { FormSubmitButton } from "./FormSubmitButton";
 import { useNavigate } from "react-router-dom";
 import TXT from "../contexts/texts.json";
@@ -12,6 +12,13 @@ import dayjs from "dayjs";
 import { getDateFormatForURL } from "../utils/commonUtils";
 import { DashboardStoreProfile } from "./DashboardStoreProfile";
 import { CurrentUserType } from "../types/userTypes";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  getUserInfo,
+  requestsSelector,
+  requestsUsersSelector,
+} from "../slices/user";
+import { RequestByUserList } from "./RequestByUserList";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -19,6 +26,33 @@ type Props = {
 
 const DashboardStore: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const requests = useAppSelector(requestsSelector);
+  const requestsUsers = useAppSelector(requestsUsersSelector);
+
+  const uniqueUsers = useMemo(() => {
+    return requests
+      .map((request) => request.userId)
+      .filter((value, index, self) => self.indexOf(value) === index);
+  }, [requests]);
+
+  useEffect(() => {
+    if (uniqueUsers)
+      uniqueUsers.map((uniqueUser) => {
+        const alreadyFetchedUser =
+          requestsUsers.find(
+            (requestsUser) => requestsUser.id === uniqueUser
+          ) || ({} as CurrentUserType);
+
+        if (!alreadyFetchedUser.id) {
+          dispatch(getUserInfo(uniqueUser || 0));
+        }
+
+        return null;
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uniqueUsers]);
 
   const today = getDateFormatForURL(dayjs());
 
@@ -26,9 +60,7 @@ const DashboardStore: FC<Props> = ({ currentUser }) => {
     <div>
       <DashboardStoreProfile currentUser={currentUser} />
 
-      {/* {reqestsUser.length !== 0 && (
-        <PickedDaysList pickedDays={reqestsUser} type="confirmed" />
-      )} */}
+      {requests.length !== 0 && <RequestByUserList requests={requests} />}
 
       <Typography
         paragraph

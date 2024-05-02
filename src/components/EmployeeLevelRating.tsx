@@ -9,9 +9,10 @@ import styled from "@emotion/styled";
 type Props = {
   level: number;
   col?: boolean;
+  labelOn?: boolean;
 };
 
-const EmployeeLevelRating: FC<Props> = ({ level, col }) => {
+const EmployeeLevelRating: FC<Props> = ({ level, col, labelOn }) => {
   // < STYLED COMPONENTS
   const LevelRatingWrapper = styled("div")({
     display: "flex",
@@ -28,7 +29,7 @@ const EmployeeLevelRating: FC<Props> = ({ level, col }) => {
           key={i}
           level={i as LevelNumberType}
           disabled={i > level}
-          hideLabel
+          hideLabel={!labelOn}
         />
       );
     }

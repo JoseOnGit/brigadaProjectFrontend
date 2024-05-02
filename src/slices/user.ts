@@ -3,9 +3,12 @@ import { CurrentUserType, RegistrationUserType } from "../types/userTypes";
 import { RootState } from "../redux/store";
 import AuthService from "../services/authService";
 import RequestService from "../services/requestService";
+import StoreService from "../services/storeService";
+import UserService from "../services/userService";
 import { NameType } from "../types/commonTypes";
 import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import { Dayjs } from "dayjs";
+import { StoreApiType } from "../types/storesTypes";
 
 export interface RequestBodyUser {
   email: string;
@@ -36,11 +39,14 @@ export interface RequestBodyRequest {
 export interface UserState {
   userDetail: {
     user: CurrentUserType;
+    store: StoreApiType | null;
     status: "init" | "loading" | "success" | "failed";
     error: string | null;
   };
   requestsDetail: {
     requests: RequestType[];
+    stores: StoreApiType[];
+    users: CurrentUserType[];
     status: "init" | "loading" | "success" | "failed";
     loaded?: number | null;
     error: string | null;
@@ -51,11 +57,14 @@ export interface UserState {
 const initialState: UserState = {
   userDetail: {
     user: {} as CurrentUserType,
+    store: null,
     status: "init",
     error: null,
   },
   requestsDetail: {
     requests: [],
+    stores: [],
+    users: [],
     status: "init",
     loaded: null,
     error: null,
@@ -162,6 +171,30 @@ export const removeRequest = createAsyncThunk(
   async (request: RequestType) => {
     try {
       const response = await RequestService.removeRequest(request);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getStore = createAsyncThunk(
+  "store/getStore",
+  async (id: number) => {
+    try {
+      const response = await StoreService.getStore(id);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const getUserInfo = createAsyncThunk(
+  "user/getUserInfo",
+  async (id: number) => {
+    try {
+      const response = await UserService.getUserInfo(id);
       return response;
     } catch (error) {
       return error;
@@ -374,6 +407,57 @@ export const userSlice = createSlice({
         state.requestsDetail.status = "failed";
         state.requestsDetail.error = action.error.message || null;
         state.requestsDetail.loaded = null;
+      })
+
+      // GET STORE
+      .addCase(getStore.pending, (state, action) => {
+        state.userDetail.status = "loading";
+        state.userDetail.error = null;
+      })
+      .addCase(getStore.fulfilled, (state, action) => {
+        if (action.payload.response?.data?.message) {
+          state.userDetail.status = "failed";
+          state.userDetail.error =
+            action.payload.response?.data?.message || null;
+        } else {
+          state.userDetail.store = action.payload;
+          state.userDetail.status = "success";
+          state.userDetail.error = null;
+        }
+      })
+      .addCase(getStore.rejected, (state, action) => {
+        state.userDetail.status = "failed";
+        state.userDetail.error = action.error.message || null;
+      })
+
+      // GET USER INFO
+      .addCase(getUserInfo.pending, (state, action) => {
+        state.requestsDetail.status = "loading";
+        state.requestsDetail.error = null;
+      })
+      .addCase(getUserInfo.fulfilled, (state, action) => {
+        if (action.payload.response?.data?.message) {
+          state.requestsDetail.status = "failed";
+          state.requestsDetail.users = [
+            ...state.requestsDetail.users,
+            {
+              id: action.meta.arg,
+            } as CurrentUserType,
+          ];
+          state.requestsDetail.error =
+            action.payload.response?.data?.message || null;
+        } else {
+          state.requestsDetail.users = [
+            ...state.requestsDetail.users,
+            action.payload,
+          ];
+          state.requestsDetail.status = "success";
+          state.requestsDetail.error = null;
+        }
+      })
+      .addCase(getUserInfo.rejected, (state, action) => {
+        state.requestsDetail.status = "failed";
+        state.requestsDetail.error = action.error.message || null;
       });
   },
 });
@@ -387,10 +471,10 @@ export const {
 
 export const userSelector = (state: RootState): CurrentUserType =>
   state.user?.userDetail.user;
-
+export const userStoreSelector = (state: RootState): StoreApiType | null =>
+  state.user?.userDetail.store || null;
 export const userLoadingSelector = (state: RootState): string =>
   state.user?.userDetail.status;
-
 export const userErrorSelector = (state: RootState): string | null =>
   state.user?.userDetail.error;
 
@@ -399,13 +483,12 @@ export const pickedDaysSelector = (state: RootState): PickedDayType[] =>
 
 export const requestsSelector = (state: RootState): RequestType[] =>
   state.user?.requestsDetail.requests;
-
+export const requestsUsersSelector = (state: RootState): CurrentUserType[] =>
+  state.user?.requestsDetail.users;
 export const requestsLoadingSelector = (state: RootState): string =>
   state.user?.requestsDetail.status;
-
 export const requestsLoadedIdSelector = (state: RootState): number | null =>
   state.user?.requestsDetail.loaded || null;
-
 export const requestsErrorSelector = (state: RootState): string | null =>
   state.user?.requestsDetail.error;
 

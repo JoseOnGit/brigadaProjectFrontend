@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import TXT from "../contexts/texts.json";
 import { PickedDayType, RequestType } from "../types/brigadaTypes";
 import dayjs from "dayjs";
 import styled from "@emotion/styled";
@@ -17,6 +16,7 @@ import {
 } from "../slices/user";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Loader } from "./Loader";
+import { getWorkTime } from "../utils/commonUtils";
 
 type Props = {
   pickedDay: PickedDayType | RequestType;
@@ -44,6 +44,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
     borderTop: "1px solid #898989",
     borderBottom: "1px solid #898989",
     fontSize: "0.8rem",
+    borderRadius: "0.25rem",
   });
   //  STYLED COMPONENTS >
 
@@ -63,14 +64,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
             <strong>{dayjs(pickedDay.day).format("D. MMMM YYYY")}</strong>
           </div>
 
-          <div>
-            {" "}
-            {pickedDay.wholeDay
-              ? TXT.pickedDaysConfirmPage.wholeDay
-              : `${dayjs(pickedDay.timeStart).format("H:MM")} - ${dayjs(
-                  pickedDay.timeEnd
-                ).format("HH:MM")}`}
-          </div>
+          <div>{getWorkTime(pickedDay)}</div>
 
           <div>
             <IconButton

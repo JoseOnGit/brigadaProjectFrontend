@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import styled from "@emotion/styled";
 import { ROLE } from "../constants/commonConstants";
 import { DashboardStore } from "../components/DashboardStore";
@@ -16,24 +16,19 @@ const Dashboard = styled("div")({
 
 const DashboardPage: FC = () => {
   const userStatus = useAppSelector(userSelector);
-  const [currentUser, setCurrentUser] = useState(userStatus);
-
-  useEffect(() => {
-    setCurrentUser(userStatus);
-  }, [userStatus]);
 
   // in case we refresh page we refetch user data,
   // untill it's done we show Loader
-  if (!currentUser?.id) {
+  if (!userStatus?.id) {
     return <Loader />;
   }
 
   return (
     <Dashboard>
-      {currentUser?.roles.includes(ROLE.MODERATOR) ? (
-        <DashboardStore currentUser={currentUser} />
+      {userStatus?.roles?.includes(ROLE.MODERATOR) ? (
+        <DashboardStore currentUser={userStatus} />
       ) : (
-        <DashboardUser currentUser={currentUser} />
+        <DashboardUser currentUser={userStatus} />
       )}
     </Dashboard>
   );

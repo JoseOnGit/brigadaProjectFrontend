@@ -39,7 +39,7 @@ const DashboardUserProfile: FC<Props> = ({ currentUser }) => {
     <ProfileWrapper>
       <Avatar
         sx={{ width: "5rem", height: "5rem" }}
-      >{`${currentUser.name[0]}`}</Avatar>
+      >{`${currentUser.name?.[0]}`}</Avatar>
       <Typography
         align="center"
         variant="h3"

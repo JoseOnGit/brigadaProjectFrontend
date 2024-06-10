@@ -11,9 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   getStore,
-  userLoadingSelector,
+  userStoreErrorSelector,
+  userStoreLoadingSelector,
   userStoreSelector,
 } from "../slices/user";
+import { ErrorMessage } from "./ErrorMessage";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -44,10 +46,11 @@ const DashboardStoreProfile: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
 
   const store = useAppSelector(userStoreSelector);
-  const storeLoading = useAppSelector(userLoadingSelector);
+  const storeLoading = useAppSelector(userStoreLoadingSelector);
+  const storeError = useAppSelector(userStoreErrorSelector);
 
   useEffect(() => {
-    if (currentUser && !store && storeLoading !== "loading") {
+    if (currentUser.id && !store && storeLoading === "init") {
       dispatch(getStore(currentUser.base.id));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,9 +64,13 @@ const DashboardStoreProfile: FC<Props> = ({ currentUser }) => {
     );
   }
 
-  // if (storesError) {
-  //   return <ProfileWrapper>errrrrroorrrrrr!!!!!</ProfileWrapper>;
-  // }
+  if (storeError) {
+    return (
+      <ProfileWrapper>
+        <ErrorMessage message={storeError} />
+      </ProfileWrapper>
+    );
+  }
 
   return (
     <ProfileWrapper>

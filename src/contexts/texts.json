@@ -22,7 +22,8 @@
       "userNotFound": "Užívatel neexistuje.",
       "phoneIsInUse": "Tel. číslo je už registrováno.",
       "emailIsInUse": "Užívatelský email je už registrován.",
-      "networkError": "Něco se posvavo. Zapracujem na opravě..."
+      "networkError": "Něco se posvavo na serveru. Zapracujem na opravě...",
+      "unauthorized": "Skuste se přihlásit znovu."
     }
   },
   "loginPage": {

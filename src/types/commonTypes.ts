@@ -4,6 +4,8 @@ export type DirectionType = "row" | "column";
 
 export type SuccesPageTypes = "registration" | "login" | "confirmed";
 
+export type ReduxStatusType = "init" | "loading" | "success" | "failed";
+
 export type TextFieldPropsType = {
   margin: "normal" | "dense" | "none" | undefined;
   fullWidth: boolean;

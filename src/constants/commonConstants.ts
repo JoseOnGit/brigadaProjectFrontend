@@ -15,6 +15,7 @@ export enum AUTH_MESSAGE {
   emailIsInUse = "email_is_in_use",
   networkError = "Network Error",
   userRegisteredSuccessfully = "user_registered_successfully",
+  unauthorized = "Unauthorized!",
 }
 
 export enum ROLE {

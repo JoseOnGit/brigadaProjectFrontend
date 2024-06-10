@@ -24,10 +24,10 @@ type Props = {
 const RequestByUserWrapper = styled("div")({
   display: "flex",
   alignItems: "center",
-  gap: "2rem",
+  gap: "1rem",
   width: "100%",
   minHeight: "3.6rem",
-  padding: "0 0.5rem",
+  padding: "0.5rem",
 });
 
 const NameWrapper = styled("div")({
@@ -41,9 +41,6 @@ const DetailsWrapper = styled("div")({
 const LevelWrapper = styled("div")({
   marginLeft: "1rem",
 });
-// const LevelNegativeWrapper = styled("div")({
-//   marginLeft: "-0.5rem",
-// });
 //  STYLED COMPONENTS >
 
 const RequestByUser: FC<Props> = ({ request, requestUser }) => {
@@ -60,20 +57,23 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
           expandIcon={<ArrowDropDownIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
-          sx={{ padding: 0, margin: 0 }}
+          sx={{ padding: 0, margin: 0, div: { margin: 0 } }}
         >
           <RequestByUserWrapper>
             <div>
-              <Avatar sx={{ width: "4rem", height: "4rem" }}>
+              <Avatar sx={{ width: "3rem", height: "3rem" }}>
                 {`${requestUser.name?.[0]}`}
               </Avatar>
             </div>
 
             <NameWrapper>
               <Typography
-                variant="h6"
                 component="div"
-                sx={{ marginBottom: "0", fontWeight: "bold" }}
+                sx={{
+                  marginBottom: "0",
+                  fontSize: "1.1rem",
+                  fontWeight: "bold",
+                }}
               >
                 {requestUser.name} {requestUser.surname}
               </Typography>
@@ -81,10 +81,6 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
               <Typography sx={{ fontSize: "0.9rem", lineHeight: "0.9rem" }}>
                 {requestUser.base?.name}
               </Typography>
-
-              {/* <LevelNegativeWrapper>
-                <EmployeeLevelRating level={requestUser.level} size={"1rem"} />
-              </LevelNegativeWrapper> */}
             </NameWrapper>
           </RequestByUserWrapper>
         </AccordionSummary>

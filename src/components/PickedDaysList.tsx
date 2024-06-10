@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { PickedDayVariant } from "../types/commonTypes";
 import { useAppSelector } from "../redux/hooks";
-import {
-  requestsLoadedIdSelector,
-  requestsLoadingSelector,
-} from "../slices/user";
 import { Loader } from "./Loader";
+import {
+  userRequestsLoadedIdSelector,
+  userRequestsLoadingSelector,
+} from "../slices/userRequest";
 
 type Props = {
   pickedDays: PickedDayType[];
@@ -25,8 +25,8 @@ const PickedDaysListWrapper = styled("div")({
 // STYLED COMPONENTS >
 
 const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
-  const requestsLoading = useAppSelector(requestsLoadingSelector);
-  const requestsLoaded = useAppSelector(requestsLoadedIdSelector);
+  const requestsLoading = useAppSelector(userRequestsLoadingSelector);
+  const requestsLoaded = useAppSelector(userRequestsLoadedIdSelector);
 
   // we can't sort origin array 'pickedDays' - it runs TypeScript error
   const newPickedDays = [...pickedDays];

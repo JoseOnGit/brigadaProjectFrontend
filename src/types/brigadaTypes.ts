@@ -6,6 +6,7 @@ export type PickedDayType = {
   timeStart: Dayjs | string;
   timeEnd: Dayjs | string;
   wholeDay: boolean;
+  byStore: boolean;
 };
 
 export type RequestType = {
@@ -15,4 +16,5 @@ export type RequestType = {
   timeStart: Dayjs | string;
   timeEnd: Dayjs | string;
   wholeDay: boolean;
+  byStore: boolean;
 };

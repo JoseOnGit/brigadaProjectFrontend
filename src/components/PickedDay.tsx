@@ -8,15 +8,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getPickedDayRoutePath } from "../routes/routePaths";
 import { PickedDayVariant } from "../types/commonTypes";
 import { useNavigate } from "react-router-dom";
-import {
-  removePickedDay,
-  removeRequest,
-  requestsLoadedIdSelector,
-  requestsLoadingSelector,
-} from "../slices/user";
+import { removePickedDay } from "../slices/userRequest";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Loader } from "./Loader";
 import { getWorkTime } from "../utils/commonUtils";
+import {
+  removeRequest,
+  userRequestsLoadedIdSelector,
+  userRequestsLoadingSelector,
+} from "../slices/userRequest";
 
 type Props = {
   pickedDay: PickedDayType | RequestType;
@@ -27,8 +27,8 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const requestsLoading = useAppSelector(requestsLoadingSelector);
-  const requestsLoaded = useAppSelector(requestsLoadedIdSelector);
+  const requestsLoading = useAppSelector(userRequestsLoadingSelector);
+  const requestsLoaded = useAppSelector(userRequestsLoadedIdSelector);
 
   // < STYLED COMPONENTS
   const PickedDayWrapper = styled("div")({

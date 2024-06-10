@@ -14,7 +14,10 @@ import dayjs from "dayjs";
 import { getDateFormatForURL } from "../utils/commonUtils";
 import { CurrentUserType } from "../types/userTypes";
 import { useAppSelector } from "../redux/hooks";
-import { pickedDaysSelector, requestsSelector } from "../slices/user";
+import {
+  userPickedDaysSelector,
+  userRequestsSelector,
+} from "../slices/userRequest";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -23,8 +26,8 @@ type Props = {
 const DashboardUser: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
 
-  const pickedDays = useAppSelector(pickedDaysSelector);
-  const requests = useAppSelector(requestsSelector);
+  const pickedDays = useAppSelector(userPickedDaysSelector);
+  const requests = useAppSelector(userRequestsSelector);
 
   const today = getDateFormatForURL(dayjs());
 

@@ -15,15 +15,19 @@ import {
 } from "../routes/routePaths";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
-  getAllRequests,
   getUser,
-  getUserRequests,
-  requestsLoadingSelector,
   userErrorSelector,
   userLoadingSelector,
   userSelector,
 } from "../slices/user";
 import { MAX_CONTENT_WIDTH, ROLE } from "../constants/commonConstants";
+import {
+  getAllUsersRequests,
+  getUserRequests,
+  userRequestsLoadingSelector,
+} from "../slices/userRequest";
+import { ErrorMessage } from "./ErrorMessage";
+import { getAllStoresRequests, getStoreRequests } from "../slices/storeRequest";
 
 // < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
@@ -48,7 +52,7 @@ const PageWrapper: FC = () => {
   const currentUser = useAppSelector(userSelector);
   const currentUserLoading = useAppSelector(userLoadingSelector);
   const currentUserError = useAppSelector(userErrorSelector);
-  const userRrequestsLoading = useAppSelector(requestsLoadingSelector);
+  const userRequestsLoading = useAppSelector(userRequestsLoadingSelector);
 
   const currentUserInStorage = AuthService.getCurrentUserFromStorage();
 
@@ -59,12 +63,16 @@ const PageWrapper: FC = () => {
     location.pathname === getRegistrationRoutePath() ||
     location.pathname === getSuccessRoutePath("registration");
 
+  // if currentUser is not in Redux,
+  // but we have accessToken in localStorage,
+  // then refetch user data.
+  // (eg. when we refresh page)
   useEffect(() => {
-    // if currentUser is not in Redux,
-    // but we have accessToken in localStorage,
-    // then refetch user data.
-    // (eg. when we refresh page)
-    if (currentUserInStorage && !currentUser?.email) {
+    if (
+      currentUserInStorage &&
+      !currentUser?.email &&
+      currentUserLoading !== "loading"
+    ) {
       dispatch(
         getUser({
           email: currentUserInStorage.email,
@@ -77,20 +85,30 @@ const PageWrapper: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const fetchDataForUser = () => {
+    dispatch(getUserRequests(currentUser.id));
+    dispatch(getAllStoresRequests());
+  };
+
+  const fetchDataForStore = () => {
+    dispatch(getStoreRequests(currentUser.id));
+    dispatch(getAllUsersRequests());
+  };
+
+  // when we refetch user we have to refetch also requests
   useEffect(() => {
-    // when we refetch user we have to refetch also requests
     if (
       currentUser?.id !== undefined &&
-      userRrequestsLoading !== "loading" &&
+      userRequestsLoading !== "loading" &&
       userWasRefetched
     ) {
       currentUser.roles.includes(ROLE.MODERATOR)
-        ? dispatch(getAllRequests())
-        : dispatch(getUserRequests(currentUser.id));
+        ? fetchDataForStore()
+        : fetchDataForUser();
       setUserWasRefetched(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser, userRrequestsLoading, userWasRefetched]);
+  }, [currentUser, userRequestsLoading, userWasRefetched]);
 
   useEffect(() => {
     // if there IS NO current user in locale storage,
@@ -137,7 +155,11 @@ const PageWrapper: FC = () => {
       </AppBar>
 
       <ContentWrapper>
-        <Outlet />
+        {currentUserError && !isPublicPage ? (
+          <ErrorMessage message={currentUserError} />
+        ) : (
+          <Outlet />
+        )}
       </ContentWrapper>
     </>
   );

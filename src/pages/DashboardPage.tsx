@@ -15,20 +15,20 @@ const Dashboard = styled("div")({
 // STYLED COMPONENTS >
 
 const DashboardPage: FC = () => {
-  const userStatus = useAppSelector(userSelector);
+  const currentUser = useAppSelector(userSelector);
 
   // in case we refresh page we refetch user data,
   // untill it's done we show Loader
-  if (!userStatus?.id) {
+  if (!currentUser?.id) {
     return <Loader />;
   }
 
   return (
     <Dashboard>
-      {userStatus?.roles?.includes(ROLE.MODERATOR) ? (
-        <DashboardStore currentUser={userStatus} />
+      {currentUser?.roles?.includes(ROLE.MODERATOR) ? (
+        <DashboardStore currentUser={currentUser} />
       ) : (
-        <DashboardUser currentUser={userStatus} />
+        <DashboardUser currentUser={currentUser} />
       )}
     </Dashboard>
   );

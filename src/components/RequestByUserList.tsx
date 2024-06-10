@@ -2,13 +2,16 @@ import React, { FC } from "react";
 import TXT from "../contexts/texts.json";
 import { RequestType } from "../types/brigadaTypes";
 import { useAppSelector } from "../redux/hooks";
-import { requestsLoadingSelector, requestsUsersSelector } from "../slices/user";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import { Loader } from "./Loader";
 import { RequestByUser } from "./RequestByUser";
 import { CurrentUserType } from "../types/userTypes";
 import dayjs from "dayjs";
+import {
+  userRequestsLoadingSelector,
+  userRequestsUsersSelector,
+} from "../slices/userRequest";
 
 type Props = {
   requests: RequestType[];
@@ -22,14 +25,14 @@ const RequestByUserListWrapper = styled("div")({
 const DateWrapper = styled("div")({
   width: "100%",
   textAlign: "left",
-  padding: "0rem 0 1rem 0",
+  padding: "0.5rem 0 0.5rem 0",
   fontWeight: "bold",
 });
 // STYLED COMPONENTS >
 
 const RequestByUserList: FC<Props> = ({ requests }) => {
-  const requestsUsers = useAppSelector(requestsUsersSelector);
-  const requestsLoading = useAppSelector(requestsLoadingSelector);
+  const requestsUsers = useAppSelector(userRequestsUsersSelector);
+  const requestsLoading = useAppSelector(userRequestsLoadingSelector);
 
   // we can't sort origin array 'requests' - it runs TypeScript error
   const newReqests = [...requests];

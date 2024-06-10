@@ -31,8 +31,8 @@ const LoginPage: FC = () => {
 
     dispatch(login({ email, password })).then((response: any) => {
       // for some reason we get 'fulfilled' state even when there's error
-      // in that case error is returned in payload, so we check if there's error message
-      if (!response.payload.response?.data?.message) {
+      // in that case error is returned in payload, so we check if there's ID of user
+      if (response.payload.id) {
         navigate(getSuccessRoutePath("login"));
         window.location.reload();
       }

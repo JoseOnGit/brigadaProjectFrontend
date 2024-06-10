@@ -1,11 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import userReducer from "../slices/user";
-// import pickedDaysReducer from "../slices/pickedDays";
+import userRequestReducer from "../slices/userRequest";
+import storeRequestReducer from "../slices/storeRequest";
 
 const reducer = {
   user: userReducer,
-  // pickedDays: pickedDaysReducer,
-  // requestsUser: userReducer,
+  userRequest: userRequestReducer,
+  storeRequest: storeRequestReducer,
 };
 
 export const store = configureStore({

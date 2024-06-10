@@ -91,7 +91,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
 
-### Commit #29: RequestByUser update - soreted and grouped by date
+### Commit #29: RequestByUser update - sorted and grouped by date
 
 ### Commit #28: Branch: 16-request-by-user: Request by user on store dashboard
 

@@ -2,21 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CurrentUserType, RegistrationUserType } from "../types/userTypes";
 import { RootState } from "../redux/store";
 import AuthService from "../services/authService";
-import RequestService from "../services/requestService";
 import StoreService from "../services/storeService";
-import UserService from "../services/userService";
-import { NameType } from "../types/commonTypes";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
-import { Dayjs } from "dayjs";
 import { StoreApiType } from "../types/storesTypes";
-
-export interface RequestBodyUser {
-  email: string;
-  token: string;
-}
+import { NameType, ReduxStatusType } from "../types/commonTypes";
 export interface RequestBodyLogin {
   email: string;
   password: string;
+}
+export interface RequestBodyUser {
+  email: string;
+  token: string;
 }
 export interface RequestBodyRegister {
   name: string;
@@ -28,48 +23,31 @@ export interface RequestBodyRegister {
   onboardDate: string;
   password: string;
 }
-export interface RequestBodyRequest {
-  id?: number;
-  userId: number;
-  day: string;
-  timeStart: Dayjs | string;
-  timeEnd: Dayjs | string;
-  wholeDay: string;
-}
+
 export interface UserState {
   userDetail: {
     user: CurrentUserType;
+    status: ReduxStatusType;
+    error: string | null;
+  };
+  storeDetail: {
     store: StoreApiType | null;
-    status: "init" | "loading" | "success" | "failed";
+    status: ReduxStatusType;
     error: string | null;
   };
-  requestsDetail: {
-    requests: RequestType[];
-    stores: StoreApiType[];
-    users: CurrentUserType[];
-    status: "init" | "loading" | "success" | "failed";
-    loaded?: number | null;
-    error: string | null;
-  };
-  pickedDays: PickedDayType[];
 }
 
 const initialState: UserState = {
   userDetail: {
     user: {} as CurrentUserType,
+    status: "init",
+    error: null,
+  },
+  storeDetail: {
     store: null,
     status: "init",
     error: null,
   },
-  requestsDetail: {
-    requests: [],
-    stores: [],
-    users: [],
-    status: "init",
-    loaded: null,
-    error: null,
-  },
-  pickedDays: [],
 };
 
 export const login = createAsyncThunk(
@@ -130,71 +108,11 @@ export const getUser = createAsyncThunk(
   }
 );
 
-export const addRequest = createAsyncThunk(
-  "request/addReqest",
-  async (request: RequestType) => {
-    try {
-      const response = await RequestService.createNewRequest(request);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-export const getAllRequests = createAsyncThunk(
-  "request/getAllReqests",
-  async () => {
-    try {
-      const response = await RequestService.getAllRequests();
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-export const getUserRequests = createAsyncThunk(
-  "request/getUserRequests",
-  async (userId: number) => {
-    try {
-      const response = await RequestService.getUserRequests(userId);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-export const removeRequest = createAsyncThunk(
-  "request/removeRequest",
-  async (request: RequestType) => {
-    try {
-      const response = await RequestService.removeRequest(request);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
 export const getStore = createAsyncThunk(
-  "store/getStore",
+  "user/getStore",
   async (id: number) => {
     try {
       const response = await StoreService.getStore(id);
-      return response;
-    } catch (error) {
-      return error;
-    }
-  }
-);
-
-export const getUserInfo = createAsyncThunk(
-  "user/getUserInfo",
-  async (id: number) => {
-    try {
-      const response = await UserService.getUserInfo(id);
       return response;
     } catch (error) {
       return error;
@@ -212,22 +130,6 @@ export const userSlice = createSlice({
         localStorage.clear();
       }
     },
-    addPickedDay(state, action) {
-      state.pickedDays = [...state.pickedDays, action.payload];
-    },
-    changePickedDay(state, action) {
-      state.pickedDays = state.pickedDays.map((pickedDay) => {
-        if (pickedDay.day === action.payload.day) {
-          return action.payload;
-        }
-        return pickedDay;
-      });
-    },
-    removePickedDay(state, action) {
-      state.pickedDays = state.pickedDays.filter(
-        (pickedDay) => pickedDay.day !== action.payload.day
-      );
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -240,18 +142,21 @@ export const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         // for some reason we get 'fulfilled' state even when there's error
         // in that case error is returned in payload, so we check if there's error message
-        if (action.payload.response?.data?.message) {
+        if (action.payload.id) {
+          state.userDetail.user = action.payload;
+          state.userDetail.status = "success";
+          state.userDetail.error = null;
+        } else {
           state.userDetail.user = {} as CurrentUserType;
           state.userDetail.status = "failed";
           state.userDetail.error =
-            action.payload.response?.data?.message || null;
-        } else {
-          state.userDetail = action.payload;
-          state.userDetail.status = "success";
-          state.userDetail.error = null;
+            action.payload.response?.data?.message ||
+            action.payload.message ||
+            null;
         }
       })
       .addCase(login.rejected, (state, action) => {
+        state.userDetail.user = {} as CurrentUserType;
         state.userDetail.status = "failed";
         state.userDetail.error = action.error.message || null;
       })
@@ -262,18 +167,21 @@ export const userSlice = createSlice({
         state.userDetail.error = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        if (action.payload.response?.data?.message) {
-          state.userDetail.user = {} as CurrentUserType;
-          state.userDetail.status = "failed";
-          state.userDetail.error =
-            action.payload.response?.data?.message || null;
-        } else {
+        if (action.payload.id) {
           state.userDetail.user = action.payload;
           state.userDetail.status = "success";
           state.userDetail.error = null;
+        } else {
+          state.userDetail.user = {} as CurrentUserType;
+          state.userDetail.status = "failed";
+          state.userDetail.error =
+            action.payload.response?.data?.message ||
+            action.payload.message ||
+            null;
         }
       })
       .addCase(getUser.rejected, (state, action) => {
+        state.userDetail.user = {} as CurrentUserType;
         state.userDetail.status = "failed";
         state.userDetail.error = action.error.message || null;
       })
@@ -292,204 +200,43 @@ export const userSlice = createSlice({
         state.userDetail.error = action.error.message || null;
       })
 
-      // ADD REQUEST
-      .addCase(addRequest.pending, (state) => {
-        state.requestsDetail.status = "loading";
-        state.requestsDetail.error = null;
-      })
-      .addCase(addRequest.fulfilled, (state, action) => {
-        if (action.payload.response?.data?.message) {
-          state.requestsDetail.status = "failed";
-          state.requestsDetail.requests = [];
-          state.requestsDetail.error =
-            action.payload.response?.data?.message || null;
-        } else {
-          state.requestsDetail.status = "success";
-          state.requestsDetail.requests = [
-            ...state.requestsDetail.requests,
-            action.payload,
-          ];
-          state.pickedDays = state.pickedDays.filter(
-            (pickedDay) => pickedDay.day !== action.payload.day
-          );
-          state.requestsDetail.error = null;
-        }
-      })
-      .addCase(addRequest.rejected, (state, action) => {
-        state.requestsDetail.status = "failed";
-        state.requestsDetail.error = action.error.message || null;
-      })
-
-      // GET ALL REQUEST
-      .addCase(getAllRequests.pending, (state) => {
-        state.requestsDetail.status = "loading";
-        state.requestsDetail.error = null;
-      })
-      .addCase(getAllRequests.fulfilled, (state, action) => {
-        if (action.payload.response?.data?.message) {
-          state.requestsDetail.status = "failed";
-          state.requestsDetail.requests = [];
-          state.requestsDetail.error =
-            action.payload.response?.data?.message || null;
-        } else {
-          state.requestsDetail.status = "success";
-          state.requestsDetail.requests = action.payload.map(
-            (request: RequestBodyRequest): RequestType => ({
-              id: request.id,
-              userId: request.userId,
-              day: request.day,
-              timeStart: request.timeStart,
-              timeEnd: request.timeEnd,
-              wholeDay: request.wholeDay === "1" ? true : false,
-            })
-          );
-          state.requestsDetail.error = null;
-        }
-      })
-      .addCase(getAllRequests.rejected, (state, action) => {
-        state.requestsDetail.status = "failed";
-        state.requestsDetail.error = action.error.message || null;
-      })
-
-      // GET USER REQUEST
-      .addCase(getUserRequests.pending, (state) => {
-        state.requestsDetail.status = "loading";
-        state.requestsDetail.error = null;
-      })
-      .addCase(getUserRequests.fulfilled, (state, action) => {
-        if (action.payload.response?.data?.message) {
-          state.requestsDetail.requests = [];
-          state.requestsDetail.status = "failed";
-          state.requestsDetail.error =
-            action.payload.response?.data?.message || null;
-        } else {
-          state.requestsDetail.requests = action.payload.map(
-            (request: RequestBodyRequest): RequestType => ({
-              id: request.id,
-              userId: request.userId,
-              day: request.day,
-              timeStart: request.timeStart,
-              timeEnd: request.timeEnd,
-              wholeDay: request.wholeDay === "1" ? true : false,
-            })
-          );
-          state.requestsDetail.status = "success";
-        }
-        state.requestsDetail.error = null;
-      })
-      .addCase(getUserRequests.rejected, (state, action) => {
-        state.requestsDetail.status = "failed";
-        state.requestsDetail.error = action.error.message || null;
-      })
-
-      // REMOVE REQUEST
-      .addCase(removeRequest.pending, (state, action) => {
-        state.requestsDetail.status = "loading";
-        state.requestsDetail.loaded = action.meta.arg.id;
-        state.requestsDetail.error = null;
-      })
-      .addCase(removeRequest.fulfilled, (state, action) => {
-        if (action.payload.response?.data?.message) {
-          state.requestsDetail.status = "failed";
-          state.requestsDetail.error =
-            action.payload.response?.data?.message || null;
-          state.requestsDetail.loaded = null;
-        } else {
-          state.requestsDetail.requests = state.requestsDetail.requests.filter(
-            (request: any) => request.id !== action.meta.arg.id
-          );
-          state.requestsDetail.status = "success";
-          state.requestsDetail.error = null;
-          state.requestsDetail.loaded = null;
-        }
-      })
-      .addCase(removeRequest.rejected, (state, action) => {
-        state.requestsDetail.status = "failed";
-        state.requestsDetail.error = action.error.message || null;
-        state.requestsDetail.loaded = null;
-      })
-
       // GET STORE
       .addCase(getStore.pending, (state, action) => {
-        state.userDetail.status = "loading";
-        state.userDetail.error = null;
+        state.storeDetail.status = "loading";
+        state.storeDetail.error = null;
       })
       .addCase(getStore.fulfilled, (state, action) => {
         if (action.payload.response?.data?.message) {
-          state.userDetail.status = "failed";
-          state.userDetail.error =
+          state.storeDetail.status = "failed";
+          state.storeDetail.error =
             action.payload.response?.data?.message || null;
         } else {
-          state.userDetail.store = action.payload;
-          state.userDetail.status = "success";
-          state.userDetail.error = null;
+          state.storeDetail.store = action.payload;
+          state.storeDetail.status = "success";
+          state.storeDetail.error = null;
         }
       })
       .addCase(getStore.rejected, (state, action) => {
-        state.userDetail.status = "failed";
-        state.userDetail.error = action.error.message || null;
-      })
-
-      // GET USER INFO
-      .addCase(getUserInfo.pending, (state, action) => {
-        state.requestsDetail.status = "loading";
-        state.requestsDetail.error = null;
-      })
-      .addCase(getUserInfo.fulfilled, (state, action) => {
-        if (action.payload.response?.data?.message) {
-          state.requestsDetail.status = "failed";
-          state.requestsDetail.users = [
-            ...state.requestsDetail.users,
-            {
-              id: action.meta.arg,
-            } as CurrentUserType,
-          ];
-          state.requestsDetail.error =
-            action.payload.response?.data?.message || null;
-        } else {
-          state.requestsDetail.users = [
-            ...state.requestsDetail.users,
-            action.payload,
-          ];
-          state.requestsDetail.status = "success";
-          state.requestsDetail.error = null;
-        }
-      })
-      .addCase(getUserInfo.rejected, (state, action) => {
-        state.requestsDetail.status = "failed";
-        state.requestsDetail.error = action.error.message || null;
+        state.storeDetail.status = "failed";
+        state.storeDetail.error = action.error.message || null;
       });
   },
 });
 
-export const {
-  removeOnLogout,
-  addPickedDay,
-  changePickedDay,
-  removePickedDay,
-} = userSlice.actions;
+export const { removeOnLogout } = userSlice.actions;
 
 export const userSelector = (state: RootState): CurrentUserType =>
   state.user?.userDetail.user;
-export const userStoreSelector = (state: RootState): StoreApiType | null =>
-  state.user?.userDetail.store || null;
 export const userLoadingSelector = (state: RootState): string =>
   state.user?.userDetail.status;
 export const userErrorSelector = (state: RootState): string | null =>
   state.user?.userDetail.error;
 
-export const pickedDaysSelector = (state: RootState): PickedDayType[] =>
-  state.user?.pickedDays;
-
-export const requestsSelector = (state: RootState): RequestType[] =>
-  state.user?.requestsDetail.requests;
-export const requestsUsersSelector = (state: RootState): CurrentUserType[] =>
-  state.user?.requestsDetail.users;
-export const requestsLoadingSelector = (state: RootState): string =>
-  state.user?.requestsDetail.status;
-export const requestsLoadedIdSelector = (state: RootState): number | null =>
-  state.user?.requestsDetail.loaded || null;
-export const requestsErrorSelector = (state: RootState): string | null =>
-  state.user?.requestsDetail.error;
+export const userStoreSelector = (state: RootState): StoreApiType | null =>
+  state.user?.storeDetail.store || null;
+export const userStoreLoadingSelector = (state: RootState): string =>
+  state.user?.storeDetail.status;
+export const userStoreErrorSelector = (state: RootState): string | null =>
+  state.user?.storeDetail.error;
 
 export default userSlice.reducer;

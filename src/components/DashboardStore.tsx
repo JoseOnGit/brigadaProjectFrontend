@@ -13,12 +13,15 @@ import { getDateFormatForURL } from "../utils/commonUtils";
 import { DashboardStoreProfile } from "./DashboardStoreProfile";
 import { CurrentUserType } from "../types/userTypes";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import // pickedDaysSelector,
+"../slices/user";
+import { RequestByUserList } from "./RequestByUserList";
 import {
   getUserInfo,
-  requestsSelector,
-  requestsUsersSelector,
-} from "../slices/user";
-import { RequestByUserList } from "./RequestByUserList";
+  userRequestsSelector,
+  userRequestsUsersSelector,
+} from "../slices/userRequest";
+// import { PickedDaysList } from "./PickedDaysList";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -28,8 +31,9 @@ const DashboardStore: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const requests = useAppSelector(requestsSelector);
-  const requestsUsers = useAppSelector(requestsUsersSelector);
+  // const pickedDays = useAppSelector(pickedDaysSelector);
+  const requests = useAppSelector(userRequestsSelector);
+  const requestsUsers = useAppSelector(userRequestsUsersSelector);
 
   const uniqueUsers = useMemo(() => {
     return requests
@@ -61,6 +65,10 @@ const DashboardStore: FC<Props> = ({ currentUser }) => {
       <DashboardStoreProfile currentUser={currentUser} />
 
       {requests.length !== 0 && <RequestByUserList requests={requests} />}
+
+      {/* {pickedDays.length !== 0 && (
+        <PickedDaysList pickedDays={pickedDays} type="selected" />
+      )} */}
 
       <Typography
         paragraph

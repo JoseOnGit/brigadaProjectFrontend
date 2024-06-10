@@ -9,52 +9,55 @@ type Props = {
   error: string | null;
 };
 
+export const getServerMessage = (response: string) => {
+  switch (response) {
+    // possible LOGIN messages from backend
+    case AUTH_MESSAGE.invalidPassword:
+      return TXT.common.message.invalidPasword;
+
+    case AUTH_MESSAGE.userNotFound:
+      return TXT.common.message.userNotFound;
+
+    // possible REGISTER messages from backend
+    case AUTH_MESSAGE.phoneIsInUse:
+      return TXT.common.message.phoneIsInUse;
+
+    case AUTH_MESSAGE.emailIsInUse:
+      return TXT.common.message.emailIsInUse;
+
+    case AUTH_MESSAGE.networkError:
+      return TXT.common.message.networkError;
+
+    case AUTH_MESSAGE.unauthorized:
+      return TXT.common.message.unauthorized;
+
+    default:
+      return response;
+  }
+};
+
+const getFormMessage = (error: FieldError) => {
+  switch (error.type) {
+    case "required":
+      return TXT.common.message.required;
+
+    case "pattern":
+      return TXT.common.message.emailPattern;
+
+    case "validate":
+      return TXT.common.message.validate;
+
+    default:
+      return error.message || "";
+  }
+};
+
 const FormErrorHandler: FC<Props> = ({ children, error }) => {
   useEffect(() => {
     if (error) {
       window.scrollTo(0, 0);
     }
   }, [error]);
-
-  const getServerMessage = (response: string) => {
-    switch (response) {
-      // possible LOGIN messages from backend
-      case AUTH_MESSAGE.invalidPassword:
-        return TXT.common.message.invalidPasword;
-
-      case AUTH_MESSAGE.userNotFound:
-        return TXT.common.message.userNotFound;
-
-      // possible REGISTER messages from backend
-      case AUTH_MESSAGE.phoneIsInUse:
-        return TXT.common.message.phoneIsInUse;
-
-      case AUTH_MESSAGE.emailIsInUse:
-        return TXT.common.message.emailIsInUse;
-
-      case AUTH_MESSAGE.networkError:
-        return TXT.common.message.networkError;
-
-      default:
-        return response;
-    }
-  };
-
-  const getFormMessage = (error: FieldError) => {
-    switch (error.type) {
-      case "required":
-        return TXT.common.message.required;
-
-      case "pattern":
-        return TXT.common.message.emailPattern;
-
-      case "validate":
-        return TXT.common.message.validate;
-
-      default:
-        return error.message || "";
-    }
-  };
 
   return (
     <FormErrorProvider onError={(error) => getFormMessage(error)}>

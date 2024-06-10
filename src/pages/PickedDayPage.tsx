@@ -15,10 +15,10 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   addPickedDay,
   changePickedDay,
-  pickedDaysSelector,
+  userPickedDaysSelector,
   removeRequest,
-  requestsSelector,
-} from "../slices/user";
+  userRequestsSelector,
+} from "../slices/userRequest";
 
 type Props = {};
 
@@ -28,8 +28,8 @@ const PickedDayPage: FC<Props> = () => {
   const params = useParams();
   const { date: selectedDate } = params;
 
-  const pickedDays = useAppSelector(pickedDaysSelector);
-  const requests = useAppSelector(requestsSelector);
+  const pickedDays = useAppSelector(userPickedDaysSelector);
+  const requests = useAppSelector(userRequestsSelector);
 
   const alreadyPicked = pickedDays.find(
     (pickedDay) => pickedDay.day === selectedDate
@@ -90,6 +90,7 @@ const PickedDayPage: FC<Props> = () => {
       timeStart: isWholeDaySelected ? "" : selectedTimeStart || "",
       timeEnd: isWholeDaySelected ? "" : selectedTimeEnd || "",
       wholeDay: isWholeDaySelected,
+      byStore: false, // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     };
 
     const changeRequestToPicked = () => {

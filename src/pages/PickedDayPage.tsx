@@ -9,7 +9,7 @@ import { FormSubmitButton } from "../components/FormSubmitButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeadline } from "../components/PageHeadline";
 import { getPickedDaysConfirmRoutePath } from "../routes/routePaths";
-import { PickedDayType } from "../types/brigadaTypes";
+import { PickedDayType } from "../types/requestTypes";
 import Alert from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
@@ -19,6 +19,7 @@ import {
   removeRequest,
   userRequestsSelector,
 } from "../slices/userRequest";
+import { getDateInFormat } from "../utils/commonUtils";
 
 type Props = {};
 
@@ -91,6 +92,7 @@ const PickedDayPage: FC<Props> = () => {
       timeEnd: isWholeDaySelected ? "" : selectedTimeEnd || "",
       wholeDay: isWholeDaySelected,
       byStore: false, // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      level: 0,
     };
 
     const changeRequestToPicked = () => {
@@ -112,7 +114,7 @@ const PickedDayPage: FC<Props> = () => {
   return (
     <>
       <PageHeadline
-        headline={dayjs(params.date).format("D. MMMM YYYY") || ""}
+        headline={getDateInFormat(params.date || "")}
         hasBackButton
       />
 

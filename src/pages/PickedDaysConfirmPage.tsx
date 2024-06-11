@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from "react";
 import TXT from "../contexts/texts.json";
 import { PageHeadline } from "../components/PageHeadline";
-import { PickedDaysList } from "../components/PickedDaysList";
+import { PickedDayByUserList } from "../components/PickedDayByUserList";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { RequestType } from "../types/brigadaTypes";
+import { RequestType } from "../types/requestTypes";
 import {
   getCalendarRoutePath,
   getSuccessRoutePath,
@@ -61,7 +61,7 @@ const PickedDaysConfirmPage: FC<Props> = () => {
         bottomSpace="3rem"
       />
 
-      <PickedDaysList pickedDays={pickedDays} type="selected" />
+      <PickedDayByUserList pickedDays={pickedDays} type="selected" />
       <Button
         variant="text"
         color="primary"

@@ -5,12 +5,12 @@ import { useAppSelector } from "../redux/hooks";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import { Loader } from "./Loader";
-import { RequestByUser } from "./RequestByUser";
-import { CurrentUserType } from "../types/userTypes";
 import {
-  userRequestsLoadingSelector,
-  userRequestsUsersSelector,
-} from "../slices/userRequest";
+  storeRequestsLoadingSelector,
+  storeRequestsStoresSelector,
+} from "../slices/storeRequest";
+import { RequestByStore } from "./RequestByStore";
+import { StoreApiType } from "../types/storesTypes";
 import { getDateInFormat } from "../utils/commonUtils";
 
 type Props = {
@@ -30,9 +30,9 @@ const DateWrapper = styled("div")({
 });
 // STYLED COMPONENTS >
 
-const RequestByUserList: FC<Props> = ({ requests }) => {
-  const requestsUsers = useAppSelector(userRequestsUsersSelector);
-  const requestsLoading = useAppSelector(userRequestsLoadingSelector);
+const RequestByStoreList: FC<Props> = ({ requests }) => {
+  const requestsStores = useAppSelector(storeRequestsStoresSelector);
+  const requestsLoading = useAppSelector(storeRequestsLoadingSelector);
 
   // we can't sort origin array 'requests' - it runs TypeScript error
   const newReqests = [...requests];
@@ -59,11 +59,15 @@ const RequestByUserList: FC<Props> = ({ requests }) => {
           <DateWrapper>{getDateInFormat(date)}</DateWrapper>
           {grouped[date].map((request, index) => {
             const user =
-              requestsUsers.find((user) => user.id === request.userId) ||
-              ({} as CurrentUserType);
+              requestsStores.find((user) => user.id === request.userId) ||
+              ({} as StoreApiType);
 
             return (
-              <RequestByUser key={index} request={request} requestUser={user} />
+              <RequestByStore
+                key={index}
+                request={request}
+                requestStore={user}
+              />
             );
           })}
         </div>
@@ -80,7 +84,7 @@ const RequestByUserList: FC<Props> = ({ requests }) => {
           fontWeight: "bold",
         }}
       >
-        {TXT.dashboardPage.store.userList.label}
+        {TXT.dashboardPage.user.storeList.label}
       </Typography>
 
       {requestsLoading === "loading" ? (
@@ -92,4 +96,4 @@ const RequestByUserList: FC<Props> = ({ requests }) => {
   );
 };
 
-export { RequestByUserList };
+export { RequestByStoreList };

@@ -7,7 +7,6 @@ import {
   getCalendarRoutePath,
   getPickedDayRoutePath,
 } from "../routes/routePaths";
-import { PickedDaysList } from "./PickedDaysList";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
@@ -18,6 +17,7 @@ import {
   userPickedDaysSelector,
   userRequestsSelector,
 } from "../slices/userRequest";
+import { DashboardUserRequests } from "./DashboardUserRequests";
 
 type Props = {
   currentUser: CurrentUserType;
@@ -42,12 +42,7 @@ const DashboardUser: FC<Props> = ({ currentUser }) => {
     <div>
       <DashboardUserProfile currentUser={currentUser} />
 
-      {requests.length !== 0 && (
-        <PickedDaysList pickedDays={requests} type="confirmed" />
-      )}
-      {pickedDays.length !== 0 && (
-        <PickedDaysList pickedDays={pickedDays} type="selected" />
-      )}
+      <DashboardUserRequests />
 
       <Typography
         paragraph

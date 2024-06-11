@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { SelectOptionType } from "../types/commonTypes";
 import { StoreApiType } from "../types/storesTypes";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import { PickedDayType, RequestType } from "../types/requestTypes";
 import TXT from "../contexts/texts.json";
 
 export const getStoresOptions = (stores: StoreApiType[]): SelectOptionType[] =>
@@ -20,4 +20,8 @@ export const getWorkTime = (request: PickedDayType | RequestType) => {
     : `${dayjs(request.timeStart).format("H:MM")} - ${dayjs(
         request.timeEnd
       ).format("HH:MM")}`;
+};
+
+export const getDateInFormat = (date: string) => {
+  return dayjs(date).format("D. MMMM YYYY");
 };

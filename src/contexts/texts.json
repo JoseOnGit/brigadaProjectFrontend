@@ -85,6 +85,20 @@
   },
   "dashboardPage": {
     "user": {
+      "storeList": {
+        "label": "Volné brigády",
+        "detail": {
+          "requestDate": "Datum brigády",
+          "requestTime": "Čas brigády",
+          "place": "Místo brigády",
+          "level": "Požadavky na brigádnika",
+          "manager": "Kontakní osoba",
+          "email": "Email",
+          "phone": "Tel.",
+          "buttonCall": "Volat",
+          "buttonMail": "Napsat"
+        }
+      },
       "callToAction1": "Máš čas na brigádu, ale není nahlášená?",
       "callToAction2": "Dej vědět store-managerům, možná se něco najde...",
       "todayButton": "Chci brigádu na dnes"
@@ -130,6 +144,14 @@
     "headline": "Vybrané brigády",
     "labelPicked": "Más zatím nepotvrzenou žádost o brigádu:",
     "labelRequest": "Nahlášená žádost o brigádu",
+    "backButton": "Vybrat další brigádu",
+    "submitButton": "Potvrdit a odeslat správu",
+    "submitMessage": "Žádost potvrzena. Během chvíle bude na obchody odeslána správa..."
+  },
+  "pickedDaysByStoreConfirmPage": {
+    "headline": "Vybrané brigády",
+    "labelPicked": "Más zatím nepotvrzenou žádost o brigádnika:",
+    "labelRequest": "Nahlášená žádost o brigádnika",
     "backButton": "Vybrat další brigádu",
     "submitButton": "Potvrdit a odeslat správu",
     "submitMessage": "Žádost potvrzena. Během chvíle bude na obchody odeslána správa..."

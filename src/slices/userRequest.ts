@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import { PickedDayType, RequestType } from "../types/requestTypes";
 import { CurrentUserType } from "../types/userTypes";
 import RequestService from "../services/requestService";
 import UserService from "../services/userService";
@@ -14,6 +14,7 @@ export interface RequestBodyRequest {
   timeEnd: string;
   wholeDay: string;
   byStore: boolean;
+  level: number;
 }
 export interface RequestsState {
   requestsDetail: {
@@ -181,6 +182,7 @@ export const userRequestSlice = createSlice({
               timeEnd: request.timeEnd,
               wholeDay: request.wholeDay === "1" ? true : false,
               byStore: request.byStore,
+              level: request.level,
             })
           );
           state.requestsDetail.error = null;
@@ -212,6 +214,7 @@ export const userRequestSlice = createSlice({
               timeEnd: request.timeEnd,
               wholeDay: request.wholeDay === "1" ? true : false,
               byStore: request.byStore,
+              level: request.level,
             })
           );
           state.requestsDetail.status = "success";

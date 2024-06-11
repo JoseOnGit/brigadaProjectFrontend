@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC } from "react";
 import { FormSubmitButton } from "./FormSubmitButton";
 import { useNavigate } from "react-router-dom";
 import TXT from "../contexts/texts.json";
@@ -12,15 +12,7 @@ import dayjs from "dayjs";
 import { getDateFormatForURL } from "../utils/commonUtils";
 import { DashboardStoreProfile } from "./DashboardStoreProfile";
 import { CurrentUserType } from "../types/userTypes";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import // pickedDaysSelector,
-"../slices/user";
-import { RequestByUserList } from "./RequestByUserList";
-import {
-  getUserInfo,
-  userRequestsSelector,
-  userRequestsUsersSelector,
-} from "../slices/userRequest";
+import { DashboardStoreRequests } from "./DashboardStoreRequests";
 // import { PickedDaysList } from "./PickedDaysList";
 
 type Props = {
@@ -29,34 +21,6 @@ type Props = {
 
 const DashboardStore: FC<Props> = ({ currentUser }) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  // const pickedDays = useAppSelector(pickedDaysSelector);
-  const requests = useAppSelector(userRequestsSelector);
-  const requestsUsers = useAppSelector(userRequestsUsersSelector);
-
-  const uniqueUsers = useMemo(() => {
-    return requests
-      .map((request) => request.userId)
-      .filter((value, index, self) => self.indexOf(value) === index);
-  }, [requests]);
-
-  useEffect(() => {
-    if (uniqueUsers)
-      uniqueUsers.map((uniqueUser) => {
-        const alreadyFetchedUser =
-          requestsUsers.find(
-            (requestsUser) => requestsUser.id === uniqueUser
-          ) || ({} as CurrentUserType);
-
-        if (!alreadyFetchedUser.id) {
-          dispatch(getUserInfo(uniqueUser || 0));
-        }
-
-        return null;
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uniqueUsers]);
 
   const today = getDateFormatForURL(dayjs());
 
@@ -64,11 +28,7 @@ const DashboardStore: FC<Props> = ({ currentUser }) => {
     <div>
       <DashboardStoreProfile currentUser={currentUser} />
 
-      {requests.length !== 0 && <RequestByUserList requests={requests} />}
-
-      {/* {pickedDays.length !== 0 && (
-        <PickedDaysList pickedDays={pickedDays} type="selected" />
-      )} */}
+      <DashboardStoreRequests />
 
       <Typography
         paragraph

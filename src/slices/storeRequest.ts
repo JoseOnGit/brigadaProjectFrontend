@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
+import { PickedDayType, RequestType } from "../types/requestTypes";
 import { StoreApiType } from "../types/storesTypes";
 import RequestService from "../services/requestService";
 import StoreService from "../services/storeService";
@@ -14,6 +14,7 @@ export interface RequestBodyRequest {
   timeEnd: string;
   wholeDay: string;
   byStore: boolean;
+  level: number;
 }
 export interface RequestsState {
   requestsDetail: {
@@ -181,6 +182,7 @@ export const storeRequestSlice = createSlice({
               timeEnd: request.timeEnd,
               wholeDay: request.wholeDay === "1" ? true : false,
               byStore: request.byStore,
+              level: request.level,
             })
           );
           state.requestsDetail.error = null;
@@ -212,6 +214,7 @@ export const storeRequestSlice = createSlice({
               timeEnd: request.timeEnd,
               wholeDay: request.wholeDay === "1" ? true : false,
               byStore: request.byStore,
+              level: request.level,
             })
           );
           state.requestsDetail.status = "success";
@@ -294,14 +297,14 @@ export const storeRequestsLoadedIdSelector = (
 export const storeRequestsErrorSelector = (state: RootState): string | null =>
   state.storeRequest.requestsDetail.error;
 
-export const storeRequestsUsersSelector = (state: RootState): StoreApiType[] =>
+export const storeRequestsStoresSelector = (state: RootState): StoreApiType[] =>
   state.storeRequest.uniqueStores.stores;
-export const storeRequestsUsersLoadingSelector = (state: RootState): string =>
+export const storeRequestsStoresLoadingSelector = (state: RootState): string =>
   state.storeRequest.requestsDetail.status;
-export const storeRequestsUsersLoadedIdSelector = (
+export const storeRequestsStoresLoadedIdSelector = (
   state: RootState
 ): number | null => state.storeRequest.requestsDetail.loaded || null;
-export const storeRequestsUsersErrorSelector = (
+export const storeRequestsStoresErrorSelector = (
   state: RootState
 ): string | null => state.storeRequest.requestsDetail.error;
 

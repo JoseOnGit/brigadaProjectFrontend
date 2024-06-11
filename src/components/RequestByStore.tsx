@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import TXT from "../contexts/texts.json";
 import styled from "@emotion/styled";
 import { RequestType } from "../types/requestTypes";
-import { CurrentUserType } from "../types/userTypes";
 import {
   Accordion,
   AccordionDetails,
@@ -14,10 +13,11 @@ import {
 import { ArrowDropDownIcon } from "@mui/x-date-pickers/icons";
 import { EmployeeLevelRating } from "./EmployeeLevelRating";
 import { getDateInFormat, getWorkTime } from "../utils/commonUtils";
+import { StoreApiType } from "../types/storesTypes";
 
 type Props = {
   request: RequestType;
-  requestUser: CurrentUserType;
+  requestStore: StoreApiType;
 };
 
 // < STYLED COMPONENTS
@@ -43,12 +43,13 @@ const LevelWrapper = styled("div")({
 });
 //  STYLED COMPONENTS >
 
-const RequestByUser: FC<Props> = ({ request, requestUser }) => {
+const RequestByStore: FC<Props> = ({ request, requestStore }) => {
+  console.log("%c⧭ request ", "color: #917399", request);
   return (
     <>
       <Accordion
         sx={{
-          background: "#A7FFB0",
+          background: "#d6bbfa",
           borderTop: "1px solid #898989",
           marginBottom: "1rem",
         }}
@@ -62,7 +63,7 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
           <RequestByUserWrapper>
             <div>
               <Avatar sx={{ width: "3rem", height: "3rem" }}>
-                {`${requestUser.name?.[0]}`}
+                {`${requestStore.name?.[0]}`}
               </Avatar>
             </div>
 
@@ -75,7 +76,7 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
                   fontWeight: "bold",
                 }}
               >
-                {requestUser.name} {requestUser.surname}
+                {requestStore.name}
               </Typography>
 
               <Typography sx={{ fontSize: "0.9rem", lineHeight: "0.9rem" }}>
@@ -85,65 +86,72 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
           </RequestByUserWrapper>
         </AccordionSummary>
 
-        <AccordionDetails sx={{ background: "#ccffd1" }}>
+        <AccordionDetails sx={{ background: "#e1cff8" }}>
           <DetailsWrapper>
             <Typography sx={{ marginTop: "0.5rem" }}>
               <strong>
-                {TXT.dashboardPage.store.userList.detail.requestDate}:
+                {TXT.dashboardPage.user.storeList.detail.requestDate}:
               </strong>{" "}
               {getDateInFormat(request.day)}
             </Typography>
 
             <Typography sx={{ marginTop: "0.5rem" }}>
               <strong>
-                {TXT.dashboardPage.store.userList.detail.requestTime}:
+                {TXT.dashboardPage.user.storeList.detail.requestTime}:
               </strong>{" "}
               {getWorkTime(request)}
             </Typography>
 
             <Typography sx={{ marginTop: "0.5rem" }}>
-              <strong>{TXT.dashboardPage.store.userList.detail.base}:</strong>{" "}
-              {requestUser.base?.name}
+              <strong>{TXT.dashboardPage.user.storeList.detail.place}:</strong>{" "}
+              {requestStore.name}
             </Typography>
 
             <Typography sx={{ marginTop: "0.5rem" }}>
-              <strong>{TXT.dashboardPage.store.userList.detail.level}:</strong>{" "}
+              <strong>{TXT.dashboardPage.user.storeList.detail.level}:</strong>{" "}
             </Typography>
             <LevelWrapper>
-              <EmployeeLevelRating level={requestUser.level} col labelOn />
+              <EmployeeLevelRating level={request.level} col labelOn />
             </LevelWrapper>
 
             <Typography sx={{ marginTop: "0.5rem" }}>
-              <strong>{TXT.dashboardPage.store.userList.detail.email}:</strong>{" "}
-              {requestUser.email}
+              <strong>
+                {TXT.dashboardPage.user.storeList.detail.manager}:
+              </strong>{" "}
+              {requestStore.manager}
             </Typography>
 
             <Typography sx={{ marginTop: "0.5rem" }}>
-              <strong>{TXT.dashboardPage.store.userList.detail.phone}:</strong>{" "}
-              {requestUser.phone}
+              <strong>{TXT.dashboardPage.user.storeList.detail.email}:</strong>{" "}
+              {requestStore.email}
+            </Typography>
+
+            <Typography sx={{ marginTop: "0.5rem" }}>
+              <strong>{TXT.dashboardPage.user.storeList.detail.phone}:</strong>{" "}
+              {requestStore.phone}
             </Typography>
           </DetailsWrapper>
 
           <Button
-            href={`mailto:${requestUser.phone}`}
+            href={`mailto:${requestStore.phone}`}
             variant="contained"
             color="primary"
             size="large"
             fullWidth
             sx={{ marginTop: "2rem", padding: "1rem 0rem" }}
           >
-            {TXT.dashboardPage.store.userList.detail.buttonMail}
+            {TXT.dashboardPage.user.storeList.detail.buttonMail}
           </Button>
 
           <Button
-            href={`tel:${requestUser.phone}`}
+            href={`tel:${requestStore.phone}`}
             variant="contained"
             color="primary"
             size="large"
             fullWidth
             sx={{ marginTop: "1rem", padding: "1rem 0rem" }}
           >
-            {TXT.dashboardPage.store.userList.detail.buttonCall}
+            {TXT.dashboardPage.user.storeList.detail.buttonCall}
           </Button>
         </AccordionDetails>
       </Accordion>
@@ -151,4 +159,4 @@ const RequestByUser: FC<Props> = ({ request, requestUser }) => {
   );
 };
 
-export { RequestByUser };
+export { RequestByStore };

@@ -18,7 +18,10 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
-  - [Commit #29: RequestByUser update - soreted and grouped by date](#commit-29-requestbyuser-update---soreted-and-grouped-by-date)
+  - [Commit #32: Requests separated for users and for stores - finished design](#commit-32-requests-separated-for-users-and-for-stores---finished-design)
+  - [Commit #31: Fix for login redirection when token is expired](#commit-31-fix-for-login-redirection-when-token-is-expired)
+  - [Commit #30: Requests separated for users and for stores](#commit-30-requests-separated-for-users-and-for-stores)
+  - [Commit #29: RequestByUser update - sorted and grouped by date](#commit-29-requestbyuser-update---sorted-and-grouped-by-date)
   - [Commit #28: Branch: 16-request-by-user: Request by user on store dashboard](#commit-28-branch-16-request-by-user-request-by-user-on-store-dashboard)
   - [Commit #27: Branch: 14-send-request-by-user-to-database: Request remove, change](#commit-27-branch-14-send-request-by-user-to-database-request-remove-change)
   - [Commit #26: Branch: 14-send-request-by-user-to-database: Redux refactor](#commit-26-branch-14-send-request-by-user-to-database-redux-refactor)
@@ -90,6 +93,12 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #32: Requests separated for users and for stores - finished design
+
+### Commit #31: Fix for login redirection when token is expired
+
+### Commit #30: Requests separated for users and for stores
 
 ### Commit #29: RequestByUser update - sorted and grouped by date
 

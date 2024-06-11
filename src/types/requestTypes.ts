@@ -7,6 +7,7 @@ export type PickedDayType = {
   timeEnd: Dayjs | string;
   wholeDay: boolean;
   byStore: boolean;
+  level: number;
 };
 
 export type RequestType = {
@@ -17,4 +18,5 @@ export type RequestType = {
   timeEnd: Dayjs | string;
   wholeDay: boolean;
   byStore: boolean;
+  level: number;
 };

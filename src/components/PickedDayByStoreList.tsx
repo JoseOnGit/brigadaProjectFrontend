@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import TXT from "../contexts/texts.json";
-import { PickedDayType } from "../types/brigadaTypes";
-import { PickedDay } from "./PickedDay";
+import { PickedDayType } from "../types/requestTypes";
 import Typography from "@mui/material/Typography";
 import styled from "@emotion/styled";
 import { PickedDayVariant } from "../types/commonTypes";
@@ -11,6 +10,7 @@ import {
   userRequestsLoadedIdSelector,
   userRequestsLoadingSelector,
 } from "../slices/userRequest";
+import { PickedDayByStore } from "./PickedDayByStore";
 
 type Props = {
   pickedDays: PickedDayType[];
@@ -24,7 +24,7 @@ const PickedDaysListWrapper = styled("div")({
 });
 // STYLED COMPONENTS >
 
-const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
+const PickedDayByStoreList: FC<Props> = ({ pickedDays, type }) => {
   const requestsLoading = useAppSelector(userRequestsLoadingSelector);
   const requestsLoaded = useAppSelector(userRequestsLoadedIdSelector);
 
@@ -41,8 +41,8 @@ const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
         }}
       >
         {type === "selected"
-          ? TXT.pickedDaysConfirmPage.labelPicked
-          : TXT.pickedDaysConfirmPage.labelRequest}
+          ? TXT.pickedDaysByStoreConfirmPage.labelPicked
+          : TXT.pickedDaysByStoreConfirmPage.labelRequest}
       </Typography>
 
       {requestsLoading === "loading" && !requestsLoaded ? (
@@ -53,11 +53,11 @@ const PickedDaysList: FC<Props> = ({ pickedDays, type }) => {
             a.day.localeCompare(b.day)
           )
           .map((day, index) => (
-            <PickedDay key={index} pickedDay={day} type={type} />
+            <PickedDayByStore key={index} pickedDay={day} type={type} />
           ))
       )}
     </PickedDaysListWrapper>
   );
 };
 
-export { PickedDaysList };
+export { PickedDayByStoreList };

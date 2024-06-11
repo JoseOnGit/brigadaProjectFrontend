@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { PickedDayType, RequestType } from "../types/brigadaTypes";
-import dayjs from "dayjs";
+import { PickedDayType, RequestType } from "../types/requestTypes";
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
@@ -11,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { removePickedDay } from "../slices/userRequest";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Loader } from "./Loader";
-import { getWorkTime } from "../utils/commonUtils";
+import { getDateInFormat, getWorkTime } from "../utils/commonUtils";
 import {
   removeRequest,
   userRequestsLoadedIdSelector,
@@ -23,7 +22,7 @@ type Props = {
   type: PickedDayVariant;
 };
 
-const PickedDay: FC<Props> = ({ pickedDay, type }) => {
+const PickedDayByStore: FC<Props> = ({ pickedDay, type }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -39,12 +38,12 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
     width: "100%",
     minHeight: "3.6rem",
     padding: "0.5rem",
-    background: type === "confirmed" ? "#A7FFB0" : "#F8FFA7",
+    background: type === "confirmed" ? "#d6bbfa" : "#f8ffa7",
     marginBottom: "0.5rem",
     borderTop: "1px solid #898989",
     borderBottom: "1px solid #898989",
     fontSize: "0.8rem",
-    borderRadius: "0.25rem",
+    // borderRadius: " 0 0 0.25rem 0.25rem",
   });
   //  STYLED COMPONENTS >
 
@@ -61,7 +60,7 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
       ) : (
         <>
           <div>
-            <strong>{dayjs(pickedDay.day).format("D. MMMM YYYY")}</strong>
+            <strong>{getDateInFormat(pickedDay.day)}</strong>
           </div>
 
           <div>{getWorkTime(pickedDay)}</div>
@@ -89,4 +88,4 @@ const PickedDay: FC<Props> = ({ pickedDay, type }) => {
   );
 };
 
-export { PickedDay };
+export { PickedDayByStore };

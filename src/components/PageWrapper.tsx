@@ -124,6 +124,18 @@ const PageWrapper: FC = () => {
       navigate(getLoginRoutePath());
     }
 
+    // if there IS current user in locale storage,
+    // but there's also error (eg. token in local storage for fetching currentUser is expired)
+    // then redirect to Login
+    if (
+      currentUserInStorage &&
+      !currentUser?.id &&
+      currentUserError &&
+      !userWasRefetched
+    ) {
+      navigate(getLoginRoutePath());
+    }
+
     // if there IS current user,
     // then don't let him see pages like 'login' or 'register'
     // and always redirect to 'dashboard' of user

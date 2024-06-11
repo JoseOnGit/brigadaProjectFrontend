@@ -128,15 +128,31 @@
     "chooseDate": "Vyber den kdy máš volno a chtěl bys brigádu."
   },
   "pickedDayPage": {
-    "chooseTime": "Dej nám vědět odkdy dokdy můžeš...",
-    "label": {
-      "timeStart": "V kolik můžeš začít",
-      "timeEnd": "V kolik končíš",
-      "wholeDay": "Můžu celý den"
+    "user": {
+      "chooseTime": "Dej nám vědět odkdy dokdy můžeš...",
+      "label": {
+        "timeStart": "V kolik můžeš začít",
+        "timeEnd": "V kolik končíš",
+        "wholeDay": "Můžu celý den"
+      },
+      "message": {
+        "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou žádost o brigádu.",
+        "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádu. Žádost můžeš změnit. Změnu pak musíš potvrdit a původní žádost bude zrušená.",
+        "alreadyRequestedByStore": "Na tenhle datum někdo hledá brigádnika."
+      }
     },
-    "message": {
-      "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou žádost o brigádu",
-      "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádu. Žádost bude zrušená. Změnu pak musíš potvrdit a poslat novou správu."
+    "store": {
+      "chooseTime": "Odkdy dokdy potřebuješ brigádnika?",
+      "label": {
+        "timeStart": "V kolik by měl začít",
+        "timeEnd": "V kolik může končit",
+        "wholeDay": "Potřebuju na celý den"
+      },
+      "message": {
+        "alreadyPicked": "Na tenhle datum už máš vybranou, ale nepotvrzenou žádost o brigádnika.",
+        "alreadyRequested": "Na tenhle datum už máš nahlášenou žádost o brigádnika. Žádost můžeš změnit. Změnu pak musíš potvrdit a původní žádost bude zrušená.",
+        "alreadyRequestedByStore": "Na tenhle datum někdo hledá brigádu."
+      }
     },
     "submitButton": "Pokračovat"
   },

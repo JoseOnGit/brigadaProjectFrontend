@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #33: Update logic on 'Picked day' page for all users](#commit-33-update-logic-on-picked-day-page-for-all-users)
   - [Commit #32: Requests separated for users and for stores - finished design](#commit-32-requests-separated-for-users-and-for-stores---finished-design)
   - [Commit #31: Fix for login redirection when token is expired](#commit-31-fix-for-login-redirection-when-token-is-expired)
   - [Commit #30: Requests separated for users and for stores](#commit-30-requests-separated-for-users-and-for-stores)
@@ -93,6 +94,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #33: Update logic on 'Picked day' page for all users
 
 ### Commit #32: Requests separated for users and for stores - finished design
 

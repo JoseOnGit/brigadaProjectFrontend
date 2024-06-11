@@ -1,20 +1,23 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import TXT from "../contexts/texts.json";
 import { RequestType } from "../types/requestTypes";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import { Loader } from "./Loader";
 import {
+  getStoreInfo,
   storeRequestsLoadingSelector,
   storeRequestsStoresSelector,
 } from "../slices/storeRequest";
 import { RequestByStore } from "./RequestByStore";
 import { StoreApiType } from "../types/storesTypes";
 import { getDateInFormat } from "../utils/commonUtils";
+import { CurrentUserType } from "../types/userTypes";
 
 type Props = {
   requests: RequestType[];
+  noHeader?: boolean;
 };
 
 // < STYLED COMPONENTS
@@ -30,9 +33,35 @@ const DateWrapper = styled("div")({
 });
 // STYLED COMPONENTS >
 
-const RequestByStoreList: FC<Props> = ({ requests }) => {
+const RequestByStoreList: FC<Props> = ({ requests, noHeader = false }) => {
+  const dispatch = useAppDispatch();
+
   const requestsStores = useAppSelector(storeRequestsStoresSelector);
   const requestsLoading = useAppSelector(storeRequestsLoadingSelector);
+
+  // first we fetch Stores data for requests
+  const uniqueStores = useMemo(() => {
+    return requests
+      .map((request) => request.userId)
+      .filter((value, index, self) => self.indexOf(value) === index);
+  }, [requests]);
+
+  useEffect(() => {
+    if (uniqueStores)
+      uniqueStores.map((uniqueStore) => {
+        const alreadyFetchedStore =
+          requestsStores.find(
+            (requestsStore) => requestsStore.id === uniqueStore
+          ) || ({} as CurrentUserType);
+
+        if (!alreadyFetchedStore.id) {
+          dispatch(getStoreInfo(uniqueStore || 0));
+        }
+
+        return null;
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uniqueStores]);
 
   // we can't sort origin array 'requests' - it runs TypeScript error
   const newReqests = [...requests];
@@ -56,7 +85,7 @@ const RequestByStoreList: FC<Props> = ({ requests }) => {
     return requestsDates.map((date) => {
       return (
         <div key={date}>
-          <DateWrapper>{getDateInFormat(date)}</DateWrapper>
+          {!noHeader && <DateWrapper>{getDateInFormat(date)}</DateWrapper>}
           {grouped[date].map((request, index) => {
             const user =
               requestsStores.find((user) => user.id === request.userId) ||
@@ -77,15 +106,17 @@ const RequestByStoreList: FC<Props> = ({ requests }) => {
 
   return (
     <RequestByUserListWrapper>
-      <Typography
-        paragraph
-        sx={{
-          marginBottom: "1rem",
-          fontWeight: "bold",
-        }}
-      >
-        {TXT.dashboardPage.user.storeList.label}
-      </Typography>
+      {!noHeader && (
+        <Typography
+          paragraph
+          sx={{
+            marginBottom: "1rem",
+            fontWeight: "bold",
+          }}
+        >
+          {TXT.dashboardPage.user.storeList.label}
+        </Typography>
+      )}
 
       {requestsLoading === "loading" ? (
         <Loader />

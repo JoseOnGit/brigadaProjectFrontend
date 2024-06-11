@@ -7,9 +7,9 @@ import { PickedDayVariant } from "../types/commonTypes";
 import { useAppSelector } from "../redux/hooks";
 import { Loader } from "./Loader";
 import {
-  userRequestsLoadedIdSelector,
-  userRequestsLoadingSelector,
-} from "../slices/userRequest";
+  storeRequestsLoadedIdSelector,
+  storeRequestsLoadingSelector,
+} from "../slices/storeRequest";
 import { PickedDayByStore } from "./PickedDayByStore";
 
 type Props = {
@@ -25,8 +25,8 @@ const PickedDaysListWrapper = styled("div")({
 // STYLED COMPONENTS >
 
 const PickedDayByStoreList: FC<Props> = ({ pickedDays, type }) => {
-  const requestsLoading = useAppSelector(userRequestsLoadingSelector);
-  const requestsLoaded = useAppSelector(userRequestsLoadedIdSelector);
+  const requestsLoading = useAppSelector(storeRequestsLoadingSelector);
+  const requestsLoaded = useAppSelector(storeRequestsLoadedIdSelector);
 
   // we can't sort origin array 'pickedDays' - it runs TypeScript error
   const newPickedDays = [...pickedDays];

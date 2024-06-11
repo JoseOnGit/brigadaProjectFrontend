@@ -1,17 +1,17 @@
 import React, { FC } from "react";
 import { useAppSelector } from "../redux/hooks";
-import {
-  userPickedDaysSelector,
-  userRequestsSelector,
-} from "../slices/userRequest";
+import { userRequestsSelector } from "../slices/userRequest";
 import { RequestByUserList } from "./RequestByUserList";
-import { storeRequestsSelector } from "../slices/storeRequest";
+import {
+  storePickedDaysSelector,
+  storeRequestsSelector,
+} from "../slices/storeRequest";
 import { PickedDayByStoreList } from "./PickedDayByStoreList";
 
 const DashboardStoreRequests: FC = () => {
   const userRequests = useAppSelector(userRequestsSelector);
   const storeRequests = useAppSelector(storeRequestsSelector);
-  const pickedDays = useAppSelector(userPickedDaysSelector);
+  const pickedDays = useAppSelector(storePickedDaysSelector);
 
   return (
     <div>

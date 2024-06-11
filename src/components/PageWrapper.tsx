@@ -27,7 +27,11 @@ import {
   userRequestsLoadingSelector,
 } from "../slices/userRequest";
 import { ErrorMessage } from "./ErrorMessage";
-import { getAllStoresRequests, getStoreRequests } from "../slices/storeRequest";
+import {
+  getAllStoresRequests,
+  getStoreRequests,
+  storeRequestsLoadingSelector,
+} from "../slices/storeRequest";
 
 // < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
@@ -53,6 +57,7 @@ const PageWrapper: FC = () => {
   const currentUserLoading = useAppSelector(userLoadingSelector);
   const currentUserError = useAppSelector(userErrorSelector);
   const userRequestsLoading = useAppSelector(userRequestsLoadingSelector);
+  const storeRequestsLoading = useAppSelector(storeRequestsLoadingSelector);
 
   const currentUserInStorage = AuthService.getCurrentUserFromStorage();
 
@@ -91,7 +96,7 @@ const PageWrapper: FC = () => {
   };
 
   const fetchDataForStore = () => {
-    dispatch(getStoreRequests(currentUser.id));
+    dispatch(getStoreRequests(currentUser.base.id));
     dispatch(getAllUsersRequests());
   };
 
@@ -100,6 +105,7 @@ const PageWrapper: FC = () => {
     if (
       currentUser?.id !== undefined &&
       userRequestsLoading !== "loading" &&
+      storeRequestsLoading !== "loading" &&
       userWasRefetched
     ) {
       currentUser.roles.includes(ROLE.MODERATOR)
@@ -108,7 +114,12 @@ const PageWrapper: FC = () => {
       setUserWasRefetched(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser, userRequestsLoading, userWasRefetched]);
+  }, [
+    currentUser,
+    userRequestsLoading,
+    storeRequestsLoading,
+    userWasRefetched,
+  ]);
 
   useEffect(() => {
     // if there IS NO current user in locale storage,

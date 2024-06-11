@@ -48,7 +48,7 @@ const initialState: RequestsState = {
   pickedDaysDetail: [],
 };
 
-export const addRequest = createAsyncThunk(
+export const addUserRequest = createAsyncThunk(
   "userRequest/addReqest",
   async (request: RequestType) => {
     try {
@@ -84,7 +84,7 @@ export const getUserRequests = createAsyncThunk(
   }
 );
 
-export const removeRequest = createAsyncThunk(
+export const removeUserRequest = createAsyncThunk(
   "userRequest/removeRequest",
   async (request: RequestType) => {
     try {
@@ -112,10 +112,10 @@ export const userRequestSlice = createSlice({
   name: "userRequest",
   initialState,
   reducers: {
-    addPickedDay(state, action) {
+    addPickedDayByUser(state, action) {
       state.pickedDaysDetail = [...state.pickedDaysDetail, action.payload];
     },
-    changePickedDay(state, action) {
+    changePickedDayByUser(state, action) {
       state.pickedDaysDetail = state.pickedDaysDetail.map((pickedDay) => {
         if (pickedDay.day === action.payload.day) {
           return action.payload;
@@ -123,7 +123,7 @@ export const userRequestSlice = createSlice({
         return pickedDay;
       });
     },
-    removePickedDay(state, action) {
+    removePickedDayByUser(state, action) {
       state.pickedDaysDetail = state.pickedDaysDetail.filter(
         (pickedDay) => pickedDay.day !== action.payload.day
       );
@@ -133,11 +133,11 @@ export const userRequestSlice = createSlice({
     builder
 
       // ADD REQUEST
-      .addCase(addRequest.pending, (state) => {
+      .addCase(addUserRequest.pending, (state) => {
         state.requestsDetail.status = "loading";
         state.requestsDetail.error = null;
       })
-      .addCase(addRequest.fulfilled, (state, action) => {
+      .addCase(addUserRequest.fulfilled, (state, action) => {
         if (action.payload.response?.data?.message) {
           state.requestsDetail.status = "failed";
           state.requestsDetail.requests = [];
@@ -155,7 +155,7 @@ export const userRequestSlice = createSlice({
           state.requestsDetail.error = null;
         }
       })
-      .addCase(addRequest.rejected, (state, action) => {
+      .addCase(addUserRequest.rejected, (state, action) => {
         state.requestsDetail.status = "failed";
         state.requestsDetail.error = action.error.message || null;
       })
@@ -227,12 +227,12 @@ export const userRequestSlice = createSlice({
       })
 
       // REMOVE REQUEST
-      .addCase(removeRequest.pending, (state, action) => {
+      .addCase(removeUserRequest.pending, (state, action) => {
         state.requestsDetail.status = "loading";
         state.requestsDetail.loaded = action.meta.arg.id;
         state.requestsDetail.error = null;
       })
-      .addCase(removeRequest.fulfilled, (state, action) => {
+      .addCase(removeUserRequest.fulfilled, (state, action) => {
         if (action.payload.response?.data?.message) {
           state.requestsDetail.status = "failed";
           state.requestsDetail.error =
@@ -247,7 +247,7 @@ export const userRequestSlice = createSlice({
           state.requestsDetail.loaded = null;
         }
       })
-      .addCase(removeRequest.rejected, (state, action) => {
+      .addCase(removeUserRequest.rejected, (state, action) => {
         state.requestsDetail.status = "failed";
         state.requestsDetail.error = action.error.message || null;
         state.requestsDetail.loaded = null;
@@ -284,8 +284,11 @@ export const userRequestSlice = createSlice({
       }),
 });
 
-export const { addPickedDay, changePickedDay, removePickedDay } =
-  userRequestSlice.actions;
+export const {
+  addPickedDayByUser,
+  changePickedDayByUser,
+  removePickedDayByUser,
+} = userRequestSlice.actions;
 
 export const userRequestsSelector = (state: RootState): RequestType[] =>
   state.userRequest.requestsDetail.requests;

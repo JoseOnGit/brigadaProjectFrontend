@@ -7,12 +7,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getPickedDayRoutePath } from "../routes/routePaths";
 import { PickedDayVariant } from "../types/commonTypes";
 import { useNavigate } from "react-router-dom";
-import { removePickedDay } from "../slices/userRequest";
+import { removePickedDayByUser } from "../slices/userRequest";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Loader } from "./Loader";
 import { getDateInFormat, getWorkTime } from "../utils/commonUtils";
 import {
-  removeRequest,
+  removeUserRequest,
   userRequestsLoadedIdSelector,
   userRequestsLoadingSelector,
 } from "../slices/userRequest";
@@ -49,8 +49,8 @@ const PickedDayByUser: FC<Props> = ({ pickedDay, type }) => {
 
   const handleRemove = () => {
     type === "confirmed"
-      ? dispatch(removeRequest(pickedDay))
-      : dispatch(removePickedDay(pickedDay));
+      ? dispatch(removeUserRequest(pickedDay))
+      : dispatch(removePickedDayByUser(pickedDay));
   };
 
   return (

@@ -13,14 +13,20 @@ import { PickedDayType, RequestType } from "../types/requestTypes";
 import Alert from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
-  addPickedDay,
-  changePickedDay,
+  addPickedDayByUser,
+  changePickedDayByUser,
   userPickedDaysSelector,
-  removeRequest,
+  removeUserRequest,
   userRequestsSelector,
 } from "../slices/userRequest";
 import { getDateInFormat } from "../utils/commonUtils";
-import { storeRequestsSelector } from "../slices/storeRequest";
+import {
+  addPickedDayByStore,
+  changePickedDayByStore,
+  removeStoreRequest,
+  storePickedDaysSelector,
+  storeRequestsSelector,
+} from "../slices/storeRequest";
 import { RequestByStoreList } from "../components/RequestByStoreList";
 import { ROLE } from "../constants/commonConstants";
 import { userSelector } from "../slices/user";
@@ -39,7 +45,9 @@ const PickedDayPage: FC<Props> = () => {
   const currentUser = useAppSelector(userSelector);
   const isStore = currentUser && currentUser?.roles?.includes(ROLE.MODERATOR);
 
-  const pickedDays = useAppSelector(userPickedDaysSelector);
+  const pickedDays = useAppSelector(
+    isStore ? storePickedDaysSelector : userPickedDaysSelector
+  );
   const userRequests = useAppSelector(userRequestsSelector);
   const storeRequests = useAppSelector(storeRequestsSelector);
 
@@ -118,16 +126,32 @@ const PickedDayPage: FC<Props> = () => {
 
     const changeRequestToPicked = () => {
       if (isRequested) {
-        dispatch(addPickedDay(pickedDay));
-        dispatch(removeRequest(isRequested));
+        dispatch(
+          isStore
+            ? addPickedDayByStore(pickedDay)
+            : addPickedDayByUser(pickedDay)
+        );
+        dispatch(
+          isStore
+            ? removeStoreRequest(isRequested)
+            : removeUserRequest(isRequested)
+        );
       }
     };
 
     isRequested
       ? changeRequestToPicked()
       : isPicked
-      ? dispatch(changePickedDay(pickedDay))
-      : dispatch(addPickedDay(pickedDay));
+      ? dispatch(
+          isStore
+            ? changePickedDayByStore(pickedDay)
+            : changePickedDayByUser(pickedDay)
+        )
+      : dispatch(
+          isStore
+            ? addPickedDayByStore(pickedDay)
+            : addPickedDayByUser(pickedDay)
+        );
 
     navigate(getPickedDaysConfirmRoutePath());
   };

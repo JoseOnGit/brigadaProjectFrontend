@@ -7,15 +7,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import { getPickedDayRoutePath } from "../routes/routePaths";
 import { PickedDayVariant } from "../types/commonTypes";
 import { useNavigate } from "react-router-dom";
-import { removePickedDay } from "../slices/userRequest";
+import { removePickedDayByUser } from "../slices/userRequest";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Loader } from "./Loader";
 import { getDateInFormat, getWorkTime } from "../utils/commonUtils";
 import {
-  removeRequest,
-  userRequestsLoadedIdSelector,
-  userRequestsLoadingSelector,
-} from "../slices/userRequest";
+  removeStoreRequest,
+  storeRequestsLoadedIdSelector,
+  storeRequestsLoadingSelector,
+} from "../slices/storeRequest";
 
 type Props = {
   pickedDay: PickedDayType | RequestType;
@@ -26,8 +26,8 @@ const PickedDayByStore: FC<Props> = ({ pickedDay, type }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const requestsLoading = useAppSelector(userRequestsLoadingSelector);
-  const requestsLoaded = useAppSelector(userRequestsLoadedIdSelector);
+  const requestsLoading = useAppSelector(storeRequestsLoadingSelector);
+  const requestsLoaded = useAppSelector(storeRequestsLoadedIdSelector);
 
   // < STYLED COMPONENTS
   const PickedDayWrapper = styled("div")({
@@ -49,8 +49,8 @@ const PickedDayByStore: FC<Props> = ({ pickedDay, type }) => {
 
   const handleRemove = () => {
     type === "confirmed"
-      ? dispatch(removeRequest(pickedDay))
-      : dispatch(removePickedDay(pickedDay));
+      ? dispatch(removeStoreRequest(pickedDay))
+      : dispatch(removePickedDayByUser(pickedDay));
   };
 
   return (

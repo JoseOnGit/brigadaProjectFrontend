@@ -13,7 +13,11 @@ import { FormSubmitButton } from "../components/FormSubmitButton";
 import { userSelector } from "../slices/user";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { ROLE } from "../constants/commonConstants";
-import { addRequest, userPickedDaysSelector } from "../slices/userRequest";
+import { addUserRequest, userPickedDaysSelector } from "../slices/userRequest";
+import {
+  addStoreRequest,
+  storePickedDaysSelector,
+} from "../slices/storeRequest";
 
 type Props = {};
 
@@ -22,9 +26,11 @@ const PickedDaysConfirmPage: FC<Props> = () => {
   const navigate = useNavigate();
 
   const currentUser = useAppSelector(userSelector);
-  const pickedDays = useAppSelector(userPickedDaysSelector);
+  const isStore = currentUser && currentUser?.roles?.includes(ROLE.MODERATOR);
 
-  const isStore = currentUser.roles.includes(ROLE.MODERATOR);
+  const pickedDays = useAppSelector(
+    isStore ? storePickedDaysSelector : userPickedDaysSelector
+  );
 
   useEffect(() => {
     if (pickedDays.length === 0) {
@@ -47,9 +53,12 @@ const PickedDaysConfirmPage: FC<Props> = () => {
     userRequests.map((request) => {
       const requestByStore = {
         ...request,
+        userId: currentUser.base.id,
         byStore: true,
       };
-      return dispatch(addRequest(isStore ? requestByStore : request));
+      return dispatch(
+        isStore ? addStoreRequest(requestByStore) : addUserRequest(request)
+      );
     });
     navigate(getSuccessRoutePath("confirmed"));
   };

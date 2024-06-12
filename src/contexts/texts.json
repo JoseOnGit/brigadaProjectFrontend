@@ -146,6 +146,7 @@
       "label": {
         "timeStart": "V kolik by měl začít",
         "timeEnd": "V kolik může končit",
+        "level": "Požadavky na brigádnika",
         "wholeDay": "Potřebuju na celý den"
       },
       "message": {

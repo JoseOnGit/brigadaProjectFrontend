@@ -3,8 +3,6 @@ import TXT from "../contexts/texts.json";
 import Typography from "@mui/material/Typography";
 import dayjs, { Dayjs } from "dayjs";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { FormSubmitButton } from "../components/FormSubmitButton";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageHeadline } from "../components/PageHeadline";
@@ -32,6 +30,8 @@ import { ROLE } from "../constants/commonConstants";
 import { userSelector } from "../slices/user";
 import { RequestByUserList } from "../components/RequestByUserList";
 import { Loader } from "../components/Loader";
+import { CheckboxElement, SelectElement, useForm } from "react-hook-form-mui";
+import { employeeLevels } from "../components/EmployeeLevel";
 
 type Props = {};
 
@@ -103,6 +103,8 @@ const PickedDayPage: FC<Props> = () => {
   const [isWholeDaySelected, setIsWholeDaySelected] =
     useState<boolean>(initialWholeDay);
 
+  const [level, setLevel] = useState<number>(0);
+
   const enableButton =
     (selectedTimeStart && selectedTimeEnd) || isWholeDaySelected;
 
@@ -121,7 +123,7 @@ const PickedDayPage: FC<Props> = () => {
       timeEnd: isWholeDaySelected ? "" : selectedTimeEnd || "",
       wholeDay: isWholeDaySelected,
       byStore: isStore,
-      level: 0,
+      level: level,
     };
 
     const changeRequestToPicked = () => {
@@ -155,6 +157,15 @@ const PickedDayPage: FC<Props> = () => {
 
     navigate(getPickedDaysConfirmRoutePath());
   };
+
+  const { control } = useForm({
+    defaultValues: {
+      timeStart: "",
+      timeEnd: "",
+      level: null,
+      wholeDay: false,
+    },
+  });
 
   if (!currentUser.id) {
     return <Loader />;
@@ -239,25 +250,34 @@ const PickedDayPage: FC<Props> = () => {
           marginRight: "1rem",
         }}
       />
-
       <br />
 
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={isWholeDaySelected}
-            onChange={() => setIsWholeDaySelected(!isWholeDaySelected)}
-          />
-        }
+      <CheckboxElement
+        name="wholeDay"
+        control={control}
+        checked={isWholeDaySelected}
+        onChange={() => setIsWholeDaySelected(!isWholeDaySelected)}
         label={
           isStore
             ? TXT.pickedDayPage.store.label.wholeDay
             : TXT.pickedDayPage.user.label.wholeDay
         }
-        sx={{
-          marginTop: "1rem",
-        }}
       />
+      {isStore && (
+        <SelectElement
+          name="level"
+          control={control}
+          label={TXT.pickedDayPage.store.label.level}
+          value={level}
+          options={employeeLevels}
+          onChange={(e) => setLevel(e)}
+          fullWidth
+          sx={{
+            marginBottom: "1rem",
+            marginTop: "1rem",
+          }}
+        />
+      )}
 
       <FormSubmitButton
         onClick={handleSubmit}

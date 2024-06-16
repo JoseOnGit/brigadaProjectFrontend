@@ -233,7 +233,7 @@ export const userErrorSelector = (state: RootState): string | null =>
   state.user?.userDetail.error;
 
 export const userStoreSelector = (state: RootState): StoreApiType | null =>
-  state.user?.storeDetail.store || null;
+  state.user?.storeDetail.store;
 export const userStoreLoadingSelector = (state: RootState): string =>
   state.user?.storeDetail.status;
 export const userStoreErrorSelector = (state: RootState): string | null =>

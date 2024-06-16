@@ -18,6 +18,7 @@ You get notification when store needs some extra help on the field. You get noti
   - [`yarn build`](#yarn-build)
   - [`yarn eject`](#yarn-eject)
 - [Commits](#commits)
+  - [Commit #36: Branch: 29-send-notification-after-confirm: Send notification after confirm](#commit-36-branch-29-send-notification-after-confirm-send-notification-after-confirm)
   - [Commit #35: Branch: 22-add-levels-select-for-store-manager: Add levels select for store manager](#commit-35-branch-22-add-levels-select-for-store-manager-add-levels-select-for-store-manager)
   - [Commit #34: Branch: 23-picked-day-confirm-page-logic-for-store-manager: Fix 'Add request' for stores](#commit-34-branch-23-picked-day-confirm-page-logic-for-store-manager-fix-add-request-for-stores)
   - [Commit #33: Update logic on 'Picked day' page for all users](#commit-33-update-logic-on-picked-day-page-for-all-users)
@@ -96,6 +97,8 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Commits
 
 https://github.com/JoseOnGit/brigadaProjectFrontend/commits/master/
+
+### Commit #36: Branch: 29-send-notification-after-confirm: Send notification after confirm
 
 ### Commit #35: Branch: 22-add-levels-select-for-store-manager: Add levels select for store manager
 

@@ -4,20 +4,25 @@ import { PageHeadline } from "../components/PageHeadline";
 import { PickedDayByUserList } from "../components/PickedDayByUserList";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import { RequestType } from "../types/requestTypes";
+import { NotificationType, RequestType } from "../types/requestTypes";
 import {
   getCalendarRoutePath,
   getSuccessRoutePath,
 } from "../routes/routePaths";
 import { FormSubmitButton } from "../components/FormSubmitButton";
-import { userSelector } from "../slices/user";
+import { userSelector, userStoreSelector } from "../slices/user";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { ROLE } from "../constants/commonConstants";
-import { addUserRequest, userPickedDaysSelector } from "../slices/userRequest";
+import {
+  addUserRequest,
+  userPickedDaysSelector,
+  userRequestNotification,
+} from "../slices/userRequest";
 import {
   addStoreRequest,
   storePickedDaysSelector,
 } from "../slices/storeRequest";
+import { getWorkTime } from "../utils/commonUtils";
 
 type Props = {};
 
@@ -27,6 +32,7 @@ const PickedDaysConfirmPage: FC<Props> = () => {
 
   const currentUser = useAppSelector(userSelector);
   const isStore = currentUser && currentUser?.roles?.includes(ROLE.MODERATOR);
+  const currentUserStore = useAppSelector(userStoreSelector);
 
   const pickedDays = useAppSelector(
     isStore ? storePickedDaysSelector : userPickedDaysSelector
@@ -49,17 +55,34 @@ const PickedDaysConfirmPage: FC<Props> = () => {
     });
 
     // if we are store,
-    // then send request with additional parameter 'byStore: true'
+    // then send request with additional parameter 'byStore: true' and 'userId: base of current user'
     userRequests.map((request) => {
       const requestByStore = {
         ...request,
         userId: currentUser.base.id,
         byStore: true,
       };
-      return dispatch(
+
+      const notification: NotificationType = {
+        id: isStore
+          ? `store-${currentUserStore?.id}-${request.day}`
+          : `user-${currentUser.id}-${request.day}`,
+        userId: isStore ? currentUserStore?.id || 0 : currentUser.id,
+        name: isStore
+          ? currentUserStore?.name || ""
+          : `${currentUser.name} ${currentUser.surname}`,
+        date: request.day,
+        time: getWorkTime(request),
+        byStore: isStore,
+      };
+      dispatch(
         isStore ? addStoreRequest(requestByStore) : addUserRequest(request)
       );
+      dispatch(userRequestNotification(notification));
+
+      return null;
     });
+
     navigate(getSuccessRoutePath("confirmed"));
   };
 

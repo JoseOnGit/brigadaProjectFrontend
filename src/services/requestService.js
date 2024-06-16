@@ -3,13 +3,6 @@ import { API_URL } from "../config";
 import authHeader from "./authHeader";
 
 class RequestService {
-  getAllRequests() {
-    return axios
-      .get(API_URL + "/requests", { headers: authHeader() })
-      .then((response) => {
-        return response.data;
-      });
-  }
   getAllUserRequests() {
     return axios
       .post(API_URL + "/allUsersRequests", null, { headers: authHeader() })
@@ -49,6 +42,17 @@ class RequestService {
   createNewRequest(request) {
     return axios
       .post(API_URL + "/request/add", { request }, { headers: authHeader() })
+      .then((response) => {
+        return response.data;
+      });
+  }
+  sendNotification(notification) {
+    return axios
+      .post(
+        API_URL + "/request/notification",
+        { notification },
+        { headers: authHeader() }
+      )
       .then((response) => {
         return response.data;
       });

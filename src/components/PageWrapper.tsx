@@ -21,17 +21,10 @@ import {
   userSelector,
 } from "../slices/user";
 import { MAX_CONTENT_WIDTH, ROLE } from "../constants/commonConstants";
-import {
-  getAllUsersRequests,
-  getUserRequests,
-  userRequestsLoadingSelector,
-} from "../slices/userRequest";
+import { userRequestsLoadingSelector } from "../slices/userRequest";
 import { ErrorMessage } from "./ErrorMessage";
-import {
-  getAllStoresRequests,
-  getStoreRequests,
-  storeRequestsLoadingSelector,
-} from "../slices/storeRequest";
+import { storeRequestsLoadingSelector } from "../slices/storeRequest";
+import { fetchDataForStore, fetchDataForUser } from "../utils/commonUtils";
 
 // < STYLED COMPONENTS
 const ToolbarWrapper = styled("div")({
@@ -90,16 +83,6 @@ const PageWrapper: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchDataForUser = () => {
-    dispatch(getUserRequests(currentUser.id));
-    dispatch(getAllStoresRequests());
-  };
-
-  const fetchDataForStore = () => {
-    dispatch(getStoreRequests(currentUser.base.id));
-    dispatch(getAllUsersRequests());
-  };
-
   // when we refetch user we have to refetch also requests
   useEffect(() => {
     if (
@@ -109,8 +92,8 @@ const PageWrapper: FC = () => {
       userWasRefetched
     ) {
       currentUser.roles.includes(ROLE.MODERATOR)
-        ? fetchDataForStore()
-        : fetchDataForUser();
+        ? fetchDataForStore(dispatch, currentUser.base.id)
+        : fetchDataForUser(dispatch, currentUser.id);
       setUserWasRefetched(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -152,6 +135,10 @@ const PageWrapper: FC = () => {
     // and always redirect to 'dashboard' of user
     if (currentUser?.id && isPublicPage && !currentUserError) {
       navigate(getDashboardRoutePath());
+    }
+
+    if (currentUserError) {
+      navigate(getLoginRoutePath());
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

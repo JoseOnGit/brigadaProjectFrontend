@@ -44,7 +44,6 @@ const LevelWrapper = styled("div")({
 //  STYLED COMPONENTS >
 
 const RequestByStore: FC<Props> = ({ request, requestStore }) => {
-  console.log("%c⧭ request ", "color: #917399", request);
   return (
     <>
       <Accordion

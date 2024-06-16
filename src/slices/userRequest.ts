@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PickedDayType, RequestType } from "../types/requestTypes";
+import {
+  NotificationType,
+  PickedDayType,
+  RequestType,
+} from "../types/requestTypes";
 import { CurrentUserType } from "../types/userTypes";
 import RequestService from "../services/requestService";
 import UserService from "../services/userService";
@@ -53,6 +57,18 @@ export const addUserRequest = createAsyncThunk(
   async (request: RequestType) => {
     try {
       const response = await RequestService.createNewRequest(request);
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const userRequestNotification = createAsyncThunk(
+  "userRequest/reqestNotification",
+  async (notification: NotificationType) => {
+    try {
+      const response = await RequestService.sendNotification(notification);
       return response;
     } catch (error) {
       return error;
